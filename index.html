@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>MY THERAPEUTICS TRUST · Peptide PROMs/PREMs</title>
     <style>
         * {
@@ -13,7 +13,7 @@
         }
         body {
             background: #0b1020;
-            padding: 16px;
+            padding: 12px;
             color: #f0f4fa;
             min-height: 100vh;
             display: flex;
@@ -28,15 +28,15 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            margin-bottom: 16px;
             background: #12172a;
             padding: 12px 18px;
             border-radius: 16px;
             border: 1px solid #262c4a;
+            margin-bottom: 16px;
         }
         .header h1 {
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             background: linear-gradient(135deg, #005792, #00b4d8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -44,10 +44,9 @@
         .header .sub {
             font-size: 0.6rem;
             color: #8892b0;
-            letter-spacing: 0.5px;
         }
         .badge-veritas {
-            background: #28a745;
+            background: #6f42c1;
             padding: 4px 14px;
             border-radius: 30px;
             font-size: 0.6rem;
@@ -85,11 +84,11 @@
             }
         }
         .form-group {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .form-group label {
             display: block;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 600;
             text-transform: uppercase;
             color: #8892b0;
@@ -98,12 +97,12 @@
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 8px;
             border: 1px solid #262c4a;
             background: #0f1428;
             color: #f5f5f5;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
         .form-group input:focus,
         .form-group select:focus {
@@ -113,12 +112,12 @@
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
         }
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6px 12px;
+            gap: 6px 10px;
         }
         @media (max-width: 480px) {
             .form-grid {
@@ -129,16 +128,16 @@
             }
         }
         .btn {
-            padding: 7px 16px;
+            padding: 6px 14px;
             border-radius: 30px;
             border: none;
             font-weight: 600;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             cursor: pointer;
             transition: 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
         .btn-primary {
             background: #005792;
@@ -171,14 +170,14 @@
         }
         .action-bar {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
-            margin-top: 12px;
+            margin-top: 10px;
         }
         .risk-badge {
             padding: 2px 10px;
             border-radius: 30px;
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             font-weight: 700;
             text-transform: uppercase;
         }
@@ -197,43 +196,43 @@
         .composite-box {
             background: linear-gradient(135deg, #0f1a30, #1a2a4a);
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 8px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            margin: 8px 0;
+            margin: 6px 0;
         }
         .composite-score {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: #00b4d8;
         }
         .ai-insight {
             background: #0f1428;
             border-left: 4px solid #00b4d8;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 8px;
-            margin: 8px 0;
-            font-size: 0.7rem;
+            margin: 6px 0;
+            font-size: 0.65rem;
             line-height: 1.5;
-            max-height: 140px;
+            max-height: 130px;
             overflow-y: auto;
         }
         .ai-insight ul {
-            padding-left: 18px;
-            margin: 4px 0;
+            padding-left: 16px;
+            margin: 3px 0;
         }
         .ai-insight ul li {
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
         .concordance-box {
             background: #0f1428;
             border-radius: 8px;
-            padding: 8px 12px;
-            margin: 6px 0;
+            padding: 6px 10px;
+            margin: 4px 0;
             border-left: 4px solid #28a745;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
         .concordance-box.silent {
             border-left-color: #dc3545;
@@ -245,7 +244,7 @@
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
         .concordance-box .alert.silent {
             color: #ff6b6b;
@@ -257,19 +256,19 @@
             color: #28a745;
         }
         .concordance-box .detail {
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             color: #8892b0;
-            margin-top: 2px;
+            margin-top: 1px;
         }
         .trend-indicator {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
             background: #0f1428;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 6px;
-            font-size: 0.6rem;
-            margin: 4px 0;
+            font-size: 0.55rem;
+            margin: 3px 0;
         }
         .trend-indicator .up {
             color: #28a745;
@@ -282,16 +281,16 @@
         }
         .table-wrap {
             overflow-x: auto;
-            margin-top: 6px;
+            margin-top: 4px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
         }
         th {
             text-align: left;
-            padding: 4px 6px;
+            padding: 3px 5px;
             background: #0f1428;
             border-bottom: 2px solid #262c4a;
             color: #8892b0;
@@ -299,17 +298,17 @@
             white-space: nowrap;
         }
         td {
-            padding: 4px 6px;
+            padding: 3px 5px;
             border-bottom: 1px solid #1a2038;
         }
         tr:hover td {
             background: #1a2038;
         }
         .btn-sm {
-            padding: 2px 8px;
+            padding: 2px 6px;
             border-radius: 30px;
             border: none;
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             font-weight: 600;
             cursor: pointer;
             background: #1a2038;
@@ -332,13 +331,13 @@
             gap: 8px;
             flex-wrap: wrap;
             background: #0f1428;
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 8px;
-            margin: 6px 0;
-            font-size: 0.65rem;
+            margin: 4px 0;
+            font-size: 0.6rem;
         }
         .veritas-status .icon {
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         .veritas-status .icon.pass {
             color: #28a745;
@@ -351,24 +350,24 @@
         }
         .token-area {
             width: 100%;
-            min-height: 50px;
+            min-height: 45px;
             resize: vertical;
             border-radius: 8px;
             border: 1px solid #262c4a;
-            padding: 6px 10px;
-            font-size: 0.5rem;
+            padding: 5px 8px;
+            font-size: 0.45rem;
             font-family: monospace;
             background: #0f1428;
             color: #f5f5f5;
             word-break: break-all;
         }
         .vault-list {
-            max-height: 100px;
+            max-height: 90px;
             overflow-y: auto;
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             background: #0f1428;
             border-radius: 6px;
-            padding: 4px 8px;
+            padding: 3px 6px;
             border: 1px solid #262c4a;
         }
         .vault-item {
@@ -383,16 +382,16 @@
         }
         .vault-token {
             font-family: monospace;
-            font-size: 0.45rem;
+            font-size: 0.4rem;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-width: 120px;
+            max-width: 100px;
             color: #8892b0;
         }
         .vault-status {
-            font-size: 0.45rem;
-            padding: 1px 8px;
+            font-size: 0.4rem;
+            padding: 1px 6px;
             border-radius: 30px;
             font-weight: 600;
         }
@@ -405,12 +404,12 @@
             color: #1a1a1a;
         }
         .vault-actions button {
-            padding: 1px 6px;
+            padding: 1px 5px;
             border-radius: 30px;
             border: none;
-            font-size: 0.45rem;
+            font-size: 0.4rem;
             cursor: pointer;
-            margin-left: 3px;
+            margin-left: 2px;
             background: #1a2038;
             color: #8892b0;
         }
@@ -419,13 +418,13 @@
             color: #f5f5f5;
         }
         .footer {
-            margin-top: 16px;
+            margin-top: 14px;
             background: #12172a;
             border: 1px solid #262c4a;
             border-radius: 16px;
-            padding: 12px 16px;
+            padding: 10px 14px;
             text-align: center;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: #8892b0;
         }
         .footer .highlight {
@@ -434,17 +433,17 @@
         }
         .profile-selector {
             display: flex;
-            gap: 6px;
+            gap: 5px;
             flex-wrap: wrap;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .profile-btn {
-            padding: 4px 14px;
+            padding: 3px 12px;
             border-radius: 30px;
             border: 1.5px solid #262c4a;
             background: #12172a;
             font-weight: 600;
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             cursor: pointer;
             color: #8892b0;
             transition: 0.2s;
@@ -461,59 +460,59 @@
         .demo-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px 12px;
+            gap: 4px 10px;
             background: #0f1428;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             align-items: center;
         }
         .demo-row .field {
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 0.55rem;
+            gap: 3px;
+            font-size: 0.5rem;
             color: #8892b0;
         }
         .demo-row .field input,
         .demo-row .field select {
-            padding: 2px 6px;
+            padding: 2px 5px;
             border-radius: 6px;
             border: 1px solid #262c4a;
             background: #0f1428;
             color: #f5f5f5;
-            font-size: 0.6rem;
-            width: 56px;
+            font-size: 0.55rem;
+            width: 50px;
         }
         .demo-row .field input[type="date"] {
-            width: 100px;
+            width: 90px;
         }
         .demo-row .field input[type="text"] {
-            width: 80px;
+            width: 70px;
         }
         .goal-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px 12px;
+            gap: 4px 10px;
             background: #0f1428;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .goal-item {
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 0.55rem;
+            gap: 3px;
+            font-size: 0.5rem;
             background: #151a30;
-            padding: 2px 10px;
+            padding: 2px 8px;
             border-radius: 30px;
             border: 1px solid #262c4a;
         }
         .goal-item input {
             border: none;
-            width: 26px;
-            font-size: 0.6rem;
+            width: 24px;
+            font-size: 0.55rem;
             font-weight: 700;
             text-align: center;
             background: transparent;
@@ -524,9 +523,9 @@
             border-radius: 4px;
         }
         .form-scroll {
-            max-height: 340px;
+            max-height: 300px;
             overflow-y: auto;
-            padding-right: 4px;
+            padding-right: 3px;
             -webkit-overflow-scrolling: touch;
         }
         .form-scroll::-webkit-scrollbar {
@@ -538,9 +537,9 @@
         }
         .verification-badge {
             display: inline-block;
-            padding: 2px 12px;
+            padding: 2px 10px;
             border-radius: 30px;
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             font-weight: 700;
             text-transform: uppercase;
         }
@@ -563,16 +562,16 @@
         .ppd-section {
             background: #0f1428;
             border-radius: 10px;
-            padding: 8px 12px;
-            margin-bottom: 10px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
         }
         .ppd-section .ppd-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4px 8px;
+            gap: 3px 6px;
         }
         .ppd-section label {
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             color: #8892b0;
             display: block;
             text-transform: uppercase;
@@ -581,12 +580,12 @@
         }
         .ppd-section input {
             width: 100%;
-            padding: 3px 6px;
+            padding: 2px 5px;
             border-radius: 6px;
             border: 1px solid #262c4a;
             background: #0f1428;
             color: #f5f5f5;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
         }
         .ppd-section input:focus {
             outline: 2px solid #005792;
@@ -597,8 +596,8 @@
             color: white;
             border: none;
             border-radius: 30px;
-            padding: 4px 14px;
-            font-size: 0.6rem;
+            padding: 3px 12px;
+            font-size: 0.55rem;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
@@ -612,6 +611,299 @@
         }
         .btn-verify-human.verified {
             background: #28a745;
+        }
+        .video-container {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        video {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+        .overlay.hidden {
+            display: none;
+        }
+        .overlay span {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid #fff;
+            font-size: 0.65rem;
+            text-align: center;
+        }
+        .video-controls {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .video-controls button {
+            border: none;
+            border-radius: 999px;
+            padding: 3px 10px;
+            color: white;
+            background: #246bfd;
+            cursor: pointer;
+            font-size: 0.55rem;
+            transition: 0.1s;
+        }
+        .video-controls button:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+        .video-controls button:not(:disabled):hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(36, 107, 253, 0.4);
+        }
+        .video-controls .btn-danger {
+            background: #dc3545;
+        }
+        .video-controls .btn-danger:not(:disabled):hover {
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+        }
+        .video-controls .btn-success {
+            background: #28a745;
+        }
+        .video-controls .btn-success:not(:disabled):hover {
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
+        }
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.55rem;
+            margin-bottom: 2px;
+        }
+        progress {
+            width: 100%;
+            height: 0.4rem;
+            border-radius: 999px;
+            overflow: hidden;
+            background: #20263d;
+        }
+        progress::-webkit-progress-value {
+            background: #24d18f;
+        }
+        progress::-moz-progress-bar {
+            background: #24d18f;
+        }
+        .hr-block {
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px solid #262c4a;
+        }
+        .hr-block .hr-value {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .quality-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+            background: #555;
+            border: 1px solid #222;
+        }
+        .quality-dot.green {
+            background: #24d18f;
+        }
+        .quality-dot.red {
+            background: #ff4d4d;
+        }
+        .quality-dot.yellow {
+            background: #ffc107;
+        }
+        .verifier-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+        }
+        .verifier-modal.active {
+            display: flex;
+        }
+        .verifier-modal-content {
+            background: #151a30;
+            border: 1px solid #262c4a;
+            border-radius: 16px;
+            padding: 18px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .verifier-modal-content h2 {
+            color: #6f42c1;
+            border-bottom: 1px solid #262c4a;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .verifier-modal-content .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: #8892b0;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        .verifier-modal-content .close-btn:hover {
+            color: #f5f5f5;
+        }
+        .verifier-field {
+            margin-bottom: 8px;
+        }
+        .verifier-field label {
+            display: block;
+            font-size: 0.55rem;
+            font-weight: 600;
+            color: #8892b0;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .verifier-field input,
+        .verifier-field textarea {
+            width: 100%;
+            padding: 6px 8px;
+            border-radius: 8px;
+            border: 1px solid #262c4a;
+            background: #0f1428;
+            color: #f5f5f5;
+            font-size: 0.65rem;
+            font-family: monospace;
+        }
+        .verifier-field textarea {
+            min-height: 50px;
+            resize: vertical;
+        }
+        .verifier-field input:focus,
+        .verifier-field textarea:focus {
+            outline: 2px solid #6f42c1;
+            border-color: transparent;
+        }
+        .verifier-actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+        .verifier-actions button {
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.6rem;
+            flex: 1 0 auto;
+        }
+        .btn-unlock {
+            background: #6f42c1;
+            color: white;
+        }
+        .btn-unlock:hover {
+            background: #5530a0;
+        }
+        .btn-unlock:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+        .btn-verify {
+            background: #28a745;
+            color: white;
+        }
+        .btn-verify:hover {
+            background: #1e7e34;
+        }
+        .btn-verify:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+        .verifier-results {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            background: #0f1428;
+            border: 1px solid #262c4a;
+            font-size: 0.6rem;
+        }
+        .verifier-results .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            border-bottom: 1px solid #1a2038;
+        }
+        .verifier-results .result-item:last-child {
+            border-bottom: none;
+        }
+        .verifier-results .label {
+            color: #8892b0;
+        }
+        .verifier-results .value {
+            font-weight: 600;
+        }
+        .verifier-results .value.verified {
+            color: #28a745;
+        }
+        .verifier-results .value.pending {
+            color: #ffc107;
+        }
+        .verifier-results .value.failed {
+            color: #dc3545;
+        }
+        .verifier-status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .verifier-status-badge.verified {
+            background: #28a745;
+            color: white;
+        }
+        .verifier-status-badge.pending {
+            background: #ffc107;
+            color: #1a1a1a;
+        }
+        .verifier-status-badge.failed {
+            background: #dc3545;
+            color: white;
+        }
+        .verifier-password-hint {
+            font-size: 0.5rem;
+            color: #8892b0;
+            margin-top: 3px;
+        }
+        .verifier-password-hint.success {
+            color: #28a745;
+        }
+        .verifier-password-hint.error {
+            color: #dc3545;
         }
     </style>
 </head>
@@ -641,12 +933,12 @@
                 <h3><i class="fas fa-edit"></i> 7 Core PROMs &amp; PREMs</h3>
 
                 <div class="demo-row">
-                    <div class="field"><label>Gender</label><select id="gender"><option value="female">♀</option><option value="male">♂</option><option value="diverse">⚧</option></select></div>
-                    <div class="field"><label>Age</label><input type="number" id="age" placeholder="65" min="0" max="120" style="width:44px;"></div>
-                    <div class="field"><label>cm</label><input type="number" id="height" placeholder="170" step="0.5" style="width:48px;"></div>
-                    <div class="field"><label>kg</label><input type="number" id="weight" placeholder="72" step="0.1" style="width:48px;"></div>
-                    <div class="field"><label>DOB</label><input type="date" id="dob" value="1980-01-01" style="width:90px;"></div>
-                    <div class="field"><label>Insurance</label><input type="text" id="insuranceNumber" value="INS-12345" style="width:70px;"></div>
+                    <div class="field"><label>Gender</label><select id="gender"><option value="">—</option><option value="female">♀</option><option value="male">♂</option><option value="diverse">⚧</option></select></div>
+                    <div class="field"><label>Age</label><input type="number" id="age" placeholder="—" min="0" max="120" style="width:44px;"></div>
+                    <div class="field"><label>cm</label><input type="number" id="height" placeholder="—" step="0.5" style="width:48px;"></div>
+                    <div class="field"><label>kg</label><input type="number" id="weight" placeholder="—" step="0.1" style="width:48px;"></div>
+                    <div class="field"><label>DOB</label><input type="date" id="dob" style="width:90px;"></div>
+                    <div class="field"><label>Insurance</label><input type="text" id="insuranceNumber" placeholder="—" style="width:70px;"></div>
                 </div>
 
                 <div class="goal-row">
@@ -666,8 +958,8 @@
                     </div>
                 </form>
 
-                <div style="margin-top:12px;">
-                    <div id="riskContainer"><div style="color:#8892b0; padding:8px 0; text-align:center; font-size:0.7rem;">Save an encounter to see recommendations.</div></div>
+                <div style="margin-top:10px;">
+                    <div id="riskContainer"><div style="color:#8892b0; padding:6px 0; text-align:center; font-size:0.65rem;">Save an encounter to see recommendations.</div></div>
                     <div class="composite-box">
                         <span><i class="fas fa-shield-alt"></i> Functionality Index</span>
                         <span class="composite-score" id="compositeScore">—</span>
@@ -678,83 +970,108 @@
                 </div>
             </div>
 
-            <!-- RIGHT: VERITAS (simplified: PPD + Doctor Verification) -->
+            <!-- RIGHT: VERITAS with VIDEO + VERIFICATION -->
             <div class="card">
-                <h3><i class="fas fa-shield-alt"></i> VERITAS · Provider Verification</h3>
+                <h3><i class="fas fa-shield-alt"></i> VERITAS · Patient Liveness &amp; HR</h3>
+
+                <!-- VIDEO -->
+                <div class="video-container">
+                    <video id="video" autoplay playsinline></video>
+                    <div id="overlay" class="overlay hidden">
+                        <span id="overlayText">Look straight into the camera</span>
+                    </div>
+                </div>
+
+                <div class="video-controls">
+                    <button id="startCameraBtn" class="btn-success">📷 Start Camera</button>
+                    <button id="stopCameraBtn" class="btn-danger" disabled>⏹ Stop</button>
+                    <button id="runLivenessBtn" class="btn-success" disabled>🎯 Liveness Check</button>
+                    <button id="startHRBtn" class="btn-success" disabled>❤️ Start HR</button>
+                    <button id="stopHRBtn" class="btn-danger" disabled>⏹ Stop HR</button>
+                </div>
+
+                <div style="margin-top:4px;">
+                    <div class="status-row">
+                        <span>Status:</span>
+                        <span id="statusText">Idle</span>
+                    </div>
+                    <div class="status-row">
+                        <span>Liveness:</span>
+                        <span id="livenessStatus">Not run</span>
+                    </div>
+                    <progress id="progressBar" value="0" max="100"></progress>
+                </div>
+
+                <div class="hr-block">
+                    <div class="status-row">
+                        <span>
+                            <span id="hrQualityDot" class="quality-dot"></span>
+                            Optical HR (rPPG):
+                        </span>
+                        <span class="hr-value" id="hrValue">-- bpm</span>
+                    </div>
+                    <div style="font-size:0.6rem; opacity:0.8;" id="hrStatus">Press "Start HR" and stay still</div>
+                    <div style="font-size:0.5rem; opacity:0.6; margin-top:1px;" id="hrDebug"></div>
+                </div>
+
+                <div class="veritas-status">
+                    <span class="icon pending" id="veritasIcon">⏳</span>
+                    <span id="veritasText">Complete Liveness + HR, then PPD</span>
+                </div>
 
                 <!-- PPD -->
-                <div class="ppd-section">
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px; margin-bottom:4px;">
-                        <span style="font-weight:700; font-size:0.7rem; color:#00b4d8;"><i class="fas fa-user-md"></i> PPD · Professional Details</span>
-                        <span style="font-size:0.5rem; color:#8892b0;" id="ppdStatus">⚠️ Incomplete</span>
+                <div class="ppd-section" style="margin-top:6px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px; margin-bottom:3px;">
+                        <span style="font-weight:700; font-size:0.65rem; color:#00b4d8;"><i class="fas fa-user-md"></i> PPD · Professional Details</span>
+                        <span style="font-size:0.45rem; color:#8892b0;" id="ppdStatus">⚠️ Incomplete</span>
                     </div>
                     <div class="ppd-grid">
-                        <div><label>Full Name</label><input id="ppdName" type="text" placeholder="Dr. M. Ali" /></div>
-                        <div><label>License / ID</label><input id="ppdLicense" type="text" placeholder="PT-123456" /></div>
-                        <div><label>Issuing Authority</label><input id="ppdAuthority" type="text" placeholder="Klinik Rosenhof" /></div>
-                        <div><label>Professional Role</label><input id="ppdRole" type="text" placeholder="Physiotherapist" /></div>
+                        <div><label>Full Name</label><input id="ppdName" type="text" placeholder="" /></div>
+                        <div><label>License / ID</label><input id="ppdLicense" type="text" placeholder="" /></div>
+                        <div><label>Issuing Authority</label><input id="ppdAuthority" type="text" placeholder="" /></div>
+                        <div><label>Professional Role</label><input id="ppdRole" type="text" placeholder="" /></div>
                     </div>
                 </div>
 
-                <!-- Doctor Verification (simplified ANCHOR) -->
-                <div style="background:#0f1428; border-radius:10px; padding:8px 12px; margin-bottom:10px;">
+                <!-- TOKEN -->
+                <div style="background:#0f1428; border-radius:10px; padding:6px 10px; margin-bottom:8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-                        <span style="font-weight:700; font-size:0.7rem; color:#6f42c1;"><i class="fas fa-user-check"></i> Doctor Verification</span>
-                        <span id="doctorVerificationStatus" style="font-size:0.55rem; color:#8892b0;">Not verified</span>
-                    </div>
-                    <div style="display:flex; gap:6px; flex-wrap:wrap; margin:6px 0;">
-                        <button class="btn-verify-human" id="verifyDoctorBtn"><i class="fas fa-check-circle"></i> Verify as Doctor</button>
-                        <button class="btn btn-outline" id="resetVerificationBtn" style="font-size:0.55rem; padding:3px 12px;">↻ Reset</button>
-                    </div>
-                    <div style="display:flex; gap:12px; flex-wrap:wrap; font-size:0.55rem; color:#8892b0;">
-                        <span>Liveness: <span id="livenessDisplay">❌</span></span>
-                        <span>HR: <span id="hrDisplay">— bpm</span></span>
-                        <span>Doctor: <span id="doctorDisplay">❌</span></span>
-                    </div>
-                    <div class="veritas-status">
-                        <span class="icon pending" id="veritasIcon">⏳</span>
-                        <span id="veritasText">Complete PPD + Doctor verification to generate token</span>
-                    </div>
-                </div>
-
-                <!-- Token -->
-                <div style="background:#0f1428; border-radius:10px; padding:8px 12px; margin-bottom:10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-                        <span style="font-weight:700; font-size:0.7rem; color:#28a745;"><i class="fas fa-key"></i> VERITAS Token</span>
+                        <span style="font-weight:700; font-size:0.65rem; color:#28a745;"><i class="fas fa-key"></i> VERITAS Token</span>
                         <span class="verification-badge pending" id="tokenBadge">PENDING</span>
                     </div>
                     <div style="display:flex; gap:4px; flex-wrap:wrap; margin:4px 0;">
-                        <button class="btn btn-success" id="generateTokenBtn" disabled style="font-size:0.55rem; padding:3px 12px;"><i class="fas fa-key"></i> Generate</button>
-                        <button class="btn btn-outline" id="copyTokenBtn" disabled style="font-size:0.55rem; padding:3px 12px;"><i class="fas fa-copy"></i> Copy</button>
-                        <button class="btn btn-primary" id="saveVaultBtn" disabled style="font-size:0.55rem; padding:3px 12px;"><i class="fas fa-vault"></i> Save</button>
+                        <button class="btn btn-success" id="generateTokenBtn" disabled style="font-size:0.5rem; padding:3px 10px;"><i class="fas fa-key"></i> Generate</button>
+                        <button class="btn btn-outline" id="copyTokenBtn" disabled style="font-size:0.5rem; padding:3px 10px;"><i class="fas fa-copy"></i> Copy</button>
+                        <button class="btn btn-primary" id="saveVaultBtn" disabled style="font-size:0.5rem; padding:3px 10px;"><i class="fas fa-vault"></i> Save</button>
+                        <button class="btn btn-outline" id="openVerifierBtn" style="font-size:0.5rem; padding:3px 10px; color:#6f42c1; border-color:#6f42c1;"><i class="fas fa-shield-alt"></i> Verify</button>
                     </div>
-                    <textarea class="token-area" id="tokenOutput" readonly placeholder="Token will appear after PPD + Doctor verification."></textarea>
-                    <div style="font-size:0.5rem; color:#8892b0; margin-top:2px;" id="tokenStatus">Complete PPD + Doctor verification first.</div>
+                    <textarea class="token-area" id="tokenOutput" readonly placeholder="Token will appear after Liveness + HR + PPD are complete."></textarea>
+                    <div style="font-size:0.45rem; color:#8892b0; margin-top:2px;" id="tokenStatus">Complete Liveness, HR, and PPD first.</div>
                 </div>
 
-                <!-- Vault -->
-                <div style="background:#0f1428; border-radius:10px; padding:8px 12px;">
+                <!-- VAULT -->
+                <div style="background:#0f1428; border-radius:10px; padding:6px 10px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-                        <span style="font-weight:700; font-size:0.7rem; color:#6f42c1;"><i class="fas fa-vault"></i> Token Vault</span>
-                        <span style="font-size:0.5rem; color:#8892b0;" id="vaultCount">0 tokens</span>
+                        <span style="font-weight:700; font-size:0.65rem; color:#6f42c1;"><i class="fas fa-vault"></i> Token Vault</span>
+                        <span style="font-size:0.45rem; color:#8892b0;" id="vaultCount">0 tokens</span>
                     </div>
-                    <div class="vault-list" id="vaultList"><div style="color:#8892b0; font-size:0.55rem; text-align:center; padding:4px 0;">No tokens in vault.</div></div>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:4px;">
-                        <button class="btn btn-outline" id="clearVaultBtn" style="font-size:0.45rem; padding:2px 10px;"><i class="fas fa-trash"></i> Clear</button>
-                        <button class="btn btn-outline" id="exportVaultBtn" style="font-size:0.45rem; padding:2px 10px;"><i class="fas fa-file-export"></i> Export</button>
-                        <button class="btn btn-success" id="verifyVaultBtn" style="font-size:0.45rem; padding:2px 10px;"><i class="fas fa-check-circle"></i> Verify All</button>
+                    <div class="vault-list" id="vaultList"><div style="color:#8892b0; font-size:0.5rem; text-align:center; padding:3px 0;">No tokens in vault.</div></div>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:3px;">
+                        <button class="btn btn-outline" id="clearVaultBtn" style="font-size:0.4rem; padding:2px 8px;"><i class="fas fa-trash"></i> Clear</button>
+                        <button class="btn btn-outline" id="exportVaultBtn" style="font-size:0.4rem; padding:2px 8px;"><i class="fas fa-file-export"></i> Export</button>
+                        <button class="btn btn-success" id="verifyVaultBtn" style="font-size:0.4rem; padding:2px 8px;"><i class="fas fa-check-circle"></i> Verify All</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- History -->
+        <!-- HISTORY -->
         <div class="card">
-            <h3><i class="fas fa-history"></i> Encounter History <span style="font-size:0.55rem; font-weight:400; color:#8892b0;" id="historyCount">0 records</span></h3>
+            <h3><i class="fas fa-history"></i> Encounter History <span style="font-size:0.5rem; font-weight:400; color:#8892b0;" id="historyCount">0 records</span></h3>
             <div class="table-wrap">
                 <table>
                     <thead><tr><th>ID</th><th>Date</th><th>Profile</th><th>PPD</th><th>Pain</th><th>Mob</th><th>Fat</th><th>Func</th><th>Index</th><th>Action</th></tr></thead>
-                    <tbody id="historyBody"><tr><td colspan="10" style="text-align:center; color:#8892b0; font-size:0.65rem;">No encounters yet.</td></tr></tbody>
+                    <tbody id="historyBody"><tr><td colspan="10" style="text-align:center; color:#8892b0; font-size:0.6rem;">No encounters yet.</td></tr></tbody>
                 </table>
             </div>
         </div>
@@ -764,17 +1081,60 @@
             <span style="margin:0 6px;">·</span> Aligns Provider–Payer–Regulator goals
         </div>
 
+        <!-- VERIFIER MODAL (for pharmacist/doctor/assistant) -->
+        <div class="verifier-modal" id="verifierModal">
+            <div class="verifier-modal-content">
+                <button class="close-btn" id="closeVerifierBtn">&times;</button>
+                <h2><i class="fas fa-shield-alt" style="color:#6f42c1;"></i> VERITAS Token Verifier</h2>
+                <p style="font-size:0.6rem; color:#8892b0; margin-bottom:8px;">
+                    <strong>Pharmacist / Doctor / Assistant Verification</strong><br>
+                    Enter the verifier password to unlock, then verify the token during refill or prescription.
+                    <br><span style="color:#ffc107; font-size:0.5rem;">Password: MoMo123456789@@@</span>
+                </p>
+                <div class="verifier-field">
+                    <label><i class="fas fa-lock"></i> Verifier Password</label>
+                    <input type="password" id="verifierPassword" placeholder="Enter password to unlock verifier" />
+                    <div class="verifier-password-hint" id="passwordHint"></div>
+                </div>
+                <div class="verifier-field">
+                    <label><i class="fas fa-key"></i> Session Token</label>
+                    <textarea id="verifierTokenInput" readonly placeholder="Token will auto-populate from the main tool"></textarea>
+                </div>
+                <div class="verifier-actions">
+                    <button class="btn-unlock" id="unlockVerifierBtn"><i class="fas fa-unlock"></i> Unlock</button>
+                    <button class="btn-verify" id="verifyTokenBtn" disabled><i class="fas fa-check-circle"></i> Verify Token</button>
+                    <button class="btn btn-danger" id="closeVerifierBtn2"><i class="fas fa-times"></i> Close</button>
+                </div>
+                <div class="verifier-results" id="verifierResults" style="display:none;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
+                        <span style="font-weight:700; font-size:0.65rem;">📊 Verification Results</span>
+                        <span class="verifier-status-badge pending" id="verifierStatusBadge">Pending</span>
+                    </div>
+                    <div id="verifierResultsContent">
+                        <div class="result-item"><span class="label">Status</span><span class="value" id="resultStatus">—</span></div>
+                        <div class="result-item"><span class="label">PPD Name</span><span class="value" id="resultPPDName">—</span></div>
+                        <div class="result-item"><span class="label">License</span><span class="value" id="resultLicense">—</span></div>
+                        <div class="result-item"><span class="label">Liveness</span><span class="value" id="resultLiveness">—</span></div>
+                        <div class="result-item"><span class="label">Heart Rate</span><span class="value" id="resultHR">—</span></div>
+                        <div class="result-item"><span class="label">Function Index</span><span class="value" id="resultIndex">—</span></div>
+                        <div class="result-item"><span class="label">Signature</span><span class="value" id="resultSignature">—</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         // ============================================================
         //  MY THERAPEUTICS TRUST · Peptide PROMs/PREMs
-        //  Focus: 7 variables + VERITAS (PPD + Doctor Verification)
+        //  With Video Liveness + HR + Verifier for Pharmacist/Doctor
         // ============================================================
 
         const STORAGE_KEY = 'peptide_proms_encounters';
         const VAULT_KEY = 'veritas_token_vault';
         const TOKEN_KEY_STRING = 'local-offline-signature';
+        const VERIFIER_PASSWORD = 'MoMo123456789@@@';
         const DECAY_LAMBDA = 0.1;
 
         let encounters = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -782,17 +1142,51 @@
         let currentProfile = 'acute';
         let deviceId = crypto.randomUUID ? crypto.randomUUID() : 'dev-' + Date.now().toString(36);
 
-        // Verification state (simplified: doctor verifies liveness + HR)
-        let verification = {
-            ppdComplete: false,
-            doctorVerified: false, // doctor confirms liveness + HR in person
-            liveness: false, // simulated/confirmed by doctor
-            hr: null // confirmed by doctor
-        };
+        // ANCHOR state
+        let stream = null;
+        let livenessCompleted = false;
+        let livenessDurationSec = null;
+        let livenessStartTime = null;
+        let progressInterval = null;
+        let hrTimer = null;
+        let hrSignal = [];
+        let hrTimestamps = [];
+        let lastHREstimate = null;
+        let faceDetector = null;
+        let lastFaceBox = null;
+        if ("FaceDetector" in window) {
+            try { faceDetector = new FaceDetector({ fastMode: true, maxDetectedFaces: 1 }); } catch (e) {}
+        }
+
+        const HR_MIN_BPM = 45,
+            HR_MAX_BPM = 160;
+        const HR_SAMPLE_INTERVAL_MS = 80;
+        const HR_MIN_WINDOW_SEC = 8,
+            HR_MAX_WINDOW_SEC = 25;
+        const hrCanvas = document.createElement("canvas");
+        const hrCtx = hrCanvas.getContext("2d");
 
         let tokenGenerated = false;
+        let isUnlocked = false;
 
         // DOM refs
+        const video = document.getElementById("video");
+        const overlay = document.getElementById("overlay");
+        const overlayText = document.getElementById("overlayText");
+        const statusText = document.getElementById("statusText");
+        const livenessStatus = document.getElementById("livenessStatus");
+        const progressBar = document.getElementById("progressBar");
+        const hrValueEl = document.getElementById("hrValue");
+        const hrStatusEl = document.getElementById("hrStatus");
+        const hrDebugEl = document.getElementById("hrDebug");
+        const hrQualityDot = document.getElementById("hrQualityDot");
+
+        const startCameraBtn = document.getElementById("startCameraBtn");
+        const stopCameraBtn = document.getElementById("stopCameraBtn");
+        const runLivenessBtn = document.getElementById("runLivenessBtn");
+        const startHRBtn = document.getElementById("startHRBtn");
+        const stopHRBtn = document.getElementById("stopHRBtn");
+
         const form = document.getElementById('peptideForm');
         const formFields = document.getElementById('formFields');
         const historyBody = document.getElementById('historyBody');
@@ -809,9 +1203,6 @@
         const ppdRole = document.getElementById('ppdRole');
         const ppdStatus = document.getElementById('ppdStatus');
 
-        const livenessDisplay = document.getElementById('livenessDisplay');
-        const hrDisplay = document.getElementById('hrDisplay');
-        const doctorDisplay = document.getElementById('doctorDisplay');
         const veritasIcon = document.getElementById('veritasIcon');
         const veritasText = document.getElementById('veritasText');
         const tokenBadge = document.getElementById('tokenBadge');
@@ -824,7 +1215,20 @@
         const vaultCount = document.getElementById('vaultCount');
         const veritasHeaderBadge = document.getElementById('veritasHeaderBadge');
 
-        // ========== FIELD DEFINITIONS (7 core variables) ==========
+        // Verifier
+        const verifierModal = document.getElementById('verifierModal');
+        const openVerifierBtn = document.getElementById('openVerifierBtn');
+        const closeVerifierBtn = document.getElementById('closeVerifierBtn');
+        const closeVerifierBtn2 = document.getElementById('closeVerifierBtn2');
+        const verifierPassword = document.getElementById('verifierPassword');
+        const verifierTokenInput = document.getElementById('verifierTokenInput');
+        const unlockVerifierBtn = document.getElementById('unlockVerifierBtn');
+        const verifyTokenBtn = document.getElementById('verifyTokenBtn');
+        const verifierResults = document.getElementById('verifierResults');
+        const verifierStatusBadge = document.getElementById('verifierStatusBadge');
+        const passwordHint = document.getElementById('passwordHint');
+
+        // ========== FIELD DEFINITIONS ==========
         const FIELD_DEFS = {
             acute: [
                 { id: 'pain', label: '1. Pain (NRS)', unit: '0‑10', step: '1', max: 10 },
@@ -834,7 +1238,6 @@
                 { id: 'adverse', label: '5. Adverse Events', unit: '0‑10', step: '1', max: 10 },
                 { id: 'satisfaction', label: '6. Satisfaction', unit: '0‑10', step: '1', max: 10 },
                 { id: 'adherence', label: '7. Adherence (doses missed)', unit: '0‑3+', step: '1', max: 3 },
-                // Additional physiology markers (supporting evidence)
                 { id: 'hr', label: 'Heart Rate', unit: 'bpm', step: '1' },
                 { id: 'sbp', label: 'SBP', unit: 'mmHg', step: '1' },
                 { id: 'dbp', label: 'DBP', unit: 'mmHg', step: '1' },
@@ -937,9 +1340,10 @@
             data.ppd_authority = ppd.authority;
             data.ppd_role = ppd.role;
             data.device_id = deviceId;
-            data.doctor_verified = verification.doctorVerified;
-            data.liveness_confirmed = verification.liveness;
-            data.hr_confirmed = verification.hr;
+            data.liveness_completed = livenessCompleted;
+            data.liveness_duration = livenessDurationSec;
+            data.hr_bpm = lastHREstimate ? lastHREstimate.bpm : null;
+            data.hr_quality = lastHREstimate ? lastHREstimate.quality : null;
             data.dob = document.getElementById('dob').value;
             data.insurance_number = document.getElementById('insuranceNumber').value;
             return data;
@@ -962,9 +1366,8 @@
             if (data.ppd_role) ppdRole.value = data.ppd_role;
             if (data.dob) document.getElementById('dob').value = data.dob;
             if (data.insurance_number) document.getElementById('insuranceNumber').value = data.insurance_number;
-            if (data.doctor_verified !== undefined) verification.doctorVerified = data.doctor_verified;
-            if (data.liveness_confirmed !== undefined) verification.liveness = data.liveness_confirmed;
-            if (data.hr_confirmed !== undefined) verification.hr = data.hr_confirmed;
+            if (data.liveness_completed !== undefined) livenessCompleted = data.liveness_completed;
+            if (data.hr_bpm !== undefined) lastHREstimate = { bpm: data.hr_bpm, quality: data.hr_quality || 0.5 };
         }
 
         function clearFormValues() {
@@ -973,10 +1376,35 @@
             document.getElementById('age').value = '';
             document.getElementById('height').value = '';
             document.getElementById('weight').value = '';
-            document.getElementById('gender').value = 'female';
+            document.getElementById('gender').value = '';
             document.getElementById('goal_pain').value = 2;
             document.getElementById('goal_mobility').value = 8;
             document.getElementById('goal_energy').value = 6;
+            document.getElementById('dob').value = '';
+            document.getElementById('insuranceNumber').value = '';
+            ppdName.value = '';
+            ppdLicense.value = '';
+            ppdAuthority.value = '';
+            ppdRole.value = '';
+            // Reset ANCHOR
+            livenessCompleted = false;
+            lastHREstimate = null;
+            hrValueEl.textContent = '-- bpm';
+            livenessStatus.textContent = 'Not run';
+            statusText.textContent = 'Idle';
+            progressBar.value = 0;
+            hrQualityDot.className = 'quality-dot';
+            hrStatusEl.textContent = 'Press "Start HR" and stay still';
+            tokenOutput.value = '';
+            tokenGenerated = false;
+            generateTokenBtn.disabled = true;
+            copyTokenBtn.disabled = true;
+            saveVaultBtn.disabled = true;
+            tokenBadge.className = 'verification-badge pending';
+            tokenBadge.textContent = 'PENDING';
+            veritasHeaderBadge.textContent = '⏳ PENDING';
+            veritasHeaderBadge.style.background = '#6f42c1';
+            updateVeritasStatus();
         }
 
         function generateEncounterId() { return 'PEP' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substr(
@@ -1147,7 +1575,7 @@
         function renderInsights(data) {
             if (!data || !data.pain) {
                 riskContainer.innerHTML =
-                    `<div style="color:#8892b0; padding:8px 0; text-align:center; font-size:0.7rem;">Save an encounter to see recommendations.</div>`;
+                    `<div style="color:#8892b0; padding:6px 0; text-align:center; font-size:0.65rem;">Save an encounter to see recommendations.</div>`;
                 compositeScore.textContent = '—';
                 aiInsight.innerHTML =
                     `<i class="fas fa-robot"></i> <span>Evidence‑based recommendations appear after saving.</span>`;
@@ -1172,7 +1600,7 @@
                          <span>Decayed Index: ${decayedIndex}</span>`;
 
             const adjustedIndex = Math.min(100, Math.round(index * concordance.riskMultiplier));
-            let html = '<div style="display:flex;flex-wrap:wrap;gap:3px;margin:4px 0;">';
+            let html = '<div style="display:flex;flex-wrap:wrap;gap:2px;margin:3px 0;">';
             const items = [
                 { label: 'Pain', val: parseFloat(data.pain) || 0, invert: true },
                 { label: 'Mobility', val: parseFloat(data.mobility) || 0 },
@@ -1199,13 +1627,13 @@
                 }
                 if (val === 0) status = '—';
                 html +=
-                    `<div style="flex:1 0 55px;background:#0f1428;padding:2px 6px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:0.55rem;">
+                    `<div style="flex:1 0 50px;background:#0f1428;padding:2px 5px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:0.5rem;">
                               <span>${item.label}</span><span class="risk-badge ${cls}">${status}</span>
                             </div>`;
             });
             html += '</div>';
             html +=
-                `<div style="font-size:0.55rem;background:#0f1428;padding:3px 8px;border-radius:6px;margin:3px 0;">
+                `<div style="font-size:0.5rem;background:#0f1428;padding:2px 8px;border-radius:6px;margin:2px 0;">
                             <i class="fas fa-bullseye" style="color:#00b4d8;"></i> Goals: Pain ≤${goals.pain} · Mobility ≥${goals.mobility} · Energy ≥${goals.energy}
                           </div>`;
             riskContainer.innerHTML = html;
@@ -1244,7 +1672,7 @@
         function renderHistory() {
             if (encounters.length === 0) {
                 historyBody.innerHTML =
-                    `<tr><td colspan="10" style="text-align:center;color:#8892b0;font-size:0.65rem;">No encounters yet.</td></tr>`;
+                    `<tr><td colspan="10" style="text-align:center;color:#8892b0;font-size:0.6rem;">No encounters yet.</td></tr>`;
                 historyCount.textContent = '0 records';
                 return;
             }
@@ -1319,7 +1747,8 @@
           Encounter: ${latest.id}
           Profile: ${latest.profile}
           PPD: ${ppd.name || '—'} (${ppd.license || '—'})
-          Doctor Verified: ${latest.doctor_verified ? '✅ Yes' : '❌ No'}
+          Liveness: ${latest.liveness_completed ? '✅' : '❌'}
+          HR: ${latest.hr_bpm || '—'} bpm
           -------------------------------------------------
           FUNCTIONALITY INDEX: ${adjusted}
           Trend: ${detectTrend(encounters).direction} (${detectTrend(encounters).change.toFixed(1)} pts)
@@ -1354,22 +1783,243 @@
             URL.revokeObjectURL(url);
         }
 
-        // ========== VERITAS ==========
+        // ========== VIDEO + LIVENESS + HR ==========
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } },
+                    audio: false
+                });
+                video.srcObject = stream;
+                statusText.textContent = "Camera running";
+                startCameraBtn.disabled = true;
+                stopCameraBtn.disabled = false;
+                runLivenessBtn.disabled = false;
+                startHRBtn.disabled = false;
+            } catch (err) {
+                console.error(err);
+                statusText.textContent = "Cannot access camera";
+            }
+        }
+
+        function stopCamera() {
+            if (stream) { stream.getTracks().forEach(t => t.stop());
+                stream = null; }
+            video.srcObject = null;
+            startCameraBtn.disabled = false;
+            stopCameraBtn.disabled = true;
+            runLivenessBtn.disabled = true;
+            startHRBtn.disabled = true;
+            stopHRBtn.disabled = true;
+            statusText.textContent = "Camera stopped";
+            stopLiveness();
+            stopHRMonitoring();
+        }
+
+        function showOverlay(msg) { overlayText.textContent = msg;
+            overlay.classList.remove("hidden"); }
+
+        function hideOverlay() { overlay.classList.add("hidden"); }
+
+        function stopLiveness() {
+            if (progressInterval) clearInterval(progressInterval);
+            progressBar.value = 0;
+            hideOverlay();
+        }
+
+        function runLiveness() {
+            if (!stream) return;
+            livenessCompleted = false;
+            livenessStartTime = performance.now() / 1000;
+
+            const steps = [
+                { text: "Look straight into the camera", percent: 25 },
+                { text: "Turn your head slowly to the LEFT", percent: 50 },
+                { text: "Turn your head slowly to the RIGHT", percent: 75 },
+                { text: "Nod your head UP and DOWN", percent: 100 }
+            ];
+
+            let index = 0;
+            showOverlay(steps[index].text);
+            progressBar.value = steps[index].percent;
+            statusText.textContent = "Liveness running…";
+            livenessStatus.textContent = "In progress…";
+
+            progressInterval = setInterval(() => {
+                index++;
+                if (index >= steps.length) {
+                    stopLiveness();
+                    progressBar.value = 100;
+                    statusText.textContent = "Liveness completed ✓";
+                    livenessStatus.textContent = "✅ Completed";
+                    livenessCompleted = true;
+                    livenessDurationSec = (performance.now() / 1000) - livenessStartTime;
+                    updateVeritasStatus();
+                    return;
+                }
+                showOverlay(steps[index].text);
+                progressBar.value = steps[index].percent;
+            }, 2500);
+        }
+
+        function resetHRBuffers() { hrSignal = [];
+            hrTimestamps = [];
+            lastHREstimate = null; }
+
+        function startHRMonitoring() {
+            if (!stream || !video) { hrStatusEl.textContent = "Start camera first."; return; }
+            if (hrTimer) return;
+            resetHRBuffers();
+            hrValueEl.textContent = "-- bpm";
+            hrStatusEl.textContent = "Collecting signal… stay still, 8–15 seconds.";
+            hrQualityDot.className = "quality-dot";
+            hrDebugEl.textContent = "";
+            startHRBtn.disabled = true;
+            stopHRBtn.disabled = false;
+            hrTimer = setInterval(sampleHRFrame, HR_SAMPLE_INTERVAL_MS);
+        }
+
+        function stopHRMonitoring() {
+            if (hrTimer) { clearInterval(hrTimer);
+                hrTimer = null; }
+            hrStatusEl.textContent = "HR idle. Press Start HR again to re-measure.";
+            startHRBtn.disabled = !stream;
+            stopHRBtn.disabled = true;
+            updateVeritasStatus();
+        }
+
+        async function sampleHRFrame() {
+            if (!video || video.videoWidth === 0 || video.videoHeight === 0) return;
+            const w = video.videoWidth,
+                h = video.videoHeight;
+            let roiX, roiY, roiWidth, roiHeight;
+            let usedFace = false;
+
+            if (faceDetector) {
+                try {
+                    const faces = await faceDetector.detect(video);
+                    if (faces && faces.length > 0) { lastFaceBox = faces[0].boundingBox; }
+                } catch (e) {}
+            }
+
+            if (lastFaceBox) {
+                const box = lastFaceBox;
+                roiX = Math.max(0, box.x + box.width * 0.25);
+                roiWidth = Math.min(w - roiX, box.width * 0.5);
+                roiY = Math.max(0, box.y);
+                roiHeight = Math.min(h - roiY, box.height * 0.35);
+                usedFace = true;
+            } else {
+                roiWidth = Math.floor(w * 0.2);
+                roiHeight = Math.floor(h * 0.15);
+                roiX = Math.floor(w * 0.4);
+                roiY = Math.floor(h * 0.2);
+            }
+
+            hrCanvas.width = roiWidth;
+            hrCanvas.height = roiHeight;
+            hrCtx.drawImage(video, roiX, roiY, roiWidth, roiHeight, 0, 0, roiWidth, roiHeight);
+            const frame = hrCtx.getImageData(0, 0, roiWidth, roiHeight).data;
+
+            let sumG = 0,
+                count = 0;
+            for (let i = 0; i < frame.length; i += 4) { sumG += frame[i + 1];
+                count++; }
+            if (count === 0) return;
+
+            const avgG = sumG / count;
+            const now = performance.now() / 1000;
+
+            hrSignal.push(avgG);
+            hrTimestamps.push(now);
+
+            while (hrTimestamps.length > 0 && (now - hrTimestamps[0]) > HR_MAX_WINDOW_SEC) {
+                hrTimestamps.shift();
+                hrSignal.shift();
+            }
+
+            const duration = hrTimestamps.length > 1 ? (hrTimestamps[hrTimestamps.length - 1] - hrTimestamps[0]) : 0;
+            hrDebugEl.textContent = "ROI: " + (usedFace ? "face-based" : "center") + " | Samples: " + hrSignal.length +
+                " | Duration: " + duration.toFixed(1) + " s";
+
+            if (duration >= HR_MIN_WINDOW_SEC) {
+                const hrEstimate = estimateHeartRateFromSignal(hrSignal, hrTimestamps);
+                if (hrEstimate) {
+                    const clampedBpm = hrEstimate.bpm;
+                    const quality = hrEstimate.quality;
+                    hrValueEl.textContent = Math.round(clampedBpm) + " bpm";
+                    if (quality >= 0.05) {
+                        hrStatusEl.textContent = "HR estimated (usable signal, quality: " + (quality * 100).toFixed(0) +
+                            "%).";
+                        hrQualityDot.className = "quality-dot green";
+                    } else {
+                        hrStatusEl.textContent = "HR estimated (low-confidence signal, quality: " + (quality * 100)
+                            .toFixed(0) + "%).";
+                        hrQualityDot.className = "quality-dot yellow";
+                    }
+                    lastHREstimate = { bpm: clampedBpm, quality: quality, durationSec: duration };
+                    updateVeritasStatus();
+                } else {
+                    hrStatusEl.textContent = "No dominant HR frequency found. Improve lighting and stay very still.";
+                    hrQualityDot.className = "quality-dot red";
+                }
+            } else {
+                hrStatusEl.textContent = "Collecting signal (" + duration.toFixed(1) + " s)… hold still, good light.";
+            }
+        }
+
+        function estimateHeartRateFromSignal(signal, timestamps) {
+            const N = signal.length;
+            if (N < 40) return null;
+            let mean = 0;
+            for (let i = 0; i < N; i++) mean += signal[i];
+            mean /= N;
+            const x = new Array(N);
+            for (let i = 0; i < N; i++) x[i] = signal[i] - mean;
+            const duration = timestamps[N - 1] - timestamps[0];
+            if (duration <= 0) return null;
+            const fs = N / duration;
+            const minHz = HR_MIN_BPM / 60,
+                maxHz = HR_MAX_BPM / 60;
+            let bestFreq = 0,
+                bestAmp = 0,
+                totalAmp = 0;
+            for (let k = 1; k < N; k++) {
+                const freq = k * fs / N;
+                if (freq < minHz || freq > maxHz) continue;
+                let re = 0,
+                    im = 0;
+                const angFactor = -2 * Math.PI * k / N;
+                for (let n = 0; n < N; n++) {
+                    const angle = angFactor * n;
+                    re += x[n] * Math.cos(angle);
+                    im += x[n] * Math.sin(angle);
+                }
+                const amp = Math.sqrt(re * re + im * im);
+                if (!isFinite(amp) || amp < 0) continue;
+                totalAmp += amp;
+                if (amp > bestAmp) { bestAmp = amp;
+                    bestFreq = Math.abs(freq); }
+            }
+            if (!bestFreq || bestAmp <= 0 || totalAmp <= 0) return null;
+            const rawBpm = bestFreq * 60;
+            if (!isFinite(rawBpm) || rawBpm <= 0) return null;
+            let bpm = Math.max(HR_MIN_BPM, Math.min(HR_MAX_BPM, rawBpm));
+            const quality = Math.max(0, Math.min(1, bestAmp / totalAmp));
+            return { bpm, rawBpm, quality };
+        }
+
+        // ========== VERITAS STATUS ==========
         function updateVeritasStatus() {
             const ppdOk = isPPDComplete();
-            const allReady = ppdOk && verification.doctorVerified;
-
-            livenessDisplay.textContent = verification.liveness ? '✅' : '❌';
-            hrDisplay.textContent = verification.hr !== null ? verification.hr + ' bpm' : '— bpm';
-            doctorDisplay.textContent = verification.doctorVerified ? '✅' : '❌';
-            ppdStatus.textContent = ppdOk ? '✅ Complete' : '⚠️ Incomplete';
-            ppdStatus.style.color = ppdOk ? '#28a745' : '#ffc107';
+            const anchorOk = livenessCompleted && lastHREstimate !== null;
+            const allReady = ppdOk && anchorOk;
 
             if (allReady) {
                 veritasIcon.className = 'icon pass';
                 veritasIcon.textContent = '✅';
-                veritasText.textContent = 'VERITAS Ready · Doctor Verified ✓';
-                veritasHeaderBadge.textContent = '✅ VERIFIED';
+                veritasText.textContent = 'VERITAS Ready · Liveness + HR + PPD complete';
+                veritasHeaderBadge.textContent = '✅ READY';
                 veritasHeaderBadge.style.background = '#28a745';
                 tokenBadge.className = 'verification-badge verified';
                 tokenBadge.textContent = 'READY';
@@ -1380,65 +2030,26 @@
                 veritasIcon.className = 'icon pending';
                 veritasIcon.textContent = '⏳';
                 let missing = [];
+                if (!livenessCompleted) missing.push('Liveness');
+                if (lastHREstimate === null) missing.push('HR');
                 if (!ppdOk) missing.push('PPD');
-                if (!verification.doctorVerified) missing.push('Doctor Verification');
                 veritasText.textContent = 'Pending: ' + missing.join(', ');
                 veritasHeaderBadge.textContent = '⏳ PENDING';
-                veritasHeaderBadge.style.background = '#ffc107';
+                veritasHeaderBadge.style.background = '#6f42c1';
                 tokenBadge.className = 'verification-badge pending';
                 tokenBadge.textContent = 'PENDING';
                 generateTokenBtn.disabled = true;
-                tokenStatus.textContent = 'Complete PPD + Doctor verification first.';
+                tokenStatus.textContent = 'Complete Liveness, HR, and PPD first.';
                 tokenStatus.style.color = '#8892b0';
             }
-        }
-
-        function toggleDoctorVerification() {
-            // Doctor verifies liveness + HR (simulated)
-            verification.doctorVerified = !verification.doctorVerified;
-            if (verification.doctorVerified) {
-                verification.liveness = true;
-                verification.hr = Math.round(60 + Math.random() * 40);
-                document.getElementById('verifyDoctorBtn').textContent = '✅ Doctor Verified';
-                document.getElementById('verifyDoctorBtn').classList.add('verified');
-                document.getElementById('doctorVerificationStatus').textContent = '✅ Verified';
-                tokenStatus.textContent = '👨‍⚕️ Doctor verified liveness + HR: ' + verification.hr + ' bpm';
-            } else {
-                verification.liveness = false;
-                verification.hr = null;
-                document.getElementById('verifyDoctorBtn').textContent = 'Verify as Doctor';
-                document.getElementById('verifyDoctorBtn').classList.remove('verified');
-                document.getElementById('doctorVerificationStatus').textContent = 'Not verified';
-                tokenStatus.textContent = 'Doctor verification removed.';
-            }
-            updateVeritasStatus();
-        }
-
-        function resetVerification() {
-            verification.doctorVerified = false;
-            verification.liveness = false;
-            verification.hr = null;
-            document.getElementById('verifyDoctorBtn').textContent = 'Verify as Doctor';
-            document.getElementById('verifyDoctorBtn').classList.remove('verified');
-            document.getElementById('doctorVerificationStatus').textContent = 'Not verified';
-            tokenOutput.value = '';
-            tokenGenerated = false;
-            generateTokenBtn.disabled = true;
-            copyTokenBtn.disabled = true;
-            saveVaultBtn.disabled = true;
-            tokenBadge.className = 'verification-badge pending';
-            tokenBadge.textContent = 'PENDING';
-            veritasHeaderBadge.textContent = '⏳ PENDING';
-            veritasHeaderBadge.style.background = '#ffc107';
-            tokenStatus.textContent = 'Reset. Complete PPD + Doctor verification.';
-            tokenStatus.style.color = '#8892b0';
-            updateVeritasStatus();
+            ppdStatus.textContent = ppdOk ? '✅ Complete' : '⚠️ Incomplete';
+            ppdStatus.style.color = ppdOk ? '#28a745' : '#ffc107';
         }
 
         // ========== TOKEN ==========
         function generateToken() {
-            if (!isPPDComplete() || !verification.doctorVerified) {
-                tokenStatus.textContent = '⚠️ Complete PPD and Doctor verification first.';
+            if (!livenessCompleted || lastHREstimate === null || !isPPDComplete()) {
+                tokenStatus.textContent = '⚠️ Complete Liveness, HR, and PPD first.';
                 tokenStatus.style.color = '#ffc107';
                 return;
             }
@@ -1449,8 +2060,9 @@
             const expSec = nowSec + 600;
             const header = { alg: "HS256", typ: "JWT", kid: "veritas-session", device_id: deviceId, version: "1.0.0" };
             const payload = {
-                veritas: { liveness_confirmed: verification.liveness, hr_confirmed: verification.hr,
-                    doctor_verified: verification.doctorVerified, device_id: deviceId },
+                veritas: { liveness_completed: livenessCompleted, liveness_duration_sec: livenessDurationSec,
+                    hr_bpm: lastHREstimate ? Math.round(lastHREstimate.bpm) : null, hr_quality: lastHREstimate ?
+                        Math.round(lastHREstimate.quality * 100) : null, device_id: deviceId },
                 ppd: { caregiver_name: ppd.name, caregiver_license: ppd.license, issuing_authority: ppd.authority ||
                         '—', professional_role: ppd.role || '—' },
                 assessment: { functionality_index: index, pain: parseFloat(data.pain) || 0, mobility: parseFloat(data
@@ -1475,20 +2087,20 @@
             tokenBadge.textContent = 'TOKEN OK';
             veritasHeaderBadge.textContent = '🔐 TOKEN';
             veritasHeaderBadge.style.background = '#6f42c1';
+            verifierTokenInput.value = token;
         }
 
         function copyToken() {
             if (!tokenOutput.value) { tokenStatus.textContent = '⚠️ No token to copy.'; return; }
             navigator.clipboard.writeText(tokenOutput.value).then(() => { tokenStatus.textContent = '✅ Copied!'; }).catch(
-            () => { tokenStatus.textContent = '⚠️ Copy manually.'; });
+                () => { tokenStatus.textContent = '⚠️ Copy manually.'; });
         }
 
         function saveToVault() {
             const token = tokenOutput.value.trim();
             if (!token) return;
             tokenVault.push({ token, date: new Date().toISOString(), ppd_name: ppdName.value || 'Unknown',
-                device: deviceId, verified: verification.doctorVerified, verification_date: verification
-                    .doctorVerified ? new Date().toISOString() : null });
+                device: deviceId, verified: false, verification_date: null });
             localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
             renderVault();
             tokenStatus.textContent = '✅ Saved to vault.';
@@ -1496,7 +2108,7 @@
 
         function renderVault() {
             if (tokenVault.length === 0) { vaultList.innerHTML =
-                    '<div style="color:#8892b0;font-size:0.55rem;text-align:center;padding:4px 0;">No tokens in vault.</div>';
+                    '<div style="color:#8892b0;font-size:0.5rem;text-align:center;padding:3px 0;">No tokens in vault.</div>';
                 vaultCount.textContent = '0 tokens'; return; }
             let html = '';
             tokenVault.forEach((entry, idx) => {
@@ -1506,7 +2118,7 @@
                 html += `<div class="vault-item">
                             <span class="vault-token">${short}</span>
                             <span class="vault-status ${statusClass}">${statusText}</span>
-                            <span style="font-size:0.45rem;color:#8892b0;">${new Date(entry.date).toLocaleDateString()}</span>
+                            <span style="font-size:0.4rem;color:#8892b0;">${new Date(entry.date).toLocaleDateString()}</span>
                             <span class="vault-actions">
                               <button onclick="copyVaultToken(${idx})"><i class="fas fa-copy"></i></button>
                               <button onclick="verifyVaultToken(${idx})" style="color:#28a745;"><i class="fas fa-check-circle"></i></button>
@@ -1592,6 +2204,122 @@
                 'ℹ️ No valid tokens.'; }
         }
 
+        // ========== VERIFIER MODAL ==========
+        function openVerifier() {
+            if (tokenOutput.value) verifierTokenInput.value = tokenOutput.value;
+            else verifierTokenInput.value = 'No token found. Generate one first.';
+            verifierPassword.value = '';
+            isUnlocked = false;
+            unlockVerifierBtn.disabled = false;
+            verifyTokenBtn.disabled = true;
+            verifierResults.style.display = 'none';
+            verifierStatusBadge.className = 'verifier-status-badge pending';
+            verifierStatusBadge.textContent = 'Pending';
+            passwordHint.className = 'verifier-password-hint';
+            passwordHint.textContent = '';
+            verifierPassword.style.borderColor = '#262c4a';
+            verifierModal.classList.add('active');
+        }
+
+        function unlockVerifier() {
+            const password = verifierPassword.value;
+            if (password === VERIFIER_PASSWORD) {
+                isUnlocked = true;
+                unlockVerifierBtn.disabled = true;
+                verifyTokenBtn.disabled = false;
+                verifierPassword.style.borderColor = '#28a745';
+                passwordHint.className = 'verifier-password-hint success';
+                passwordHint.textContent = '✅ Unlocked! Click "Verify Token" to validate.';
+            } else {
+                isUnlocked = false;
+                unlockVerifierBtn.disabled = false;
+                verifyTokenBtn.disabled = true;
+                verifierPassword.style.borderColor = '#dc3545';
+                passwordHint.className = 'verifier-password-hint error';
+                passwordHint.textContent = '❌ Incorrect password. Try: MoMo123456789@@@';
+                setTimeout(() => { verifierPassword.style.borderColor = '#262c4a'; }, 2000);
+            }
+        }
+
+        function verifyToken() {
+            if (!isUnlocked) { alert('Please unlock the verifier with the password first.'); return; }
+            const token = verifierTokenInput.value.trim();
+            if (!token || token === 'No token found. Generate one first.') {
+                alert('No valid token to verify. Generate a token first.');
+                return;
+            }
+            try {
+                const parts = token.split('.');
+                if (parts.length !== 3) { showVerificationResult('failed', 'Invalid token format'); return; }
+                const headerStr = base64UrlDecode(parts[0]);
+                const payloadStr = base64UrlDecode(parts[1]);
+                const signature = parts[2];
+                if (!headerStr || !payloadStr) { showVerificationResult('failed', 'Invalid token encoding'); return; }
+                const header = JSON.parse(headerStr);
+                const payload = JSON.parse(payloadStr);
+                const expectedSignature = base64UrlEncode(TOKEN_KEY_STRING);
+                const signatureValid = (signature === expectedSignature);
+                const now = Math.floor(Date.now() / 1000);
+                const exp = payload.exp || 0;
+                const isExpired = exp < now;
+
+                let status = 'pending',
+                    statusText = '⏳ Pending',
+                    badgeClass = 'pending';
+                if (signatureValid && !isExpired && isUnlocked) {
+                    status = 'verified';
+                    statusText = '✅ VERIFIED';
+                    badgeClass = 'verified';
+                    const idx = tokenVault.findIndex(t => t.token === token);
+                    if (idx >= 0) { tokenVault[idx].verified = true;
+                        tokenVault[idx].verification_date = new Date().toISOString();
+                        localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
+                        renderVault(); }
+                    if (token === tokenOutput.value.trim()) {
+                        tokenBadge.className = 'verification-badge verified';
+                        tokenBadge.textContent = 'VERIFIED';
+                        tokenStatus.textContent = '✅ Token VERIFIED by pharmacist/doctor!';
+                        veritasHeaderBadge.textContent = '✅ VERIFIED';
+                        veritasHeaderBadge.style.background = '#28a745';
+                    }
+                } else if (!signatureValid) { status = 'failed';
+                    statusText = '❌ Invalid Signature';
+                    badgeClass = 'failed'; } else if (isExpired) { status = 'failed';
+                    statusText = '⏰ Expired';
+                    badgeClass = 'failed'; }
+                showVerificationResult(status, statusText, { header, payload, signatureValid, isExpired });
+            } catch (e) { showVerificationResult('failed', 'Error: ' + e.message); }
+        }
+
+        function showVerificationResult(status, statusText, data) {
+            verifierResults.style.display = 'block';
+            verifierStatusBadge.className = `verifier-status-badge ${status}`;
+            verifierStatusBadge.textContent = statusText;
+            if (status === 'failed') {
+                resultStatus.textContent = statusText;
+                resultStatus.className = 'value failed';
+                ['resultPPDName', 'resultLicense', 'resultLiveness', 'resultHR', 'resultIndex', 'resultSignature']
+                .forEach(id => { document.getElementById(id).textContent = '—';
+                    document.getElementById(id).className = 'value'; });
+                return;
+            }
+            const payload = data.payload;
+            resultPPDName.textContent = payload.ppd?.caregiver_name || '—';
+            resultLicense.textContent = payload.ppd?.caregiver_license || '—';
+            const anchor = payload.veritas || {};
+            resultLiveness.textContent = anchor.liveness_completed ? '✅ Completed' : '❌ Not run';
+            resultLiveness.className = `value ${anchor.liveness_completed ? 'verified' : 'pending'}`;
+            resultHR.textContent = anchor.hr_bpm ? anchor.hr_bpm + ' bpm' : '—';
+            resultHR.className = `value ${anchor.hr_bpm ? 'verified' : 'pending'}`;
+            const assess = payload.assessment || {};
+            resultIndex.textContent = assess.functionality_index || '—';
+            resultIndex.className = 'value';
+            resultSignature.textContent = data.signatureValid ? '✅ Valid' : '❌ Invalid';
+            resultSignature.className = `value ${data.signatureValid ? 'verified' : 'failed'}`;
+            resultStatus.textContent = statusText;
+            resultStatus.className = `value ${status}`;
+        }
+
         // ========== PROFILE SWITCH ==========
         function switchProfile(profile) {
             currentProfile = profile;
@@ -1614,6 +2342,9 @@
             renderHistory();
             renderVault();
             updateVeritasStatus();
+
+            // Clear all prefilled data on load
+            clearFormValues();
 
             if (encounters.length > 0) {
                 const latest = encounters[encounters.length - 1];
@@ -1645,23 +2376,39 @@
             });
             document.getElementById('pdfBtn').addEventListener('click', generatePDFReport);
 
-            document.getElementById('verifyDoctorBtn').addEventListener('click', toggleDoctorVerification);
-            document.getElementById('resetVerificationBtn').addEventListener('click', resetVerification);
+            // Video controls
+            startCameraBtn.addEventListener('click', startCamera);
+            stopCameraBtn.addEventListener('click', stopCamera);
+            runLivenessBtn.addEventListener('click', runLiveness);
+            startHRBtn.addEventListener('click', startHRMonitoring);
+            stopHRBtn.addEventListener('click', stopHRMonitoring);
 
-            document.getElementById('generateTokenBtn').addEventListener('click', generateToken);
-            document.getElementById('copyTokenBtn').addEventListener('click', copyToken);
-            document.getElementById('saveVaultBtn').addEventListener('click', saveToVault);
-            document.getElementById('clearVaultBtn').addEventListener('click', clearVault);
-            document.getElementById('exportVaultBtn').addEventListener('click', exportVault);
-            document.getElementById('verifyVaultBtn').addEventListener('click', verifyAllVaultTokens);
-
+            // PPD inputs
             [ppdName, ppdLicense, ppdAuthority, ppdRole].forEach(el => {
                 el.addEventListener('input', updateVeritasStatus);
             });
 
+            // Token
+            generateTokenBtn.addEventListener('click', generateToken);
+            copyTokenBtn.addEventListener('click', copyToken);
+            saveVaultBtn.addEventListener('click', saveToVault);
+            clearVaultBtn.addEventListener('click', clearVault);
+            exportVaultBtn.addEventListener('click', exportVault);
+            verifyVaultBtn.addEventListener('click', verifyAllVaultTokens);
+
+            // Verifier
+            openVerifierBtn.addEventListener('click', openVerifier);
+            closeVerifierBtn.addEventListener('click', () => verifierModal.classList.remove('active'));
+            closeVerifierBtn2.addEventListener('click', () => verifierModal.classList.remove('active'));
+            verifierModal.addEventListener('click', (e) => { if (e.target === verifierModal) verifierModal.classList.remove(
+                    'active'); });
+            unlockVerifierBtn.addEventListener('click', unlockVerifier);
+            verifyTokenBtn.addEventListener('click', verifyToken);
+            verifierPassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') unlockVerifier(); });
+
             console.log('=== MY THERAPEUTICS TRUST · Peptide PROMs/PREMs initialized ===');
-            console.log('Doctor verifies liveness + HR in person. Click "Verify as Doctor" to confirm.');
-            console.log('Token signature key: ' + TOKEN_KEY_STRING);
+            console.log('Patient completes Liveness + HR, then PPD, generates token.');
+            console.log('Pharmacist/Doctor uses Verifier (password: MoMo123456789@@@) to verify token.');
         }
 
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
