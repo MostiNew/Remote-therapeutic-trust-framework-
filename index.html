@@ -1,1149 +1,1671 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>PROMs · PREMs · Peptide Therapy · VERITAS</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; }
-    body { background: #0b1020; padding: 12px; color: #f0f4fa; min-height: 100vh; display: flex; justify-content: center; }
-    .app { max-width: 1100px; width: 100%; }
-    .card { background: #151a30; border-radius: 20px; padding: 16px 18px; border: 1px solid #262c4a; margin-bottom: 16px; }
-    .card h3 { font-weight: 600; font-size: 1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #fff; }
-    .card h3 i { color: #00b4d8; width: 20px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
-    .form-group { margin-bottom: 10px; }
-    .form-group label { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: #8892b0; margin-bottom: 2px; }
-    .form-group input, .form-group select { width: 100%; padding: 6px 10px; border-radius: 10px; border: 1px solid #262c4a; background: #0f1428; color: #f5f5f5; font-size: 0.85rem; }
-    .form-group input:focus, .form-group select:focus { outline: 2px solid #005792; border-color: transparent; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .btn { padding: 8px 16px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.75rem; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-    .btn-primary { background: #005792; color: white; }
-    .btn-primary:hover { background: #003d6b; }
-    .btn-success { background: #28a745; color: white; }
-    .btn-success:hover { background: #1e7e34; }
-    .btn-outline { background: transparent; border: 1px solid #262c4a; color: #f5f5f5; }
-    .btn-outline:hover { background: #1a2038; }
-    .btn-danger { background: #dc3545; color: white; }
-    .btn-danger:hover { background: #b02a37; }
-    .action-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-    .risk-badge { padding: 2px 10px; border-radius: 30px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
-    .risk-low { background: #d4edda; color: #155724; }
-    .risk-moderate { background: #fff3cd; color: #856404; }
-    .risk-high { background: #f8d7da; color: #721c24; }
-    .composite-box { background: linear-gradient(135deg, #0f1a30, #1a2a4a); border-radius: 12px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin: 8px 0; }
-    .composite-score { font-size: 1.6rem; font-weight: 800; color: #00b4d8; }
-    .ai-insight { background: #0f1428; border-left: 4px solid #00b4d8; padding: 8px 12px; border-radius: 8px; margin: 8px 0; font-size: 0.75rem; line-height: 1.5; max-height: 140px; overflow-y: auto; }
-    .ai-insight ul { padding-left: 18px; margin: 4px 0; }
-    .ai-insight ul li { margin-bottom: 2px; }
-    .concordance-box { background: #0f1428; border-radius: 8px; padding: 8px 12px; margin: 6px 0; border-left: 4px solid #28a745; font-size: 0.7rem; }
-    .concordance-box.silent { border-left-color: #dc3545; }
-    .concordance-box.psychosocial { border-left-color: #ffc107; }
-    .concordance-box .alert { font-weight: 600; display: flex; align-items: center; gap: 6px; }
-    .concordance-box .alert.silent { color: #ff6b6b; }
-    .concordance-box .alert.psychosocial { color: #ffc107; }
-    .concordance-box .alert.good { color: #28a745; }
-    .concordance-box .detail { font-size: 0.6rem; color: #8892b0; margin-top: 2px; }
-    .trend-indicator { display: flex; gap: 12px; flex-wrap: wrap; background: #0f1428; padding: 4px 10px; border-radius: 6px; font-size: 0.65rem; margin: 4px 0; }
-    .trend-indicator .up { color: #28a745; }
-    .trend-indicator .down { color: #dc3545; }
-    .trend-indicator .stable { color: #ffc107; }
-    .table-wrap { overflow-x: auto; margin-top: 6px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.6rem; }
-    th { text-align: left; padding: 4px 6px; background: #0f1428; border-bottom: 2px solid #262c4a; color: #8892b0; font-weight: 600; white-space: nowrap; }
-    td { padding: 4px 6px; border-bottom: 1px solid #1a2038; }
-    tr:hover td { background: #1a2038; }
-    .btn-sm { padding: 2px 8px; border-radius: 30px; border: none; font-size: 0.5rem; font-weight: 600; cursor: pointer; background: #1a2038; color: #8892b0; }
-    .btn-sm:hover { background: #262c4a; color: #f5f5f5; }
-    .btn-sm.danger { background: #3a1a1a; color: #ff6b6b; }
-    .btn-sm.danger:hover { background: #5a1a1a; }
-    .header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
-    .header h1 { font-weight: 700; font-size: 1.2rem; background: linear-gradient(135deg, #005792, #00b4d8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .header .badge { font-size: 0.55rem; background: #6f42c1; padding: 2px 12px; border-radius: 30px; color: white; font-weight: 600; }
-    .veritas-badge { background: #28a745; padding: 2px 12px; border-radius: 30px; font-size: 0.55rem; font-weight: 600; color: white; }
-    .footer { margin-top: 20px; background: #12172a; border: 1px solid #262c4a; border-radius: 16px; padding: 12px 16px; text-align: center; font-size: 0.65rem; color: #8892b0; }
-    .footer .highlight { color: #00b4d8; font-weight: 600; }
-    .profile-selector { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-    .profile-btn { padding: 4px 14px; border-radius: 30px; border: 1.5px solid #262c4a; background: #12172a; font-weight: 600; font-size: 0.6rem; cursor: pointer; color: #8892b0; transition: 0.2s; }
-    .profile-btn.active { background: #005792; border-color: #005792; color: white; }
-    .profile-btn:hover:not(.active) { background: #1a2038; border-color: #3a4060; }
-    .demo-row { display: flex; flex-wrap: wrap; gap: 6px 12px; background: #0f1428; padding: 6px 12px; border-radius: 10px; margin-bottom: 10px; align-items: center; }
-    .demo-row .field { display: flex; align-items: center; gap: 4px; font-size: 0.6rem; color: #8892b0; }
-    .demo-row .field input, .demo-row .field select { padding: 2px 6px; border-radius: 6px; border: 1px solid #262c4a; background: #0f1428; color: #f5f5f5; font-size: 0.6rem; width: 60px; }
-    .demo-row .field input[type="date"] { width: 100px; }
-    .demo-row .field input[type="text"] { width: 90px; }
-    .goal-row { display: flex; flex-wrap: wrap; gap: 6px 12px; background: #0f1428; padding: 4px 12px; border-radius: 10px; margin-bottom: 10px; }
-    .goal-item { display: flex; align-items: center; gap: 4px; font-size: 0.6rem; background: #151a30; padding: 2px 10px; border-radius: 30px; border: 1px solid #262c4a; }
-    .goal-item input { border: none; width: 28px; font-size: 0.6rem; font-weight: 700; text-align: center; background: transparent; color: #f5f5f5; }
-    .goal-item input:focus { outline: 2px solid #005792; border-radius: 4px; }
-    .form-scroll { max-height: 340px; overflow-y: auto; padding-right: 4px; -webkit-overflow-scrolling: touch; }
-    .form-scroll::-webkit-scrollbar { width: 4px; }
-    .form-scroll::-webkit-scrollbar-thumb { background: #262c4a; border-radius: 4px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px 10px; }
-    @media (max-width: 480px) { .form-grid { grid-template-columns: 1fr 1fr; } }
-    .veritas-status { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: #0f1428; padding: 4px 12px; border-radius: 8px; margin: 6px 0; font-size: 0.65rem; }
-    .veritas-status .icon { font-size: 1rem; }
-    .veritas-status .icon.pass { color: #28a745; }
-    .veritas-status .icon.fail { color: #dc3545; }
-    .veritas-status .icon.pending { color: #ffc107; }
-    .token-area { width: 100%; min-height: 60px; resize: vertical; border-radius: 8px; border: 1px solid #262c4a; padding: 6px 10px; font-size: 0.55rem; font-family: monospace; background: #0f1428; color: #f5f5f5; word-break: break-all; }
-    .vault-list { max-height: 110px; overflow-y: auto; font-size: 0.6rem; background: #0f1428; border-radius: 6px; padding: 4px 8px; border: 1px solid #262c4a; }
-    .vault-item { display: flex; justify-content: space-between; align-items: center; padding: 2px 0; border-bottom: 1px solid #1a2038; }
-    .vault-item:last-child { border-bottom: none; }
-    .vault-token { font-family: monospace; font-size: 0.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px; color: #8892b0; }
-    .vault-status { font-size: 0.5rem; padding: 1px 8px; border-radius: 30px; font-weight: 600; }
-    .vault-status.verified { background: #28a745; color: white; }
-    .vault-status.pending { background: #ffc107; color: #1a1a1a; }
-    .vault-actions button { padding: 1px 6px; border-radius: 30px; border: none; font-size: 0.5rem; cursor: pointer; margin-left: 3px; background: #1a2038; color: #8892b0; }
-    .vault-actions button:hover { background: #262c4a; color: #f5f5f5; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MY THERAPEUTICS TRUST · Peptide PROMs/PREMs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #0b1020;
+            padding: 16px;
+            color: #f0f4fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+        .app {
+            max-width: 1100px;
+            width: 100%;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            background: #12172a;
+            padding: 12px 18px;
+            border-radius: 16px;
+            border: 1px solid #262c4a;
+        }
+        .header h1 {
+            font-weight: 700;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, #005792, #00b4d8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .sub {
+            font-size: 0.6rem;
+            color: #8892b0;
+            letter-spacing: 0.5px;
+        }
+        .badge-veritas {
+            background: #28a745;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: white;
+        }
+        .card {
+            background: #151a30;
+            border-radius: 16px;
+            padding: 16px 18px;
+            border: 1px solid #262c4a;
+            margin-bottom: 16px;
+        }
+        .card h3 {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+        .card h3 i {
+            color: #00b4d8;
+            width: 20px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 640px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .form-group {
+            margin-bottom: 8px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #8892b0;
+            margin-bottom: 2px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid #262c4a;
+            background: #0f1428;
+            color: #f5f5f5;
+            font-size: 0.85rem;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: 2px solid #005792;
+            border-color: transparent;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 12px;
+        }
+        @media (max-width: 480px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .btn {
+            padding: 7px 16px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary {
+            background: #005792;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #003d6b;
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #262c4a;
+            color: #f5f5f5;
+        }
+        .btn-outline:hover {
+            background: #1a2038;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #b02a37;
+        }
+        .action-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .risk-badge {
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .risk-low {
+            background: #d4edda;
+            color: #155724;
+        }
+        .risk-moderate {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .risk-high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .composite-box {
+            background: linear-gradient(135deg, #0f1a30, #1a2a4a);
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 8px 0;
+        }
+        .composite-score {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #00b4d8;
+        }
+        .ai-insight {
+            background: #0f1428;
+            border-left: 4px solid #00b4d8;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            font-size: 0.7rem;
+            line-height: 1.5;
+            max-height: 140px;
+            overflow-y: auto;
+        }
+        .ai-insight ul {
+            padding-left: 18px;
+            margin: 4px 0;
+        }
+        .ai-insight ul li {
+            margin-bottom: 2px;
+        }
+        .concordance-box {
+            background: #0f1428;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 6px 0;
+            border-left: 4px solid #28a745;
+            font-size: 0.7rem;
+        }
+        .concordance-box.silent {
+            border-left-color: #dc3545;
+        }
+        .concordance-box.psychosocial {
+            border-left-color: #ffc107;
+        }
+        .concordance-box .alert {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .concordance-box .alert.silent {
+            color: #ff6b6b;
+        }
+        .concordance-box .alert.psychosocial {
+            color: #ffc107;
+        }
+        .concordance-box .alert.good {
+            color: #28a745;
+        }
+        .concordance-box .detail {
+            font-size: 0.55rem;
+            color: #8892b0;
+            margin-top: 2px;
+        }
+        .trend-indicator {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: #0f1428;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.6rem;
+            margin: 4px 0;
+        }
+        .trend-indicator .up {
+            color: #28a745;
+        }
+        .trend-indicator .down {
+            color: #dc3545;
+        }
+        .trend-indicator .stable {
+            color: #ffc107;
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin-top: 6px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.6rem;
+        }
+        th {
+            text-align: left;
+            padding: 4px 6px;
+            background: #0f1428;
+            border-bottom: 2px solid #262c4a;
+            color: #8892b0;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        td {
+            padding: 4px 6px;
+            border-bottom: 1px solid #1a2038;
+        }
+        tr:hover td {
+            background: #1a2038;
+        }
+        .btn-sm {
+            padding: 2px 8px;
+            border-radius: 30px;
+            border: none;
+            font-size: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: #1a2038;
+            color: #8892b0;
+        }
+        .btn-sm:hover {
+            background: #262c4a;
+            color: #f5f5f5;
+        }
+        .btn-sm.danger {
+            background: #3a1a1a;
+            color: #ff6b6b;
+        }
+        .btn-sm.danger:hover {
+            background: #5a1a1a;
+        }
+        .veritas-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: #0f1428;
+            padding: 6px 12px;
+            border-radius: 8px;
+            margin: 6px 0;
+            font-size: 0.65rem;
+        }
+        .veritas-status .icon {
+            font-size: 1.1rem;
+        }
+        .veritas-status .icon.pass {
+            color: #28a745;
+        }
+        .veritas-status .icon.fail {
+            color: #dc3545;
+        }
+        .veritas-status .icon.pending {
+            color: #ffc107;
+        }
+        .token-area {
+            width: 100%;
+            min-height: 50px;
+            resize: vertical;
+            border-radius: 8px;
+            border: 1px solid #262c4a;
+            padding: 6px 10px;
+            font-size: 0.5rem;
+            font-family: monospace;
+            background: #0f1428;
+            color: #f5f5f5;
+            word-break: break-all;
+        }
+        .vault-list {
+            max-height: 100px;
+            overflow-y: auto;
+            font-size: 0.55rem;
+            background: #0f1428;
+            border-radius: 6px;
+            padding: 4px 8px;
+            border: 1px solid #262c4a;
+        }
+        .vault-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px 0;
+            border-bottom: 1px solid #1a2038;
+        }
+        .vault-item:last-child {
+            border-bottom: none;
+        }
+        .vault-token {
+            font-family: monospace;
+            font-size: 0.45rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 120px;
+            color: #8892b0;
+        }
+        .vault-status {
+            font-size: 0.45rem;
+            padding: 1px 8px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        .vault-status.verified {
+            background: #28a745;
+            color: white;
+        }
+        .vault-status.pending {
+            background: #ffc107;
+            color: #1a1a1a;
+        }
+        .vault-actions button {
+            padding: 1px 6px;
+            border-radius: 30px;
+            border: none;
+            font-size: 0.45rem;
+            cursor: pointer;
+            margin-left: 3px;
+            background: #1a2038;
+            color: #8892b0;
+        }
+        .vault-actions button:hover {
+            background: #262c4a;
+            color: #f5f5f5;
+        }
+        .footer {
+            margin-top: 16px;
+            background: #12172a;
+            border: 1px solid #262c4a;
+            border-radius: 16px;
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 0.6rem;
+            color: #8892b0;
+        }
+        .footer .highlight {
+            color: #00b4d8;
+            font-weight: 600;
+        }
+        .profile-selector {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .profile-btn {
+            padding: 4px 14px;
+            border-radius: 30px;
+            border: 1.5px solid #262c4a;
+            background: #12172a;
+            font-weight: 600;
+            font-size: 0.55rem;
+            cursor: pointer;
+            color: #8892b0;
+            transition: 0.2s;
+        }
+        .profile-btn.active {
+            background: #005792;
+            border-color: #005792;
+            color: white;
+        }
+        .profile-btn:hover:not(.active) {
+            background: #1a2038;
+            border-color: #3a4060;
+        }
+        .demo-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+            background: #0f1428;
+            padding: 6px 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .demo-row .field {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.55rem;
+            color: #8892b0;
+        }
+        .demo-row .field input,
+        .demo-row .field select {
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid #262c4a;
+            background: #0f1428;
+            color: #f5f5f5;
+            font-size: 0.6rem;
+            width: 56px;
+        }
+        .demo-row .field input[type="date"] {
+            width: 100px;
+        }
+        .demo-row .field input[type="text"] {
+            width: 80px;
+        }
+        .goal-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+            background: #0f1428;
+            padding: 4px 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .goal-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.55rem;
+            background: #151a30;
+            padding: 2px 10px;
+            border-radius: 30px;
+            border: 1px solid #262c4a;
+        }
+        .goal-item input {
+            border: none;
+            width: 26px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-align: center;
+            background: transparent;
+            color: #f5f5f5;
+        }
+        .goal-item input:focus {
+            outline: 2px solid #005792;
+            border-radius: 4px;
+        }
+        .form-scroll {
+            max-height: 340px;
+            overflow-y: auto;
+            padding-right: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .form-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .form-scroll::-webkit-scrollbar-thumb {
+            background: #262c4a;
+            border-radius: 4px;
+        }
+        .verification-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .verification-badge.verified {
+            background: #28a745;
+            color: white;
+        }
+        .verification-badge.pending {
+            background: #ffc107;
+            color: #1a1a1a;
+        }
+        .verification-badge.failed {
+            background: #dc3545;
+            color: white;
+        }
+        .verification-badge.partial {
+            background: #6f42c1;
+            color: white;
+        }
+        .ppd-section {
+            background: #0f1428;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+        }
+        .ppd-section .ppd-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 8px;
+        }
+        .ppd-section label {
+            font-size: 0.5rem;
+            color: #8892b0;
+            display: block;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .ppd-section input {
+            width: 100%;
+            padding: 3px 6px;
+            border-radius: 6px;
+            border: 1px solid #262c4a;
+            background: #0f1428;
+            color: #f5f5f5;
+            font-size: 0.65rem;
+        }
+        .ppd-section input:focus {
+            outline: 2px solid #005792;
+            border-color: transparent;
+        }
+        .btn-verify-human {
+            background: #6f42c1;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 4px 14px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-verify-human:hover {
+            background: #5530a0;
+        }
+        .btn-verify-human:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+        .btn-verify-human.verified {
+            background: #28a745;
+        }
+    </style>
 </head>
 <body>
-<div class="app">
+    <div class="app">
 
-  <div class="header">
-    <h1>🧬 Peptide PROMs · PREMs · VERITAS</h1>
-    <div>
-      <span class="badge">7‑Variable Form</span>
-      <span class="veritas-badge" id="veritasStatusBadge">⏳ Pending</span>
-    </div>
-  </div>
-
-  <div class="profile-selector">
-    <button class="profile-btn active" data-profile="acute">⚡ Acute</button>
-    <button class="profile-btn" data-profile="preventive">🛡️ Preventive</button>
-    <button class="profile-btn" data-profile="palliative">❤️ Palliative</button>
-  </div>
-
-  <div class="grid-2">
-
-    <!-- LEFT COLUMN: 7-Variable Form -->
-    <div class="card">
-      <h3><i class="fas fa-edit"></i> 7 Core PROMs & PREMs</h3>
-
-      <div class="demo-row">
-        <div class="field"><label>Gender</label><select id="gender"><option value="female">♀</option><option value="male">♂</option><option value="diverse">⚧</option></select></div>
-        <div class="field"><label>Age</label><input type="number" id="age" placeholder="65" min="0" max="120" style="width:44px;"></div>
-        <div class="field"><label>cm</label><input type="number" id="height" placeholder="170" step="0.5" style="width:48px;"></div>
-        <div class="field"><label>kg</label><input type="number" id="weight" placeholder="72" step="0.1" style="width:48px;"></div>
-        <div class="field"><label>DOB</label><input type="date" id="dob" value="1980-01-01" style="width:90px;"></div>
-        <div class="field"><label>Insurance</label><input type="text" id="insuranceNumber" value="INS-12345" style="width:70px;"></div>
-      </div>
-
-      <div class="goal-row">
-        <div class="goal-item"><i class="fas fa-bullseye"></i> Pain Goal: <input type="number" id="goal_pain" value="2" min="0" max="10" step="1" /></div>
-        <div class="goal-item"><i class="fas fa-walking"></i> Mobility Goal: <input type="number" id="goal_mobility" value="8" min="0" max="10" step="1" /></div>
-        <div class="goal-item"><i class="fas fa-battery-half"></i> Energy Goal: <input type="number" id="goal_energy" value="6" min="0" max="10" step="1" /></div>
-      </div>
-
-      <form id="peptideForm">
-        <div class="form-scroll">
-          <div class="form-grid" id="formFields"></div>
+        <div class="header">
+            <div>
+                <h1>🧬 MY THERAPEUTICS TRUST</h1>
+                <span class="sub">Peptide Therapy · PROMs &amp; PREMs · Value-Based Care</span>
+            </div>
+            <div>
+                <span class="badge-veritas" id="veritasHeaderBadge">⏳ PENDING</span>
+            </div>
         </div>
 
-        <div class="action-bar">
-          <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Encounter</button>
-          <button type="reset" class="btn btn-outline" id="clearBtn"><i class="fas fa-undo"></i> Clear</button>
-          <button type="button" class="btn btn-primary" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF Report</button>
+        <div class="profile-selector">
+            <button class="profile-btn active" data-profile="acute">⚡ Acute</button>
+            <button class="profile-btn" data-profile="preventive">🛡️ Preventive</button>
+            <button class="profile-btn" data-profile="palliative">❤️ Palliative</button>
         </div>
-      </form>
 
-      <div style="margin-top:12px;">
-        <div id="riskContainer"><div style="color:#8892b0; padding:8px 0; text-align:center; font-size:0.7rem;">Save an encounter to see recommendations.</div></div>
-        <div class="composite-box">
-          <span><i class="fas fa-shield-alt"></i> Functionality Index</span>
-          <span class="composite-score" id="compositeScore">—</span>
-        </div>
-        <div id="concordanceContainer"></div>
-        <div id="trendContainer" class="trend-indicator" style="display:none;"></div>
-        <div class="ai-insight" id="aiInsight"><i class="fas fa-robot"></i> <span>Evidence‑based recommendations appear after saving.</span></div>
-      </div>
-    </div>
+        <div class="grid-2">
 
-    <!-- RIGHT COLUMN: VERITAS + PPD + VAULT -->
-    <div class="card">
-      <h3><i class="fas fa-shield-alt"></i> VERITAS · Anti‑Deepfake</h3>
+            <!-- LEFT: 7 VARIABLES + RISK -->
+            <div class="card">
+                <h3><i class="fas fa-edit"></i> 7 Core PROMs &amp; PREMs</h3>
 
-      <!-- PPD Section -->
-      <div style="background:#0f1428; border-radius:10px; padding:8px 12px; margin-bottom:10px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-          <span style="font-weight:700; font-size:0.7rem; color:#00b4d8;"><i class="fas fa-user-md"></i> PPD · Professional Details</span>
-          <span style="font-size:0.5rem; color:#8892b0;" id="ppdStatus">⚠️ Incomplete</span>
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 8px;">
-          <div><label style="font-size:0.5rem; color:#8892b0;">Full Name</label><input id="ppdName" type="text" placeholder="Dr. M. Ali" style="width:100%; padding:3px 6px; border-radius:6px; border:1px solid #262c4a; background:#0f1428; color:#f5f5f5; font-size:0.65rem;"></div>
-          <div><label style="font-size:0.5rem; color:#8892b0;">License / ID</label><input id="ppdLicense" type="text" placeholder="PT-123456" style="width:100%; padding:3px 6px; border-radius:6px; border:1px solid #262c4a; background:#0f1428; color:#f5f5f5; font-size:0.65rem;"></div>
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 8px; margin-top:4px;">
-          <div><label style="font-size:0.5rem; color:#8892b0;">Authority</label><input id="ppdAuthority" type="text" placeholder="Klinik Rosenhof" style="width:100%; padding:3px 6px; border-radius:6px; border:1px solid #262c4a; background:#0f1428; color:#f5f5f5; font-size:0.65rem;"></div>
-          <div><label style="font-size:0.5rem; color:#8892b0;">Role</label><input id="ppdRole" type="text" placeholder="Physiotherapist" style="width:100%; padding:3px 6px; border-radius:6px; border:1px solid #262c4a; background:#0f1428; color:#f5f5f5; font-size:0.65rem;"></div>
-        </div>
-      </div>
-
-      <!-- ANCHOR Simulation -->
-      <div style="background:#0f1428; border-radius:10px; padding:8px 12px; margin-bottom:10px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-          <span style="font-weight:700; font-size:0.7rem; color:#6f42c1;"><i class="fas fa-fingerprint"></i> ANCHOR · Liveness & HR</span>
-          <span id="anchorStatus" style="font-size:0.55rem; color:#8892b0;">Not run</span>
-        </div>
-        <div style="display:flex; gap:4px; flex-wrap:wrap; margin:4px 0;">
-          <button class="btn btn-primary" id="simulateLivenessBtn" style="font-size:0.6rem; padding:3px 12px;">▶ Simulate Liveness</button>
-          <button class="btn btn-success" id="simulateHRBtn" style="font-size:0.6rem; padding:3px 12px;">❤️ Simulate HR</button>
-          <button class="btn btn-outline" id="resetAnchorBtn" style="font-size:0.6rem; padding:3px 12px;">↻ Reset</button>
-        </div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap; font-size:0.55rem; color:#8892b0;">
-          <span>Liveness: <span id="livenessStatusDisplay">❌</span></span>
-          <span>HR: <span id="hrStatusDisplay">— bpm</span></span>
-          <span>Human: <span id="humanStatusDisplay">❌</span></span>
-        </div>
-        <div class="veritas-status">
-          <span class="icon pending" id="veritasIcon">⏳</span>
-          <span id="veritasText">Complete ANCHOR + PPD to generate token</span>
-        </div>
-      </div>
-
-      <!-- Token Generation -->
-      <div style="background:#0f1428; border-radius:10px; padding:8px 12px; margin-bottom:10px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-          <span style="font-weight:700; font-size:0.7rem; color:#28a745;"><i class="fas fa-key"></i> VERITAS Token</span>
-          <span class="vault-status pending" id="tokenBadge">PENDING</span>
-        </div>
-        <div style="display:flex; gap:4px; flex-wrap:wrap; margin:4px 0;">
-          <button class="btn btn-success" id="generateTokenBtn" disabled style="font-size:0.6rem; padding:3px 12px;"><i class="fas fa-key"></i> Generate</button>
-          <button class="btn btn-outline" id="copyTokenBtn" disabled style="font-size:0.6rem; padding:3px 12px;"><i class="fas fa-copy"></i> Copy</button>
-          <button class="btn btn-primary" id="saveVaultBtn" disabled style="font-size:0.6rem; padding:3px 12px;"><i class="fas fa-vault"></i> Save</button>
-        </div>
-        <textarea class="token-area" id="tokenOutput" readonly placeholder="Token will appear here after ANCHOR + PPD are complete."></textarea>
-        <div style="font-size:0.5rem; color:#8892b0; margin-top:2px;" id="tokenStatus">Complete ANCHOR + PPD first.</div>
-      </div>
-
-      <!-- Vault -->
-      <div style="background:#0f1428; border-radius:10px; padding:8px 12px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-          <span style="font-weight:700; font-size:0.7rem; color:#6f42c1;"><i class="fas fa-vault"></i> Token Vault</span>
-          <span style="font-size:0.5rem; color:#8892b0;" id="vaultCount">0 tokens</span>
-        </div>
-        <div class="vault-list" id="vaultList"><div style="color:#8892b0; font-size:0.6rem; text-align:center; padding:4px 0;">No tokens in vault.</div></div>
-        <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:4px;">
-          <button class="btn btn-outline" id="clearVaultBtn" style="font-size:0.5rem; padding:2px 10px;"><i class="fas fa-trash"></i> Clear</button>
-          <button class="btn btn-outline" id="exportVaultBtn" style="font-size:0.5rem; padding:2px 10px;"><i class="fas fa-file-export"></i> Export</button>
-          <button class="btn btn-success" id="verifyVaultBtn" style="font-size:0.5rem; padding:2px 10px;"><i class="fas fa-check-circle"></i> Verify All</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- History -->
-  <div class="card history-section">
-    <h3><i class="fas fa-history"></i> Encounter History <span style="font-size:0.55rem; font-weight:400; color:#8892b0;" id="historyCount">0 records</span></h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>ID</th><th>Date</th><th>Profile</th><th>PPD</th><th>Pain</th><th>Mob</th><th>Fat</th><th>Func</th><th>Index</th><th>Action</th></tr></thead>
-        <tbody id="historyBody"><tr><td colspan="10" style="text-align:center; color:#8892b0; font-size:0.65rem;">No encounters yet.</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="footer">
-    <span class="highlight">MyMedfit BRAVO PRO</span> · VERITAS · Value‑Based Care · <span class="highlight">www.virtualcaresolution.de</span>
-    <span style="margin:0 6px;">·</span> Aligns Provider–Payer–Regulator goals
-  </div>
-
-</div>
-
-<script>
-  // ============================================================
-  //  COMPLETE 7‑VARIABLE PROMs/PREMs + VERITAS
-  //  Includes: PPD, ANCHOR (simulated), Token, Vault, Dynamic Risk
-  // ============================================================
-
-  const STORAGE_KEY = 'peptide_proms_encounters';
-  const VAULT_KEY = 'veritas_token_vault';
-  const TOKEN_KEY_STRING = 'local-offline-signature';
-  const VERIFIER_PASSWORD = 'MoMo123456789@@@';
-  const DECAY_LAMBDA = 0.1;
-
-  let encounters = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  let tokenVault = JSON.parse(localStorage.getItem(VAULT_KEY)) || [];
-  let currentProfile = 'acute';
-  let deviceId = crypto.randomUUID ? crypto.randomUUID() : 'dev-' + Date.now().toString(36);
-
-  // ANCHOR state
-  let anchorState = { liveness: false, hr: null, human: false };
-
-  // DOM refs
-  const form = document.getElementById('peptideForm');
-  const formFields = document.getElementById('formFields');
-  const historyBody = document.getElementById('historyBody');
-  const historyCount = document.getElementById('historyCount');
-  const compositeScore = document.getElementById('compositeScore');
-  const riskContainer = document.getElementById('riskContainer');
-  const aiInsight = document.getElementById('aiInsight');
-  const concordanceContainer = document.getElementById('concordanceContainer');
-  const trendContainer = document.getElementById('trendContainer');
-
-  const ppdName = document.getElementById('ppdName');
-  const ppdLicense = document.getElementById('ppdLicense');
-  const ppdAuthority = document.getElementById('ppdAuthority');
-  const ppdRole = document.getElementById('ppdRole');
-  const ppdStatus = document.getElementById('ppdStatus');
-
-  const livenessStatusDisplay = document.getElementById('livenessStatusDisplay');
-  const hrStatusDisplay = document.getElementById('hrStatusDisplay');
-  const humanStatusDisplay = document.getElementById('humanStatusDisplay');
-  const veritasIcon = document.getElementById('veritasIcon');
-  const veritasText = document.getElementById('veritasText');
-  const tokenBadge = document.getElementById('tokenBadge');
-  const tokenOutput = document.getElementById('tokenOutput');
-  const tokenStatus = document.getElementById('tokenStatus');
-  const generateTokenBtn = document.getElementById('generateTokenBtn');
-  const copyTokenBtn = document.getElementById('copyTokenBtn');
-  const saveVaultBtn = document.getElementById('saveVaultBtn');
-  const vaultList = document.getElementById('vaultList');
-  const vaultCount = document.getElementById('vaultCount');
-  const veritasStatusBadge = document.getElementById('veritasStatusBadge');
-
-  let tokenGenerated = false;
-
-  // ========== FIELD DEFINITIONS ==========
-  const FIELD_DEFS = {
-    acute: [
-      { id: 'pain', label: 'Pain (NRS)', unit: '0‑10', step: '1', max: 10 },
-      { id: 'mobility', label: 'Mobility', unit: '0‑10', step: '1', max: 10 },
-      { id: 'fatigue', label: 'Fatigue', unit: '0‑10', step: '1', max: 10 },
-      { id: 'function', label: 'Global Function', unit: '0‑10', step: '1', max: 10 },
-      { id: 'hr', label: 'Heart Rate', unit: 'bpm', step: '1' },
-      { id: 'sbp', label: 'SBP', unit: 'mmHg', step: '1' },
-      { id: 'dbp', label: 'DBP', unit: 'mmHg', step: '1' },
-      { id: 'glucose', label: 'Glucose', unit: 'mmol/L', step: '0.1' },
-      { id: 'hba1c', label: 'HbA1c', unit: '%', step: '0.1' },
-      { id: 'egfr', label: 'eGFR', unit: 'mL/min/1.73m²', step: '1' },
-      { id: 'crp', label: 'CRP', unit: 'mg/L', step: '0.1' },
-      { id: 'fev1', label: 'FEV1', unit: 'L', step: '0.1' },
-    ],
-    preventive: [
-      { id: 'pain', label: 'Pain (NRS)', unit: '0‑10', step: '1', max: 10 },
-      { id: 'mobility', label: 'Mobility', unit: '0‑10', step: '1', max: 10 },
-      { id: 'fatigue', label: 'Fatigue', unit: '0‑10', step: '1', max: 10 },
-      { id: 'function', label: 'Global Function', unit: '0‑10', step: '1', max: 10 },
-      { id: 'hr', label: 'Heart Rate', unit: 'bpm', step: '1' },
-      { id: 'sbp', label: 'SBP', unit: 'mmHg', step: '1' },
-      { id: 'dbp', label: 'DBP', unit: 'mmHg', step: '1' },
-      { id: 'glucose', label: 'Glucose', unit: 'mmol/L', step: '0.1' },
-      { id: 'hba1c', label: 'HbA1c', unit: '%', step: '0.1' },
-      { id: 'egfr', label: 'eGFR', unit: 'mL/min/1.73m²', step: '1' },
-      { id: 'crp', label: 'CRP', unit: 'mg/L', step: '0.1' },
-      { id: 'fev1', label: 'FEV1', unit: 'L', step: '0.1' },
-      { id: 'exercise', label: 'Exercise', unit: 'min/day', step: '5' },
-    ],
-    palliative: [
-      { id: 'pain', label: 'Pain (NRS)', unit: '0‑10', step: '1', max: 10 },
-      { id: 'mobility', label: 'Mobility', unit: '0‑10', step: '1', max: 10 },
-      { id: 'fatigue', label: 'Fatigue', unit: '0‑10', step: '1', max: 10 },
-      { id: 'function', label: 'Global Function', unit: '0‑10', step: '1', max: 10 },
-      { id: 'hr', label: 'Heart Rate', unit: 'bpm', step: '1' },
-      { id: 'sbp', label: 'SBP', unit: 'mmHg', step: '1' },
-      { id: 'dbp', label: 'DBP', unit: 'mmHg', step: '1' },
-      { id: 'glucose', label: 'Glucose', unit: 'mmol/L', step: '0.1' },
-      { id: 'hba1c', label: 'HbA1c', unit: '%', step: '0.1' },
-      { id: 'egfr', label: 'eGFR', unit: 'mL/min/1.73m²', step: '1' },
-      { id: 'crp', label: 'CRP', unit: 'mg/L', step: '0.1' },
-      { id: 'fev1', label: 'FEV1', unit: 'L', step: '0.1' },
-      { id: 'comfort', label: 'Comfort Score', unit: '0‑10', step: '1', max: 10 },
-    ]
-  };
-
-  // ========== UTILITY ==========
-  function base64UrlEncode(str) { return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, ''); }
-  function base64UrlDecode(str) { try { return atob(str.replace(/-/g, '+').replace(/_/g, '/')); } catch (e) { return null; } }
-  function generateSessionId() { return crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
-
-  function getPPD() {
-    return { name: ppdName.value.trim(), license: ppdLicense.value.trim(), authority: ppdAuthority.value.trim(), role: ppdRole
-        .value.trim() };
-  }
-  function isPPDComplete() { const p = getPPD(); return p.name.length > 0 && p.license.length > 0; }
-
-  function getDemographics() {
-    return {
-      gender: document.getElementById('gender').value,
-      age: parseInt(document.getElementById('age').value) || 0,
-      height: parseFloat(document.getElementById('height').value) || 0,
-      weight: parseFloat(document.getElementById('weight').value) || 0,
-    };
-  }
-
-  function getGoals() {
-    return {
-      pain: parseInt(document.getElementById('goal_pain').value) || 2,
-      mobility: parseInt(document.getElementById('goal_mobility').value) || 8,
-      energy: parseInt(document.getElementById('goal_energy').value) || 6,
-    };
-  }
-
-  function getFieldValue(id) { const el = document.getElementById(id); return el ? el.value : ''; }
-  function setFieldValue(id, val) { const el = document.getElementById(id); if (el) el.value = val; }
-
-  function getFormData() {
-    const data = {};
-    const fields = FIELD_DEFS[currentProfile] || FIELD_DEFS.acute;
-    fields.forEach(f => data[f.id] = getFieldValue(f.id));
-    data.profile = currentProfile;
-    const demo = getDemographics();
-    data.gender = demo.gender;
-    data.age = demo.age;
-    data.height = demo.height;
-    data.weight = demo.weight;
-    data.bmi = (demo.height > 0 && demo.weight > 0) ? (demo.weight / ((demo.height / 100) ** 2)) : 0;
-    const goals = getGoals();
-    data.pain_goal = goals.pain;
-    data.mobility_goal = goals.mobility;
-    data.energy_goal = goals.energy;
-    const ppd = getPPD();
-    data.ppd_name = ppd.name;
-    data.ppd_license = ppd.license;
-    data.ppd_authority = ppd.authority;
-    data.ppd_role = ppd.role;
-    data.device_id = deviceId;
-    data.anchor_liveness = anchorState.liveness;
-    data.anchor_hr_bpm = anchorState.hr;
-    data.human_verified = anchorState.human;
-    data.dob = document.getElementById('dob').value;
-    data.insurance_number = document.getElementById('insuranceNumber').value;
-    return data;
-  }
-
-  function setFormData(data) {
-    if (!data) return;
-    const fields = FIELD_DEFS[currentProfile] || FIELD_DEFS.acute;
-    fields.forEach(f => { if (data[f.id] !== undefined) setFieldValue(f.id, data[f.id]); });
-    if (data.gender) document.getElementById('gender').value = data.gender;
-    if (data.age) document.getElementById('age').value = data.age;
-    if (data.height) document.getElementById('height').value = data.height;
-    if (data.weight) document.getElementById('weight').value = data.weight;
-    if (data.pain_goal) document.getElementById('goal_pain').value = data.pain_goal;
-    if (data.mobility_goal) document.getElementById('goal_mobility').value = data.mobility_goal;
-    if (data.energy_goal) document.getElementById('goal_energy').value = data.energy_goal;
-    if (data.ppd_name) ppdName.value = data.ppd_name;
-    if (data.ppd_license) ppdLicense.value = data.ppd_license;
-    if (data.ppd_authority) ppdAuthority.value = data.ppd_authority;
-    if (data.ppd_role) ppdRole.value = data.ppd_role;
-    if (data.dob) document.getElementById('dob').value = data.dob;
-    if (data.insurance_number) document.getElementById('insuranceNumber').value = data.insurance_number;
-    if (data.human_verified !== undefined) anchorState.human = data.human_verified;
-    if (data.anchor_liveness !== undefined) anchorState.liveness = data.anchor_liveness;
-    if (data.anchor_hr_bpm !== undefined) anchorState.hr = data.anchor_hr_bpm;
-  }
-
-  function clearFormValues() {
-    const fields = FIELD_DEFS[currentProfile] || FIELD_DEFS.acute;
-    fields.forEach(f => setFieldValue(f.id, ''));
-    document.getElementById('age').value = '';
-    document.getElementById('height').value = '';
-    document.getElementById('weight').value = '';
-    document.getElementById('gender').value = 'female';
-    document.getElementById('goal_pain').value = 2;
-    document.getElementById('goal_mobility').value = 8;
-    document.getElementById('goal_energy').value = 6;
-  }
-
-  function generateEncounterId() { return 'PEP' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substr(2, 3)
-      .toUpperCase(); }
-
-  // ========== BUILD FORM ==========
-  function buildForm() {
-    const fields = FIELD_DEFS[currentProfile] || FIELD_DEFS.acute;
-    let html = '';
-    fields.forEach(f => {
-      const maxAttr = f.max ? `max="${f.max}"` : '';
-      html += `<div class="form-group">
-                <label>${f.label} <span style="font-weight:400;color:#8892b0;">${f.unit}</span></label>
-                <input type="number" id="${f.id}" step="${f.step || '1'}" ${maxAttr} placeholder="—" />
-              </div>`;
-    });
-    formFields.innerHTML = html;
-  }
-
-  // ========== RISK ENGINE ==========
-  function computeCareIndex(data) {
-    const n = (v) => parseFloat(v) || 0;
-    const pain = n(data.pain),
-      mobility = n(data.mobility),
-      fatigue = n(data.fatigue),
-      func = n(data.function);
-    const glucose = n(data.glucose),
-      fev1 = n(data.fev1),
-      egfr = n(data.egfr),
-      crp = n(data.crp);
-
-    const painScore = Math.max(0, 10 - pain);
-    const mobilityScore = Math.min(10, mobility);
-    const fatigueScore = Math.max(0, 10 - fatigue);
-    const funcScore = Math.min(10, func);
-
-    let glucoseScore = 10;
-    if (glucose > 0) {
-      if (glucose < 3.9) glucoseScore = Math.max(0, 10 - (3.9 - glucose) / 0.5);
-      else if (glucose > 5.6) glucoseScore = Math.max(0, 10 - (glucose - 5.6) / 2);
-    }
-    let fev1Score = 10;
-    if (fev1 > 0) fev1Score = Math.min(10, (fev1 / 3.0) * 10);
-    let egfrScore = 10;
-    if (egfr > 0) egfrScore = Math.min(10, egfr / 90 * 10);
-    let crpScore = 10;
-    if (crp > 0 && crp > 10) crpScore = Math.max(0, 10 - (crp - 10) / 10);
-
-    const raw = (painScore + mobilityScore + fatigueScore + funcScore + glucoseScore + fev1Score + egfrScore + crpScore) / 8;
-    return Math.min(100, Math.round(raw * 2));
-  }
-
-  function calculateConcordance(encounter, allEncounters) {
-    const pain = parseFloat(encounter.pain) || 0,
-      mobility = parseFloat(encounter.mobility) || 0;
-    const fatigue = parseFloat(encounter.fatigue) || 0,
-      func = parseFloat(encounter.function) || 0;
-    const subjectiveScore = ((10 - Math.min(10, pain)) + Math.min(10, mobility) + (10 - Math.min(10, fatigue)) + Math.min(10,
-      func)) / 4 * 10;
-
-    const glucose = parseFloat(encounter.glucose) || 0,
-      fev1 = parseFloat(encounter.fev1) || 0;
-    const egfr = parseFloat(encounter.egfr) || 0,
-      crp = parseFloat(encounter.crp) || 0;
-    let objectiveScore = 0,
-      objCount = 0;
-    if (glucose > 0) { objectiveScore += Math.max(0, 100 - Math.abs(glucose - 5.5) * 20);
-      objCount++; }
-    if (fev1 > 0) { objectiveScore += Math.min(100, fev1 / 3.5 * 100);
-      objCount++; }
-    if (egfr > 0) { objectiveScore += Math.min(100, egfr / 90 * 100);
-      objCount++; }
-    if (crp > 0) { objectiveScore += Math.max(0, 100 - crp * 2);
-      objCount++; }
-    if (objCount === 0) return { discrepancy: 0, riskMultiplier: 1.0, alert: '✅ Subjective only – add labs for full concordance.',
-      alertType: 'good', subjectiveScore, objectiveScore: 50 };
-
-    objectiveScore = objectiveScore / objCount;
-    const discrepancy = Math.abs(objectiveScore - subjectiveScore);
-    let riskMultiplier = 1.0,
-      alert = '✅ Concordant.',
-      alertType = 'good';
-    if (discrepancy > 15) {
-      if (objectiveScore < subjectiveScore) { riskMultiplier = 1.5;
-        alert = '⚠️ SILENT DETERIORATION: Objective markers declining despite stable PROMs.';
-        alertType = 'silent'; } else { riskMultiplier = 0.7;
-        alert = '🧠 PSYCHOSOCIAL FACTOR: PROMs elevated but labs stable. Consider mental health review.';
-        alertType = 'psychosocial'; }
-    }
-    return { discrepancy, riskMultiplier, alert, alertType, subjectiveScore, objectiveScore };
-  }
-
-  function calculateDecayedIndex(encounters) {
-    if (!encounters || encounters.length === 0) return 0;
-    const sorted = [...encounters].sort((a, b) => new Date(a.date) - new Date(b.date));
-    const now = new Date();
-    let weightedSum = 0,
-      totalWeight = 0;
-    sorted.forEach((enc, idx) => {
-      const daysAgo = (now - new Date(enc.date)) / (1000 * 60 * 60 * 24);
-      const decayWeight = Math.exp(-DECAY_LAMBDA * daysAgo);
-      const recencyBonus = (sorted.length - idx) <= 3 ? 1.2 : 1.0;
-      const finalWeight = decayWeight * recencyBonus;
-      weightedSum += computeCareIndex(enc) * finalWeight;
-      totalWeight += finalWeight;
-    });
-    return totalWeight > 0 ? Math.round(weightedSum / totalWeight) : 0;
-  }
-
-  function detectTrend(encounters) {
-    if (!encounters || encounters.length < 3) return { direction: 'stable', change: 0 };
-    const sorted = [...encounters].sort((a, b) => new Date(a.date) - new Date(b.date));
-    const last3 = sorted.slice(-3);
-    const indices = last3.map(e => computeCareIndex(e));
-    const change = indices[indices.length - 1] - indices[0];
-    let direction = 'stable';
-    if (change > 3) direction = 'up';
-    else if (change < -3) direction = 'down';
-    return { direction, change };
-  }
-
-  function generateCareTips(data, goals) {
-    const n = (v) => parseFloat(v) || 0;
-    const pain = n(data.pain),
-      mobility = n(data.mobility),
-      fatigue = n(data.fatigue),
-      func = n(data.function);
-    const glucose = n(data.glucose),
-      fev1 = n(data.fev1),
-      egfr = n(data.egfr),
-      crp = n(data.crp);
-    const tips = [];
-    if (pain > goals.pain + 1) tips.push('🔴 Pain above goal. Consider rest, heat/cold, or prescribed relief.');
-    else if (pain > goals.pain) tips.push('🟡 Pain slightly above goal. Gentle stretching may help.');
-    else tips.push('✅ Pain on track.');
-    if (mobility < goals.mobility - 1) tips.push('🔴 Mobility below goal. Try gentle range‑of‑motion exercises.');
-    else if (mobility < goals.mobility) tips.push('🟡 Mobility slightly below goal. A short walk could help.');
-    else tips.push('✅ Good mobility!');
-    if (fatigue < goals.energy - 1) tips.push('🔴 Fatigue high. Prioritise rest and conserve energy.');
-    else if (fatigue < goals.energy) tips.push('🟡 Fatigue moderate. Plan short bursts of activity.');
-    else tips.push('✅ Energy level is good.');
-    if (func < 4) tips.push('💙 Function limited. Consider OT/PT review.');
-    if (glucose > 7.0) tips.push('🔴 Glucose elevated (>7.0 mmol/L). Monitor and discuss with care team.');
-    else if (glucose > 5.6) tips.push('🟡 Glucose slightly elevated. Review diet and activity.');
-    else if (glucose > 0 && glucose < 3.9) tips.push('🟡 Glucose low (<3.9 mmol/L). Have a small snack if symptomatic.');
-    if (fev1 > 0 && fev1 < 1.0) tips.push('🔴 FEV1 very low (<1.0L). Urgent respiratory review recommended.');
-    else if (fev1 > 0 && fev1 < 1.5) tips.push('🟡 FEV1 reduced. Breathing exercises and review with physio.');
-    if (egfr > 0 && egfr < 60) tips.push('🔴 Reduced eGFR. Monitor renal function, adjust medications.');
-    if (crp > 10) tips.push('🟡 Elevated CRP. Screen for infection or inflammation.');
-    if (tips.length === 0) tips.push('✅ All markers on track! Keep it up.');
-    return tips;
-  }
-
-  function renderInsights(data) {
-    if (!data || !data.pain) {
-      riskContainer.innerHTML =
-        `<div style="color:#8892b0; padding:8px 0; text-align:center; font-size:0.7rem;">Save an encounter to see recommendations.</div>`;
-      compositeScore.textContent = '—';
-      aiInsight.innerHTML = `<i class="fas fa-robot"></i> <span>Evidence‑based recommendations appear after saving.</span>`;
-      concordanceContainer.innerHTML = '';
-      trendContainer.style.display = 'none';
-      return;
-    }
-    const index = computeCareIndex(data);
-    const goals = getGoals();
-    const tips = generateCareTips(data, goals);
-    const concordance = calculateConcordance(data, encounters);
-    const decayedIndex = calculateDecayedIndex(encounters);
-    const trend = detectTrend(encounters);
-    const trendIcon = trend.direction === 'up' ? '📈' : trend.direction === 'down' ? '📉' : '➡️';
-    const trendColor = trend.direction === 'up' ? 'up' : trend.direction === 'down' ? 'down' : 'stable';
-    const trendText = trend.direction === 'up' ? 'Improving' : trend.direction === 'down' ? 'Declining' : 'Stable';
-
-    trendContainer.style.display = 'flex';
-    trendContainer.innerHTML =
-      `<span><i class="fas fa-chart-line"></i> Trend: <span class="${trendColor}">${trendIcon} ${trendText}</span></span>
-                 <span>Change: ${trend.change > 0 ? '+' : ''}${trend.change.toFixed(1)} pts</span>
-                 <span>Decayed Index: ${decayedIndex}</span>`;
-
-    const adjustedIndex = Math.min(100, Math.round(index * concordance.riskMultiplier));
-    let html = '<div class="risk-summary" style="display:flex;flex-wrap:wrap;gap:3px;margin:4px 0;">';
-    const items = [
-      { label: 'Pain', val: parseFloat(data.pain) || 0, invert: true },
-      { label: 'Mobility', val: parseFloat(data.mobility) || 0 },
-      { label: 'Fatigue', val: parseFloat(data.fatigue) || 0, invert: true },
-      { label: 'Function', val: parseFloat(data.function) || 0 },
-      { label: 'Glucose', val: parseFloat(data.glucose) || 0, glucose: true },
-      { label: 'FEV1', val: parseFloat(data.fev1) || 0, fev1: true },
-    ];
-    items.forEach(item => {
-      let val = item.val,
-        cls = 'risk-low',
-        status = '✅';
-      if (item.glucose) {
-        if (val > 7.0) { cls = 'risk-high';
-          status = '⬆️'; } else if (val > 5.6) { cls = 'risk-moderate';
-          status = '🔶'; } else if (val > 0) { cls = 'risk-low';
-          status = '✅'; } else { status = '—'; }
-      } else if (item.fev1) {
-        if (val > 0 && val < 1.0) { cls = 'risk-high';
-          status = '⬇️'; } else if (val < 1.5) { cls = 'risk-moderate';
-          status = '🔶'; } else if (val > 0) { cls = 'risk-low';
-          status = '✅'; } else { status = '—'; }
-      } else if (item.invert) {
-        if (val > 5) { cls = 'risk-high';
-          status = '⚠️'; } else if (val > 2) { cls = 'risk-moderate';
-          status = '🔶'; } else if (val >= 0) { cls = 'risk-low';
-          status = '✅'; }
-      } else {
-        if (val < 4) { cls = 'risk-high';
-          status = '⚠️'; } else if (val < 7) { cls = 'risk-moderate';
-          status = '🔶'; } else if (val >= 0) { cls = 'risk-low';
-          status = '✅'; }
-      }
-      if (val === 0 && !item.glucose && !item.fev1) status = '—';
-      html +=
-        `<div style="flex:1 0 60px;background:#0f1428;padding:2px 6px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:0.6rem;">
-                  <span>${item.label}</span><span class="risk-badge ${cls}">${status}</span>
-                </div>`;
-    });
-    html += '</div>';
-    html +=
-      `<div style="font-size:0.6rem;background:#0f1428;padding:3px 8px;border-radius:6px;margin:3px 0;">
-                <i class="fas fa-bullseye" style="color:#00b4d8;"></i> Goals: Pain ≤${goals.pain} · Mobility ≥${goals.mobility} · Energy ≥${goals.energy}
-              </div>`;
-    riskContainer.innerHTML = html;
-    compositeScore.textContent = adjustedIndex;
-
-    let tipText = tips.map(t => `<li>${t}</li>`).join('');
-    aiInsight.innerHTML = `<i class="fas fa-robot"></i> <ul>${tipText}</ul>`;
-
-    concordanceContainer.innerHTML = `
-              <div class="concordance-box ${concordance.alertType}">
-                <div class="alert ${concordance.alertType}">
-                  <i class="fas fa-${concordance.alertType === 'silent' ? 'exclamation-triangle' : concordance.alertType === 'psychosocial' ? 'brain' : 'check-circle'}"></i>
-                  ${concordance.alert}
+                <div class="demo-row">
+                    <div class="field"><label>Gender</label><select id="gender"><option value="female">♀</option><option value="male">♂</option><option value="diverse">⚧</option></select></div>
+                    <div class="field"><label>Age</label><input type="number" id="age" placeholder="65" min="0" max="120" style="width:44px;"></div>
+                    <div class="field"><label>cm</label><input type="number" id="height" placeholder="170" step="0.5" style="width:48px;"></div>
+                    <div class="field"><label>kg</label><input type="number" id="weight" placeholder="72" step="0.1" style="width:48px;"></div>
+                    <div class="field"><label>DOB</label><input type="date" id="dob" value="1980-01-01" style="width:90px;"></div>
+                    <div class="field"><label>Insurance</label><input type="text" id="insuranceNumber" value="INS-12345" style="width:70px;"></div>
                 </div>
-                <div class="detail">Discrepancy: ${concordance.discrepancy.toFixed(1)} pts | Subj: ${concordance.subjectiveScore.toFixed(0)} | Obj: ${concordance.objectiveScore.toFixed(0)}</div>
-              </div>
-            `;
-  }
 
-  // ========== SAVE ENCOUNTER ==========
-  function saveEncounter(e) {
-    e.preventDefault();
-    const data = getFormData();
-    const hasValue = Object.values(data).some(v => v && v !== '' && v !== undefined && v !== null && (typeof v !== 'number' ||
-      v > 0));
-    if (!hasValue) { alert('Please enter at least one reading.'); return; }
-    const id = generateEncounterId();
-    const encounter = { id, date: new Date().toISOString().split('T')[0], profile: currentProfile, ...data };
-    encounters.push(encounter);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(encounters));
-    renderInsights(data);
-    renderHistory();
-  }
+                <div class="goal-row">
+                    <div class="goal-item"><i class="fas fa-bullseye"></i> Pain Goal: <input type="number" id="goal_pain" value="2" min="0" max="10" step="1" /></div>
+                    <div class="goal-item"><i class="fas fa-walking"></i> Mobility Goal: <input type="number" id="goal_mobility" value="8" min="0" max="10" step="1" /></div>
+                    <div class="goal-item"><i class="fas fa-battery-half"></i> Energy Goal: <input type="number" id="goal_energy" value="6" min="0" max="10" step="1" /></div>
+                </div>
 
-  // ========== HISTORY ==========
-  function renderHistory() {
-    if (encounters.length === 0) {
-      historyBody.innerHTML =
-        `<tr><td colspan="10" style="text-align:center;color:#8892b0;font-size:0.65rem;">No encounters yet.</td></tr>`;
-      historyCount.textContent = '0 records';
-      return;
-    }
-    const sorted = [...encounters].sort((a, b) => new Date(b.date) - new Date(a.date));
-    let html = '';
-    sorted.forEach(enc => {
-      const idx = computeCareIndex(enc);
-      const pain = parseFloat(enc.pain) || 0,
-        mobility = parseFloat(enc.mobility) || 0;
-      const fatigue = parseFloat(enc.fatigue) || 0,
-        func = parseFloat(enc.function) || 0;
-      const ppd = enc.ppd_name || '—';
-      const badge = idx < 40 ? 'risk-high' : idx < 65 ? 'risk-moderate' : 'risk-low';
-      html += `<tr>
-                <td><strong>${enc.id}</strong></td>
-                <td>${enc.date}</td>
-                <td>${enc.profile}</td>
-                <td>${ppd}</td>
-                <td>${pain}</td>
-                <td>${mobility}</td>
-                <td>${fatigue}</td>
-                <td>${func}</td>
-                <td><span class="risk-badge ${badge}">${idx}</span></td>
-                <td>
-                  <button class="btn-sm" data-load='${JSON.stringify(enc)}'><i class="fas fa-eye"></i></button>
-                  <button class="btn-sm danger" data-del='${enc.id}'><i class="fas fa-trash-alt"></i></button>
-                </td>
-              </tr>`;
-    });
-    historyBody.innerHTML = html;
-    historyCount.textContent = `${encounters.length} records`;
+                <form id="peptideForm">
+                    <div class="form-scroll">
+                        <div class="form-grid" id="formFields"></div>
+                    </div>
+                    <div class="action-bar">
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Encounter</button>
+                        <button type="reset" class="btn btn-outline" id="clearBtn"><i class="fas fa-undo"></i> Clear</button>
+                        <button type="button" class="btn btn-primary" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF Report</button>
+                    </div>
+                </form>
 
-    document.querySelectorAll('[data-load]').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const data = JSON.parse(this.dataset.load);
-        currentProfile = data.profile || 'acute';
-        document.querySelectorAll('.profile-btn').forEach(b => b.classList.toggle('active', b.dataset.profile ===
-          currentProfile));
-        buildForm();
-        setFormData(data);
-        renderInsights(data);
-      });
-    });
-    document.querySelectorAll('[data-del]').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const id = this.dataset.del;
-        if (!confirm('Delete this encounter?')) return;
-        encounters = encounters.filter(e => e.id !== id);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(encounters));
-        renderHistory();
-      });
-    });
-  }
+                <div style="margin-top:12px;">
+                    <div id="riskContainer"><div style="color:#8892b0; padding:8px 0; text-align:center; font-size:0.7rem;">Save an encounter to see recommendations.</div></div>
+                    <div class="composite-box">
+                        <span><i class="fas fa-shield-alt"></i> Functionality Index</span>
+                        <span class="composite-score" id="compositeScore">—</span>
+                    </div>
+                    <div id="concordanceContainer"></div>
+                    <div id="trendContainer" class="trend-indicator" style="display:none;"></div>
+                    <div class="ai-insight" id="aiInsight"><i class="fas fa-robot"></i> <span>Evidence‑based recommendations appear after saving.</span></div>
+                </div>
+            </div>
 
-  // ========== PDF ==========
-  function generatePDFReport() {
-    const latest = encounters.length > 0 ? encounters[encounters.length - 1] : null;
-    if (!latest) { alert('Please save an encounter first.'); return; }
-    const idx = computeCareIndex(latest);
-    const tips = generateCareTips(latest, getGoals());
-    const concordance = calculateConcordance(latest, encounters);
-    const adjusted = Math.min(100, Math.round(idx * concordance.riskMultiplier));
-    let vbc = adjusted >= 75 ? '✅ High-value care: top quartile outcomes.' :
-      adjusted >= 50 ? '🟡 Moderate range. Focus on mobility and pain management.' :
-      '🔴 Lower range. Opportunity for intensive coordinated care.';
-    const ppd = getPPD();
-    const report = `
-      ================================================
-      VERITAS · Peptide PROMs/PREMs Report
-      ================================================
-      Date: ${new Date().toISOString().split('T')[0]}
-      Encounter: ${latest.id}
-      Profile: ${latest.profile}
-      PPD: ${ppd.name || '—'} (${ppd.license || '—'})
-      -------------------------------------------------
-      FUNCTIONALITY INDEX: ${adjusted}
-      Trend: ${detectTrend(encounters).direction} (${detectTrend(encounters).change.toFixed(1)} pts)
-      Concordance: ${concordance.alert || '✅ Aligned'}
-      Subj: ${concordance.subjectiveScore?.toFixed(0) || '—'} | Obj: ${concordance.objectiveScore?.toFixed(0) || '—'}
-      -------------------------------------------------
-      PROMs:
-        Pain: ${latest.pain || '—'}/10
-        Mobility: ${latest.mobility || '—'}/10
-        Fatigue: ${latest.fatigue || '—'}/10
-        Function: ${latest.function || '—'}/10
-      Labs:
-        Glucose: ${latest.glucose || '—'} mmol/L
-        FEV1: ${latest.fev1 || '—'} L
-        eGFR: ${latest.egfr || '—'} mL/min
-        CRP: ${latest.crp || '—'} mg/L
-      -------------------------------------------------
-      VERITAS:
-        Liveness: ${anchorState.liveness ? '✅' : '❌'}
-        HR: ${anchorState.hr || '—'} bpm
-        Human Verified: ${anchorState.human ? '✅' : '❌'}
-      -------------------------------------------------
-      CARE TIPS:
-      ${tips.map(t => '  - ' + t).join('\n')}
-      -------------------------------------------------
-      VBC: ${vbc}
-      ================================================
-      `;
-    const blob = new Blob([report], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `VERITAS_Report_${new Date().toISOString().split('T')[0]}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
-  }
+            <!-- RIGHT: VERITAS (simplified: PPD + Doctor Verification) -->
+            <div class="card">
+                <h3><i class="fas fa-shield-alt"></i> VERITAS · Provider Verification</h3>
 
-  // ========== VERITAS TOKEN ==========
-  function updateVeritasStatus() {
-    const ppdOk = isPPDComplete();
-    const allAnchor = anchorState.liveness && anchorState.hr !== null;
-    const fullyVerified = allAnchor && ppdOk && anchorState.human;
+                <!-- PPD -->
+                <div class="ppd-section">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px; margin-bottom:4px;">
+                        <span style="font-weight:700; font-size:0.7rem; color:#00b4d8;"><i class="fas fa-user-md"></i> PPD · Professional Details</span>
+                        <span style="font-size:0.5rem; color:#8892b0;" id="ppdStatus">⚠️ Incomplete</span>
+                    </div>
+                    <div class="ppd-grid">
+                        <div><label>Full Name</label><input id="ppdName" type="text" placeholder="Dr. M. Ali" /></div>
+                        <div><label>License / ID</label><input id="ppdLicense" type="text" placeholder="PT-123456" /></div>
+                        <div><label>Issuing Authority</label><input id="ppdAuthority" type="text" placeholder="Klinik Rosenhof" /></div>
+                        <div><label>Professional Role</label><input id="ppdRole" type="text" placeholder="Physiotherapist" /></div>
+                    </div>
+                </div>
 
-    livenessStatusDisplay.textContent = anchorState.liveness ? '✅' : '❌';
-    hrStatusDisplay.textContent = anchorState.hr !== null ? anchorState.hr + ' bpm' : '— bpm';
-    humanStatusDisplay.textContent = anchorState.human ? '✅' : '❌';
-    ppdStatus.textContent = ppdOk ? '✅ Complete' : '⚠️ Incomplete';
-    ppdStatus.style.color = ppdOk ? '#28a745' : '#ffc107';
+                <!-- Doctor Verification (simplified ANCHOR) -->
+                <div style="background:#0f1428; border-radius:10px; padding:8px 12px; margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+                        <span style="font-weight:700; font-size:0.7rem; color:#6f42c1;"><i class="fas fa-user-check"></i> Doctor Verification</span>
+                        <span id="doctorVerificationStatus" style="font-size:0.55rem; color:#8892b0;">Not verified</span>
+                    </div>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap; margin:6px 0;">
+                        <button class="btn-verify-human" id="verifyDoctorBtn"><i class="fas fa-check-circle"></i> Verify as Doctor</button>
+                        <button class="btn btn-outline" id="resetVerificationBtn" style="font-size:0.55rem; padding:3px 12px;">↻ Reset</button>
+                    </div>
+                    <div style="display:flex; gap:12px; flex-wrap:wrap; font-size:0.55rem; color:#8892b0;">
+                        <span>Liveness: <span id="livenessDisplay">❌</span></span>
+                        <span>HR: <span id="hrDisplay">— bpm</span></span>
+                        <span>Doctor: <span id="doctorDisplay">❌</span></span>
+                    </div>
+                    <div class="veritas-status">
+                        <span class="icon pending" id="veritasIcon">⏳</span>
+                        <span id="veritasText">Complete PPD + Doctor verification to generate token</span>
+                    </div>
+                </div>
 
-    if (fullyVerified) {
-      veritasIcon.className = 'icon pass';
-      veritasIcon.textContent = '✅';
-      veritasText.textContent = 'VERITAS Fully Verified ✓';
-      veritasStatusBadge.textContent = '✅ VERIFIED';
-      veritasStatusBadge.style.background = '#28a745';
-      tokenBadge.className = 'vault-status verified';
-      tokenBadge.textContent = 'VERIFIED';
-      generateTokenBtn.disabled = false;
-      tokenStatus.textContent = '✅ Ready to generate token';
-      tokenStatus.style.color = '#28a745';
-    } else if (allAnchor && ppdOk) {
-      veritasIcon.className = 'icon pending';
-      veritasIcon.textContent = '⏳';
-      veritasText.textContent = 'ANCHOR + PPD complete. Awaiting human verification.';
-      veritasStatusBadge.textContent = '⏳ ANCHOR OK';
-      veritasStatusBadge.style.background = '#ffc107';
-      tokenBadge.className = 'vault-status pending';
-      tokenBadge.textContent = 'PENDING';
-      generateTokenBtn.disabled = true;
-      tokenStatus.textContent = '⚠️ Need human verification (click "Verify Human")';
-      tokenStatus.style.color = '#ffc107';
-    } else {
-      veritasIcon.className = 'icon pending';
-      veritasIcon.textContent = '⏳';
-      let missing = [];
-      if (!anchorState.liveness) missing.push('Liveness');
-      if (anchorState.hr === null) missing.push('HR');
-      if (!ppdOk) missing.push('PPD');
-      veritasText.textContent = 'Pending: ' + missing.join(', ');
-      veritasStatusBadge.textContent = '⏳ Pending';
-      veritasStatusBadge.style.background = '#8892b0';
-      tokenBadge.className = 'vault-status pending';
-      tokenBadge.textContent = 'PENDING';
-      generateTokenBtn.disabled = true;
-      tokenStatus.textContent = 'Complete ANCHOR + PPD first.';
-      tokenStatus.style.color = '#8892b0';
-    }
-  }
+                <!-- Token -->
+                <div style="background:#0f1428; border-radius:10px; padding:8px 12px; margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+                        <span style="font-weight:700; font-size:0.7rem; color:#28a745;"><i class="fas fa-key"></i> VERITAS Token</span>
+                        <span class="verification-badge pending" id="tokenBadge">PENDING</span>
+                    </div>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap; margin:4px 0;">
+                        <button class="btn btn-success" id="generateTokenBtn" disabled style="font-size:0.55rem; padding:3px 12px;"><i class="fas fa-key"></i> Generate</button>
+                        <button class="btn btn-outline" id="copyTokenBtn" disabled style="font-size:0.55rem; padding:3px 12px;"><i class="fas fa-copy"></i> Copy</button>
+                        <button class="btn btn-primary" id="saveVaultBtn" disabled style="font-size:0.55rem; padding:3px 12px;"><i class="fas fa-vault"></i> Save</button>
+                    </div>
+                    <textarea class="token-area" id="tokenOutput" readonly placeholder="Token will appear after PPD + Doctor verification."></textarea>
+                    <div style="font-size:0.5rem; color:#8892b0; margin-top:2px;" id="tokenStatus">Complete PPD + Doctor verification first.</div>
+                </div>
 
-  function generateToken() {
-    if (!anchorState.liveness || anchorState.hr === null || !isPPDComplete()) {
-      tokenStatus.textContent = '⚠️ Complete Liveness, HR, and PPD first.';
-      tokenStatus.style.color = '#ffc107';
-      return;
-    }
-    const ppd = getPPD();
-    const data = getFormData();
-    const index = computeCareIndex(data);
-    const nowSec = Math.floor(Date.now() / 1000);
-    const expSec = nowSec + 600;
-    const header = { alg: "HS256", typ: "JWT", kid: "veritas-session", device_id: deviceId, version: "1.0.0" };
-    const payload = {
-      veritas: { liveness_completed: anchorState.liveness, hr_bpm: anchorState.hr, human_verified: anchorState.human,
-        device_id: deviceId },
-      ppd: { caregiver_name: ppd.name, caregiver_license: ppd.license, issuing_authority: ppd.authority || '—',
-        professional_role: ppd.role || '—' },
-      assessment: { functionality_index: index, pain: parseFloat(data.pain) || 0, mobility: parseFloat(data.mobility) ||
-          0, fatigue: parseFloat(data.fatigue) || 0, function: parseFloat(data.function) || 0, profile: currentProfile },
-      iat: nowSec,
-      exp: expSec,
-      jti: generateSessionId(),
-      version: "veritas-token-1.0.0"
-    };
-    const token = base64UrlEncode(JSON.stringify(header)) + '.' + base64UrlEncode(JSON.stringify(payload)) + '.' +
-      base64UrlEncode(TOKEN_KEY_STRING);
-    tokenOutput.value = token;
-    tokenGenerated = true;
-    generateTokenBtn.disabled = true;
-    copyTokenBtn.disabled = false;
-    saveVaultBtn.disabled = false;
-    tokenStatus.textContent = '✅ Token generated!';
-    tokenStatus.style.color = '#28a745';
-    tokenBadge.className = 'vault-status verified';
-    tokenBadge.textContent = 'TOKEN OK';
-    veritasStatusBadge.textContent = '✅ TOKEN';
-    veritasStatusBadge.style.background = '#6f42c1';
-  }
+                <!-- Vault -->
+                <div style="background:#0f1428; border-radius:10px; padding:8px 12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+                        <span style="font-weight:700; font-size:0.7rem; color:#6f42c1;"><i class="fas fa-vault"></i> Token Vault</span>
+                        <span style="font-size:0.5rem; color:#8892b0;" id="vaultCount">0 tokens</span>
+                    </div>
+                    <div class="vault-list" id="vaultList"><div style="color:#8892b0; font-size:0.55rem; text-align:center; padding:4px 0;">No tokens in vault.</div></div>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:4px;">
+                        <button class="btn btn-outline" id="clearVaultBtn" style="font-size:0.45rem; padding:2px 10px;"><i class="fas fa-trash"></i> Clear</button>
+                        <button class="btn btn-outline" id="exportVaultBtn" style="font-size:0.45rem; padding:2px 10px;"><i class="fas fa-file-export"></i> Export</button>
+                        <button class="btn btn-success" id="verifyVaultBtn" style="font-size:0.45rem; padding:2px 10px;"><i class="fas fa-check-circle"></i> Verify All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  function copyToken() {
-    if (!tokenOutput.value) { tokenStatus.textContent = '⚠️ No token to copy.'; return; }
-    navigator.clipboard.writeText(tokenOutput.value).then(() => { tokenStatus.textContent = '✅ Copied!'; }).catch(() => {
-      tokenStatus.textContent = '⚠️ Copy manually.'; });
-  }
+        <!-- History -->
+        <div class="card">
+            <h3><i class="fas fa-history"></i> Encounter History <span style="font-size:0.55rem; font-weight:400; color:#8892b0;" id="historyCount">0 records</span></h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>ID</th><th>Date</th><th>Profile</th><th>PPD</th><th>Pain</th><th>Mob</th><th>Fat</th><th>Func</th><th>Index</th><th>Action</th></tr></thead>
+                    <tbody id="historyBody"><tr><td colspan="10" style="text-align:center; color:#8892b0; font-size:0.65rem;">No encounters yet.</td></tr></tbody>
+                </table>
+            </div>
+        </div>
 
-  function saveToVault() {
-    const token = tokenOutput.value.trim();
-    if (!token) return;
-    tokenVault.push({ token, date: new Date().toISOString(), ppd_name: ppdName.value || 'Unknown', device: deviceId,
-      verified: anchorState.human, verification_date: anchorState.human ? new Date().toISOString() : null });
-    localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
-    renderVault();
-    tokenStatus.textContent = '✅ Saved to vault.';
-  }
+        <div class="footer">
+            <span class="highlight">MY THERAPEUTICS TRUST</span> · VERITAS · Value‑Based Care · <span class="highlight">www.virtualcaresolution.de</span>
+            <span style="margin:0 6px;">·</span> Aligns Provider–Payer–Regulator goals
+        </div>
 
-  function renderVault() {
-    if (tokenVault.length === 0) { vaultList.innerHTML =
-        '<div style="color:#8892b0;font-size:0.6rem;text-align:center;padding:4px 0;">No tokens in vault.</div>';
-      vaultCount.textContent = '0 tokens'; return; }
-    let html = '';
-    tokenVault.forEach((entry, idx) => {
-      const short = entry.token ? entry.token.substring(0, 40) + '...' : '';
-      const statusClass = entry.verified ? 'verified' : 'pending';
-      const statusText = entry.verified ? '✓ VERIFIED' : '⏳ Pending';
-      html += `<div class="vault-item">
-                <span class="vault-token">${short}</span>
-                <span class="vault-status ${statusClass}">${statusText}</span>
-                <span style="font-size:0.5rem;color:#8892b0;">${new Date(entry.date).toLocaleDateString()}</span>
-                <span class="vault-actions">
-                  <button onclick="copyVaultToken(${idx})"><i class="fas fa-copy"></i></button>
-                  <button onclick="verifyVaultToken(${idx})" style="color:#28a745;"><i class="fas fa-check-circle"></i></button>
-                  <button onclick="deleteVaultToken(${idx})" style="color:#ff6b6b;"><i class="fas fa-trash"></i></button>
-                </span>
-              </div>`;
-    });
-    vaultList.innerHTML = html;
-    vaultCount.textContent = tokenVault.length + ' tokens';
-  }
+    </div>
 
-  window.copyVaultToken = function(idx) {
-    const entry = tokenVault[idx];
-    if (!entry) return;
-    navigator.clipboard.writeText(entry.token).then(() => { tokenStatus.textContent = '✅ Copied from vault.'; });
-  };
+    <script>
+        // ============================================================
+        //  MY THERAPEUTICS TRUST · Peptide PROMs/PREMs
+        //  Focus: 7 variables + VERITAS (PPD + Doctor Verification)
+        // ============================================================
 
-  window.verifyVaultToken = function(idx) {
-    const entry = tokenVault[idx];
-    if (!entry) return;
-    try {
-      const parts = entry.token.split('.');
-      if (parts.length !== 3) { tokenStatus.textContent = '❌ Invalid format.'; return; }
-      const payload = JSON.parse(base64UrlDecode(parts[1]));
-      const signature = parts[2];
-      if (signature !== base64UrlEncode(TOKEN_KEY_STRING)) { tokenStatus.textContent = '❌ Invalid signature.'; return; }
-      if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) { tokenStatus.textContent = '❌ Expired.'; return; }
-      tokenVault[idx].verified = true;
-      tokenVault[idx].verification_date = new Date().toISOString();
-      localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
-      renderVault();
-      tokenStatus.textContent = '✅ Token verified!';
-    } catch (e) { tokenStatus.textContent = '❌ Error: ' + e.message; }
-  };
+        const STORAGE_KEY = 'peptide_proms_encounters';
+        const VAULT_KEY = 'veritas_token_vault';
+        const TOKEN_KEY_STRING = 'local-offline-signature';
+        const DECAY_LAMBDA = 0.1;
 
-  window.deleteVaultToken = function(idx) {
-    if (!confirm('Delete this token?')) return;
-    tokenVault.splice(idx, 1);
-    localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
-    renderVault();
-    tokenStatus.textContent = '🗑️ Deleted.';
-  };
+        let encounters = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        let tokenVault = JSON.parse(localStorage.getItem(VAULT_KEY)) || [];
+        let currentProfile = 'acute';
+        let deviceId = crypto.randomUUID ? crypto.randomUUID() : 'dev-' + Date.now().toString(36);
 
-  function clearVault() { if (!confirm('Clear all tokens?')) return;
-    tokenVault = [];
-    localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
-    renderVault();
-    tokenStatus.textContent = '🗑️ Vault cleared.'; }
+        // Verification state (simplified: doctor verifies liveness + HR)
+        let verification = {
+            ppdComplete: false,
+            doctorVerified: false, // doctor confirms liveness + HR in person
+            liveness: false, // simulated/confirmed by doctor
+            hr: null // confirmed by doctor
+        };
 
-  function exportVault() {
-    if (tokenVault.length === 0) { tokenStatus.textContent = '⚠️ Empty.'; return; }
-    const blob = new Blob([JSON.stringify(tokenVault, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `veritas_vault_${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    tokenStatus.textContent = '✅ Exported.';
-  }
+        let tokenGenerated = false;
 
-  function verifyAllVaultTokens() {
-    let count = 0;
-    tokenVault.forEach((entry, idx) => {
-      try {
-        const parts = entry.token.split('.');
-        if (parts.length !== 3) return;
-        const payload = JSON.parse(base64UrlDecode(parts[1]));
-        const signature = parts[2];
-        if (signature === base64UrlEncode(TOKEN_KEY_STRING) && payload.exp && payload.exp > Math.floor(Date.now() /
-          1000)) {
-          tokenVault[idx].verified = true;
-          tokenVault[idx].verification_date = new Date().toISOString();
-          count++;
+        // DOM refs
+        const form = document.getElementById('peptideForm');
+        const formFields = document.getElementById('formFields');
+        const historyBody = document.getElementById('historyBody');
+        const historyCount = document.getElementById('historyCount');
+        const compositeScore = document.getElementById('compositeScore');
+        const riskContainer = document.getElementById('riskContainer');
+        const aiInsight = document.getElementById('aiInsight');
+        const concordanceContainer = document.getElementById('concordanceContainer');
+        const trendContainer = document.getElementById('trendContainer');
+
+        const ppdName = document.getElementById('ppdName');
+        const ppdLicense = document.getElementById('ppdLicense');
+        const ppdAuthority = document.getElementById('ppdAuthority');
+        const ppdRole = document.getElementById('ppdRole');
+        const ppdStatus = document.getElementById('ppdStatus');
+
+        const livenessDisplay = document.getElementById('livenessDisplay');
+        const hrDisplay = document.getElementById('hrDisplay');
+        const doctorDisplay = document.getElementById('doctorDisplay');
+        const veritasIcon = document.getElementById('veritasIcon');
+        const veritasText = document.getElementById('veritasText');
+        const tokenBadge = document.getElementById('tokenBadge');
+        const tokenOutput = document.getElementById('tokenOutput');
+        const tokenStatus = document.getElementById('tokenStatus');
+        const generateTokenBtn = document.getElementById('generateTokenBtn');
+        const copyTokenBtn = document.getElementById('copyTokenBtn');
+        const saveVaultBtn = document.getElementById('saveVaultBtn');
+        const vaultList = document.getElementById('vaultList');
+        const vaultCount = document.getElementById('vaultCount');
+        const veritasHeaderBadge = document.getElementById('veritasHeaderBadge');
+
+        // ========== FIELD DEFINITIONS (7 core variables) ==========
+        const FIELD_DEFS = {
+            acute: [
+                { id: 'pain', label: '1. Pain (NRS)', unit: '0‑10', step: '1', max: 10 },
+                { id: 'mobility', label: '2. Mobility', unit: '0‑10', step: '1', max: 10 },
+                { id: 'fatigue', label: '3. Fatigue', unit: '0‑10', step: '1', max: 10 },
+                { id: 'function', label: '4. Global Function', unit: '0‑10', step: '1', max: 10 },
+                { id: 'adverse', label: '5. Adverse Events', unit: '0‑10', step: '1', max: 10 },
+                { id: 'satisfaction', label: '6. Satisfaction', unit: '0‑10', step: '1', max: 10 },
+                { id: 'adherence', label: '7. Adherence (doses missed)', unit: '0‑3+', step: '1', max: 3 },
+                // Additional physiology markers (supporting evidence)
+                { id: 'hr', label: 'Heart Rate', unit: 'bpm', step: '1' },
+                { id: 'sbp', label: 'SBP', unit: 'mmHg', step: '1' },
+                { id: 'dbp', label: 'DBP', unit: 'mmHg', step: '1' },
+                { id: 'glucose', label: 'Glucose', unit: 'mmol/L', step: '0.1' },
+                { id: 'hba1c', label: 'HbA1c', unit: '%', step: '0.1' },
+                { id: 'egfr', label: 'eGFR', unit: 'mL/min', step: '1' },
+                { id: 'crp', label: 'CRP', unit: 'mg/L', step: '0.1' },
+                { id: 'fev1', label: 'FEV1', unit: 'L', step: '0.1' },
+            ],
+            preventive: [
+                { id: 'pain', label: '1. Pain (NRS)', unit: '0‑10', step: '1', max: 10 },
+                { id: 'mobility', label: '2. Mobility', unit: '0‑10', step: '1', max: 10 },
+                { id: 'fatigue', label: '3. Fatigue', unit: '0‑10', step: '1', max: 10 },
+                { id: 'function', label: '4. Global Function', unit: '0‑10', step: '1', max: 10 },
+                { id: 'adverse', label: '5. Adverse Events', unit: '0‑10', step: '1', max: 10 },
+                { id: 'satisfaction', label: '6. Satisfaction', unit: '0‑10', step: '1', max: 10 },
+                { id: 'adherence', label: '7. Adherence (doses missed)', unit: '0‑3+', step: '1', max: 3 },
+                { id: 'hr', label: 'Heart Rate', unit: 'bpm', step: '1' },
+                { id: 'sbp', label: 'SBP', unit: 'mmHg', step: '1' },
+                { id: 'dbp', label: 'DBP', unit: 'mmHg', step: '1' },
+                { id: 'glucose', label: 'Glucose', unit: 'mmol/L', step: '0.1' },
+                { id: 'hba1c', label: 'HbA1c', unit: '%', step: '0.1' },
+                { id: 'egfr', label: 'eGFR', unit: 'mL/min', step: '1' },
+                { id: 'crp', label: 'CRP', unit: 'mg/L', step: '0.1' },
+                { id: 'fev1', label: 'FEV1', unit: 'L', step: '0.1' },
+            ],
+            palliative: [
+                { id: 'pain', label: '1. Pain (NRS)', unit: '0‑10', step: '1', max: 10 },
+                { id: 'mobility', label: '2. Mobility', unit: '0‑10', step: '1', max: 10 },
+                { id: 'fatigue', label: '3. Fatigue', unit: '0‑10', step: '1', max: 10 },
+                { id: 'function', label: '4. Global Function', unit: '0‑10', step: '1', max: 10 },
+                { id: 'adverse', label: '5. Adverse Events', unit: '0‑10', step: '1', max: 10 },
+                { id: 'satisfaction', label: '6. Satisfaction', unit: '0‑10', step: '1', max: 10 },
+                { id: 'adherence', label: '7. Adherence (doses missed)', unit: '0‑3+', step: '1', max: 3 },
+                { id: 'hr', label: 'Heart Rate', unit: 'bpm', step: '1' },
+                { id: 'sbp', label: 'SBP', unit: 'mmHg', step: '1' },
+                { id: 'dbp', label: 'DBP', unit: 'mmHg', step: '1' },
+                { id: 'glucose', label: 'Glucose', unit: 'mmol/L', step: '0.1' },
+                { id: 'hba1c', label: 'HbA1c', unit: '%', step: '0.1' },
+                { id: 'egfr', label: 'eGFR', unit: 'mL/min', step: '1' },
+                { id: 'crp', label: 'CRP', unit: 'mg/L', step: '0.1' },
+                { id: 'fev1', label: 'FEV1', unit: 'L', step: '0.1' },
+            ]
+        };
+
+        // ========== UTILITY ==========
+        function base64UrlEncode(str) { return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, ''); }
+
+        function base64UrlDecode(str) { try { return atob(str.replace(/-/g, '+').replace(/_/g, '/')); } catch (e) { return null; } }
+
+        function generateSessionId() { return crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random()
+                .toString(36).substr(2, 6); }
+
+        function getPPD() {
+            return { name: ppdName.value.trim(), license: ppdLicense.value.trim(), authority: ppdAuthority.value.trim(),
+                role: ppdRole.value.trim() };
         }
-      } catch (e) {}
-    });
-    if (count > 0) { localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
-      renderVault();
-      tokenStatus.textContent = `✅ ${count} verified.`; } else { tokenStatus.textContent = 'ℹ️ No valid tokens.'; }
-  }
 
-  // ========== ANCHOR SIMULATION ==========
-  function simulateLiveness() {
-    anchorState.liveness = true;
-    livenessStatusDisplay.textContent = '✅';
-    updateVeritasStatus();
-    tokenStatus.textContent = '✅ Liveness simulated.';
-  }
+        function isPPDComplete() { const p = getPPD(); return p.name.length > 0 && p.license.length > 0; }
 
-  function simulateHR() {
-    const hr = Math.round(60 + Math.random() * 40);
-    anchorState.hr = hr;
-    hrStatusDisplay.textContent = hr + ' bpm';
-    updateVeritasStatus();
-    tokenStatus.textContent = `❤️ HR simulated: ${hr} bpm.`;
-  }
+        function getDemographics() {
+            return {
+                gender: document.getElementById('gender').value,
+                age: parseInt(document.getElementById('age').value) || 0,
+                height: parseFloat(document.getElementById('height').value) || 0,
+                weight: parseFloat(document.getElementById('weight').value) || 0,
+            };
+        }
 
-  function resetAnchor() {
-    anchorState.liveness = false;
-    anchorState.hr = null;
-    anchorState.human = false;
-    livenessStatusDisplay.textContent = '❌';
-    hrStatusDisplay.textContent = '— bpm';
-    humanStatusDisplay.textContent = '❌';
-    tokenOutput.value = '';
-    tokenGenerated = false;
-    generateTokenBtn.disabled = true;
-    copyTokenBtn.disabled = true;
-    saveVaultBtn.disabled = true;
-    tokenBadge.className = 'vault-status pending';
-    tokenBadge.textContent = 'PENDING';
-    veritasStatusBadge.textContent = '⏳ Pending';
-    veritasStatusBadge.style.background = '#8892b0';
-    tokenStatus.textContent = 'Reset. Complete ANCHOR + PPD.';
-    tokenStatus.style.color = '#8892b0';
-    updateVeritasStatus();
-  }
+        function getGoals() {
+            return {
+                pain: parseInt(document.getElementById('goal_pain').value) || 2,
+                mobility: parseInt(document.getElementById('goal_mobility').value) || 8,
+                energy: parseInt(document.getElementById('goal_energy').value) || 6,
+            };
+        }
 
-  // ========== PROFILE SWITCH ==========
-  function switchProfile(profile) {
-    currentProfile = profile;
-    document.querySelectorAll('.profile-btn').forEach(b => b.classList.toggle('active', b.dataset.profile === profile));
-    buildForm();
-    clearFormValues();
-    renderInsights(null);
-    compositeScore.textContent = '—';
-    aiInsight.innerHTML = `<i class="fas fa-robot"></i> <span>Evidence‑based recommendations appear after saving.</span>`;
-    concordanceContainer.innerHTML = '';
-    trendContainer.style.display = 'none';
-    renderHistory();
-  }
+        function getFieldValue(id) { const el = document.getElementById(id); return el ? el.value : ''; }
 
-  // ========== INIT ==========
-  function init() {
-    buildForm();
-    renderHistory();
-    renderVault();
-    updateVeritasStatus();
+        function setFieldValue(id, val) { const el = document.getElementById(id); if (el) el.value = val; }
 
-    if (encounters.length > 0) {
-      const latest = encounters[encounters.length - 1];
-      setFormData(latest);
-      currentProfile = latest.profile || 'acute';
-      document.querySelectorAll('.profile-btn').forEach(b => b.classList.toggle('active', b.dataset.profile ===
-      currentProfile));
-      buildForm();
-      setFormData(latest);
-      renderInsights(latest);
-    }
+        function getFormData() {
+            const data = {};
+            const fields = FIELD_DEFS[currentProfile] || FIELD_DEFS.acute;
+            fields.forEach(f => data[f.id] = getFieldValue(f.id));
+            data.profile = currentProfile;
+            const demo = getDemographics();
+            data.gender = demo.gender;
+            data.age = demo.age;
+            data.height = demo.height;
+            data.weight = demo.weight;
+            data.bmi = (demo.height > 0 && demo.weight > 0) ? (demo.weight / ((demo.height / 100) ** 2)) : 0;
+            const goals = getGoals();
+            data.pain_goal = goals.pain;
+            data.mobility_goal = goals.mobility;
+            data.energy_goal = goals.energy;
+            const ppd = getPPD();
+            data.ppd_name = ppd.name;
+            data.ppd_license = ppd.license;
+            data.ppd_authority = ppd.authority;
+            data.ppd_role = ppd.role;
+            data.device_id = deviceId;
+            data.doctor_verified = verification.doctorVerified;
+            data.liveness_confirmed = verification.liveness;
+            data.hr_confirmed = verification.hr;
+            data.dob = document.getElementById('dob').value;
+            data.insurance_number = document.getElementById('insuranceNumber').value;
+            return data;
+        }
 
-    // Profile buttons
-    document.querySelectorAll('.profile-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const profile = this.dataset.profile;
-        if (profile !== currentProfile) switchProfile(profile);
-      });
-    });
+        function setFormData(data) {
+            if (!data) return;
+            const fields = FIELD_DEFS[currentProfile] || FIELD_DEFS.acute;
+            fields.forEach(f => { if (data[f.id] !== undefined) setFieldValue(f.id, data[f.id]); });
+            if (data.gender) document.getElementById('gender').value = data.gender;
+            if (data.age) document.getElementById('age').value = data.age;
+            if (data.height) document.getElementById('height').value = data.height;
+            if (data.weight) document.getElementById('weight').value = data.weight;
+            if (data.pain_goal) document.getElementById('goal_pain').value = data.pain_goal;
+            if (data.mobility_goal) document.getElementById('goal_mobility').value = data.mobility_goal;
+            if (data.energy_goal) document.getElementById('goal_energy').value = data.energy_goal;
+            if (data.ppd_name) ppdName.value = data.ppd_name;
+            if (data.ppd_license) ppdLicense.value = data.ppd_license;
+            if (data.ppd_authority) ppdAuthority.value = data.ppd_authority;
+            if (data.ppd_role) ppdRole.value = data.ppd_role;
+            if (data.dob) document.getElementById('dob').value = data.dob;
+            if (data.insurance_number) document.getElementById('insuranceNumber').value = data.insurance_number;
+            if (data.doctor_verified !== undefined) verification.doctorVerified = data.doctor_verified;
+            if (data.liveness_confirmed !== undefined) verification.liveness = data.liveness_confirmed;
+            if (data.hr_confirmed !== undefined) verification.hr = data.hr_confirmed;
+        }
 
-    // Form submit
-    form.addEventListener('submit', saveEncounter);
-    document.getElementById('clearBtn').addEventListener('click', function() {
-      clearFormValues();
-      renderInsights(null);
-      compositeScore.textContent = '—';
-      aiInsight.innerHTML =
-        `<i class="fas fa-robot"></i> <span>Evidence‑based recommendations appear after saving.</span>`;
-      concordanceContainer.innerHTML = '';
-      trendContainer.style.display = 'none';
-    });
-    document.getElementById('pdfBtn').addEventListener('click', generatePDFReport);
+        function clearFormValues() {
+            const fields = FIELD_DEFS[currentProfile] || FIELD_DEFS.acute;
+            fields.forEach(f => setFieldValue(f.id, ''));
+            document.getElementById('age').value = '';
+            document.getElementById('height').value = '';
+            document.getElementById('weight').value = '';
+            document.getElementById('gender').value = 'female';
+            document.getElementById('goal_pain').value = 2;
+            document.getElementById('goal_mobility').value = 8;
+            document.getElementById('goal_energy').value = 6;
+        }
 
-    // ANCHOR
-    document.getElementById('simulateLivenessBtn').addEventListener('click', simulateLiveness);
-    document.getElementById('simulateHRBtn').addEventListener('click', simulateHR);
-    document.getElementById('resetAnchorBtn').addEventListener('click', resetAnchor);
+        function generateEncounterId() { return 'PEP' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substr(
+                2, 3).toUpperCase(); }
 
-    // Human verification toggle (simple)
-    document.getElementById('veritasText').addEventListener('dblclick', function() {
-      anchorState.human = !anchorState.human;
-      humanStatusDisplay.textContent = anchorState.human ? '✅' : '❌';
-      updateVeritasStatus();
-      tokenStatus.textContent = anchorState.human ? '👤 Human verified!' : '👤 Human verification removed.';
-    });
+        // ========== BUILD FORM ==========
+        function buildForm() {
+            const fields = FIELD_DEFS[currentProfile] || FIELD_DEFS.acute;
+            let html = '';
+            fields.forEach(f => {
+                const maxAttr = f.max ? `max="${f.max}"` : '';
+                html += `<div class="form-group">
+                            <label>${f.label} <span style="font-weight:400;color:#8892b0;">${f.unit}</span></label>
+                            <input type="number" id="${f.id}" step="${f.step || '1'}" ${maxAttr} placeholder="—" />
+                        </div>`;
+            });
+            formFields.innerHTML = html;
+        }
 
-    // Token
-    document.getElementById('generateTokenBtn').addEventListener('click', generateToken);
-    document.getElementById('copyTokenBtn').addEventListener('click', copyToken);
-    document.getElementById('saveVaultBtn').addEventListener('click', saveToVault);
-    document.getElementById('clearVaultBtn').addEventListener('click', clearVault);
-    document.getElementById('exportVaultBtn').addEventListener('click', exportVault);
-    document.getElementById('verifyVaultBtn').addEventListener('click', verifyAllVaultTokens);
+        // ========== RISK ENGINE ==========
+        function computeCareIndex(data) {
+            const n = (v) => parseFloat(v) || 0;
+            const pain = n(data.pain),
+                mobility = n(data.mobility),
+                fatigue = n(data.fatigue),
+                func = n(data.function);
+            const adverse = n(data.adverse),
+                satisfaction = n(data.satisfaction),
+                adherence = n(data.adherence);
+            const glucose = n(data.glucose),
+                fev1 = n(data.fev1),
+                egfr = n(data.egfr),
+                crp = n(data.crp);
 
-    // PPD inputs
-    [ppdName, ppdLicense, ppdAuthority, ppdRole].forEach(el => {
-      el.addEventListener('input', updateVeritasStatus);
-    });
+            const painScore = Math.max(0, 10 - pain);
+            const mobilityScore = Math.min(10, mobility);
+            const fatigueScore = Math.max(0, 10 - fatigue);
+            const funcScore = Math.min(10, func);
+            const adverseScore = Math.max(0, 10 - adverse);
+            const satisfactionScore = Math.min(10, satisfaction);
+            const adherenceScore = Math.max(0, 10 - adherence * 3);
 
-    console.log('=== Peptide PROMs/PREMs + VERITAS initialized ===');
-    console.log('Double-click "VERITAS status" text to toggle human verification.');
-    console.log('Verifier password (for token): MoMo123456789@@@');
-  }
+            let glucoseScore = 10;
+            if (glucose > 0) {
+                if (glucose < 3.9) glucoseScore = Math.max(0, 10 - (3.9 - glucose) / 0.5);
+                else if (glucose > 5.6) glucoseScore = Math.max(0, 10 - (glucose - 5.6) / 2);
+            }
+            let fev1Score = 10;
+            if (fev1 > 0) fev1Score = Math.min(10, (fev1 / 3.0) * 10);
+            let egfrScore = 10;
+            if (egfr > 0) egfrScore = Math.min(10, egfr / 90 * 10);
+            let crpScore = 10;
+            if (crp > 0 && crp > 10) crpScore = Math.max(0, 10 - (crp - 10) / 10);
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-</script>
+            const raw = (painScore + mobilityScore + fatigueScore + funcScore + adverseScore + satisfactionScore +
+                adherenceScore + glucoseScore + fev1Score + egfrScore + crpScore) / 11;
+            return Math.min(100, Math.round(raw * 2));
+        }
+
+        function calculateConcordance(encounter, allEncounters) {
+            const pain = parseFloat(encounter.pain) || 0,
+                mobility = parseFloat(encounter.mobility) || 0;
+            const fatigue = parseFloat(encounter.fatigue) || 0,
+                func = parseFloat(encounter.function) || 0;
+            const adverse = parseFloat(encounter.adverse) || 0;
+            const satisfaction = parseFloat(encounter.satisfaction) || 0;
+            const subjectiveScore = ((10 - Math.min(10, pain)) + Math.min(10, mobility) + (10 - Math.min(10, fatigue)) + Math
+                .min(10, func) + (10 - Math.min(10, adverse)) + Math.min(10, satisfaction)) / 6 * 10;
+
+            const glucose = parseFloat(encounter.glucose) || 0,
+                fev1 = parseFloat(encounter.fev1) || 0;
+            const egfr = parseFloat(encounter.egfr) || 0,
+                crp = parseFloat(encounter.crp) || 0;
+            let objectiveScore = 0,
+                objCount = 0;
+            if (glucose > 0) { objectiveScore += Math.max(0, 100 - Math.abs(glucose - 5.5) * 20);
+                objCount++; }
+            if (fev1 > 0) { objectiveScore += Math.min(100, fev1 / 3.5 * 100);
+                objCount++; }
+            if (egfr > 0) { objectiveScore += Math.min(100, egfr / 90 * 100);
+                objCount++; }
+            if (crp > 0) { objectiveScore += Math.max(0, 100 - crp * 2);
+                objCount++; }
+            if (objCount === 0) return { discrepancy: 0, riskMultiplier: 1.0, alert: '✅ Subjective only – add labs for full concordance.',
+                alertType: 'good', subjectiveScore, objectiveScore: 50 };
+
+            objectiveScore = objectiveScore / objCount;
+            const discrepancy = Math.abs(objectiveScore - subjectiveScore);
+            let riskMultiplier = 1.0,
+                alert = '✅ Concordant.',
+                alertType = 'good';
+            if (discrepancy > 15) {
+                if (objectiveScore < subjectiveScore) { riskMultiplier = 1.5;
+                    alert = '⚠️ SILENT DETERIORATION: Objective markers declining despite stable PROMs.';
+                    alertType = 'silent'; } else { riskMultiplier = 0.7;
+                    alert = '🧠 PSYCHOSOCIAL FACTOR: PROMs elevated but labs stable. Consider mental health review.';
+                    alertType = 'psychosocial'; }
+            }
+            return { discrepancy, riskMultiplier, alert, alertType, subjectiveScore, objectiveScore };
+        }
+
+        function calculateDecayedIndex(encounters) {
+            if (!encounters || encounters.length === 0) return 0;
+            const sorted = [...encounters].sort((a, b) => new Date(a.date) - new Date(b.date));
+            const now = new Date();
+            let weightedSum = 0,
+                totalWeight = 0;
+            sorted.forEach((enc, idx) => {
+                const daysAgo = (now - new Date(enc.date)) / (1000 * 60 * 60 * 24);
+                const decayWeight = Math.exp(-DECAY_LAMBDA * daysAgo);
+                const recencyBonus = (sorted.length - idx) <= 3 ? 1.2 : 1.0;
+                const finalWeight = decayWeight * recencyBonus;
+                weightedSum += computeCareIndex(enc) * finalWeight;
+                totalWeight += finalWeight;
+            });
+            return totalWeight > 0 ? Math.round(weightedSum / totalWeight) : 0;
+        }
+
+        function detectTrend(encounters) {
+            if (!encounters || encounters.length < 3) return { direction: 'stable', change: 0 };
+            const sorted = [...encounters].sort((a, b) => new Date(a.date) - new Date(b.date));
+            const last3 = sorted.slice(-3);
+            const indices = last3.map(e => computeCareIndex(e));
+            const change = indices[indices.length - 1] - indices[0];
+            let direction = 'stable';
+            if (change > 3) direction = 'up';
+            else if (change < -3) direction = 'down';
+            return { direction, change };
+        }
+
+        function generateCareTips(data, goals) {
+            const n = (v) => parseFloat(v) || 0;
+            const pain = n(data.pain),
+                mobility = n(data.mobility),
+                fatigue = n(data.fatigue),
+                func = n(data.function);
+            const adverse = n(data.adverse),
+                satisfaction = n(data.satisfaction),
+                adherence = n(data.adherence);
+            const glucose = n(data.glucose),
+                fev1 = n(data.fev1),
+                egfr = n(data.egfr),
+                crp = n(data.crp);
+            const tips = [];
+            if (pain > goals.pain + 1) tips.push('🔴 Pain above goal. Consider rest, heat/cold, or prescribed relief.');
+            else if (pain > goals.pain) tips.push('🟡 Pain slightly above goal. Gentle stretching may help.');
+            else tips.push('✅ Pain on track.');
+            if (mobility < goals.mobility - 1) tips.push('🔴 Mobility below goal. Try gentle range‑of‑motion exercises.');
+            else if (mobility < goals.mobility) tips.push('🟡 Mobility slightly below goal. A short walk could help.');
+            else tips.push('✅ Good mobility!');
+            if (fatigue < goals.energy - 1) tips.push('🔴 Fatigue high. Prioritise rest and conserve energy.');
+            else if (fatigue < goals.energy) tips.push('🟡 Fatigue moderate. Plan short bursts of activity.');
+            else tips.push('✅ Energy level is good.');
+            if (func < 4) tips.push('💙 Function limited. Consider OT/PT review.');
+            if (adverse > 3) tips.push('🔴 Adverse events reported. Review peptide dose or supportive care.');
+            if (satisfaction < 5) tips.push('🟡 Low satisfaction. Explore barriers to treatment acceptance.');
+            if (adherence > 1) tips.push('🔴 Missed doses detected. Assess side effects or adherence barriers.');
+            if (glucose > 7.0) tips.push('🔴 Glucose elevated (>7.0 mmol/L). Monitor and discuss with care team.');
+            else if (glucose > 5.6) tips.push('🟡 Glucose slightly elevated. Review diet and activity.');
+            if (fev1 > 0 && fev1 < 1.0) tips.push('🔴 FEV1 very low (<1.0L). Urgent respiratory review recommended.');
+            else if (fev1 > 0 && fev1 < 1.5) tips.push('🟡 FEV1 reduced. Breathing exercises and review with physio.');
+            if (egfr > 0 && egfr < 60) tips.push('🔴 Reduced eGFR. Monitor renal function, adjust medications.');
+            if (crp > 10) tips.push('🟡 Elevated CRP. Screen for infection or inflammation.');
+            if (tips.length === 0) tips.push('✅ All markers on track! Keep it up.');
+            return tips;
+        }
+
+        function renderInsights(data) {
+            if (!data || !data.pain) {
+                riskContainer.innerHTML =
+                    `<div style="color:#8892b0; padding:8px 0; text-align:center; font-size:0.7rem;">Save an encounter to see recommendations.</div>`;
+                compositeScore.textContent = '—';
+                aiInsight.innerHTML =
+                    `<i class="fas fa-robot"></i> <span>Evidence‑based recommendations appear after saving.</span>`;
+                concordanceContainer.innerHTML = '';
+                trendContainer.style.display = 'none';
+                return;
+            }
+            const index = computeCareIndex(data);
+            const goals = getGoals();
+            const tips = generateCareTips(data, goals);
+            const concordance = calculateConcordance(data, encounters);
+            const decayedIndex = calculateDecayedIndex(encounters);
+            const trend = detectTrend(encounters);
+            const trendIcon = trend.direction === 'up' ? '📈' : trend.direction === 'down' ? '📉' : '➡️';
+            const trendColor = trend.direction === 'up' ? 'up' : trend.direction === 'down' ? 'down' : 'stable';
+            const trendText = trend.direction === 'up' ? 'Improving' : trend.direction === 'down' ? 'Declining' : 'Stable';
+
+            trendContainer.style.display = 'flex';
+            trendContainer.innerHTML =
+                `<span><i class="fas fa-chart-line"></i> Trend: <span class="${trendColor}">${trendIcon} ${trendText}</span></span>
+                         <span>Change: ${trend.change > 0 ? '+' : ''}${trend.change.toFixed(1)} pts</span>
+                         <span>Decayed Index: ${decayedIndex}</span>`;
+
+            const adjustedIndex = Math.min(100, Math.round(index * concordance.riskMultiplier));
+            let html = '<div style="display:flex;flex-wrap:wrap;gap:3px;margin:4px 0;">';
+            const items = [
+                { label: 'Pain', val: parseFloat(data.pain) || 0, invert: true },
+                { label: 'Mobility', val: parseFloat(data.mobility) || 0 },
+                { label: 'Fatigue', val: parseFloat(data.fatigue) || 0, invert: true },
+                { label: 'Function', val: parseFloat(data.function) || 0 },
+                { label: 'Adverse', val: parseFloat(data.adverse) || 0, invert: true },
+                { label: 'Satisfaction', val: parseFloat(data.satisfaction) || 0 },
+                { label: 'Adherence', val: parseFloat(data.adherence) || 0, invert: true },
+            ];
+            items.forEach(item => {
+                let val = item.val,
+                    cls = 'risk-low',
+                    status = '✅';
+                if (item.invert) {
+                    if (val > 5) { cls = 'risk-high';
+                        status = '⚠️'; } else if (val > 2) { cls = 'risk-moderate';
+                        status = '🔶'; } else if (val >= 0) { cls = 'risk-low';
+                        status = '✅'; }
+                } else {
+                    if (val < 4) { cls = 'risk-high';
+                        status = '⚠️'; } else if (val < 7) { cls = 'risk-moderate';
+                        status = '🔶'; } else if (val >= 0) { cls = 'risk-low';
+                        status = '✅'; }
+                }
+                if (val === 0) status = '—';
+                html +=
+                    `<div style="flex:1 0 55px;background:#0f1428;padding:2px 6px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:0.55rem;">
+                              <span>${item.label}</span><span class="risk-badge ${cls}">${status}</span>
+                            </div>`;
+            });
+            html += '</div>';
+            html +=
+                `<div style="font-size:0.55rem;background:#0f1428;padding:3px 8px;border-radius:6px;margin:3px 0;">
+                            <i class="fas fa-bullseye" style="color:#00b4d8;"></i> Goals: Pain ≤${goals.pain} · Mobility ≥${goals.mobility} · Energy ≥${goals.energy}
+                          </div>`;
+            riskContainer.innerHTML = html;
+            compositeScore.textContent = adjustedIndex;
+
+            let tipText = tips.map(t => `<li>${t}</li>`).join('');
+            aiInsight.innerHTML = `<i class="fas fa-robot"></i> <ul>${tipText}</ul>`;
+
+            concordanceContainer.innerHTML = `
+                          <div class="concordance-box ${concordance.alertType}">
+                            <div class="alert ${concordance.alertType}">
+                              <i class="fas fa-${concordance.alertType === 'silent' ? 'exclamation-triangle' : concordance.alertType === 'psychosocial' ? 'brain' : 'check-circle'}"></i>
+                              ${concordance.alert}
+                            </div>
+                            <div class="detail">Discrepancy: ${concordance.discrepancy.toFixed(1)} pts | Subj: ${concordance.subjectiveScore.toFixed(0)} | Obj: ${concordance.objectiveScore.toFixed(0)}</div>
+                          </div>
+                        `;
+        }
+
+        // ========== SAVE ENCOUNTER ==========
+        function saveEncounter(e) {
+            e.preventDefault();
+            const data = getFormData();
+            const hasValue = Object.values(data).some(v => v && v !== '' && v !== undefined && v !== null && (typeof v !==
+                'number' || v > 0));
+            if (!hasValue) { alert('Please enter at least one reading.'); return; }
+            const id = generateEncounterId();
+            const encounter = { id, date: new Date().toISOString().split('T')[0], profile: currentProfile, ...data };
+            encounters.push(encounter);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(encounters));
+            renderInsights(data);
+            renderHistory();
+        }
+
+        // ========== HISTORY ==========
+        function renderHistory() {
+            if (encounters.length === 0) {
+                historyBody.innerHTML =
+                    `<tr><td colspan="10" style="text-align:center;color:#8892b0;font-size:0.65rem;">No encounters yet.</td></tr>`;
+                historyCount.textContent = '0 records';
+                return;
+            }
+            const sorted = [...encounters].sort((a, b) => new Date(b.date) - new Date(a.date));
+            let html = '';
+            sorted.forEach(enc => {
+                const idx = computeCareIndex(enc);
+                const pain = parseFloat(enc.pain) || 0,
+                    mobility = parseFloat(enc.mobility) || 0;
+                const fatigue = parseFloat(enc.fatigue) || 0,
+                    func = parseFloat(enc.function) || 0;
+                const ppd = enc.ppd_name || '—';
+                const badge = idx < 40 ? 'risk-high' : idx < 65 ? 'risk-moderate' : 'risk-low';
+                html += `<tr>
+                            <td><strong>${enc.id}</strong></td>
+                            <td>${enc.date}</td>
+                            <td>${enc.profile}</td>
+                            <td>${ppd}</td>
+                            <td>${pain}</td>
+                            <td>${mobility}</td>
+                            <td>${fatigue}</td>
+                            <td>${func}</td>
+                            <td><span class="risk-badge ${badge}">${idx}</span></td>
+                            <td>
+                              <button class="btn-sm" data-load='${JSON.stringify(enc)}'><i class="fas fa-eye"></i></button>
+                              <button class="btn-sm danger" data-del='${enc.id}'><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                          </tr>`;
+            });
+            historyBody.innerHTML = html;
+            historyCount.textContent = `${encounters.length} records`;
+
+            document.querySelectorAll('[data-load]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const data = JSON.parse(this.dataset.load);
+                    currentProfile = data.profile || 'acute';
+                    document.querySelectorAll('.profile-btn').forEach(b => b.classList.toggle('active', b
+                        .dataset.profile === currentProfile));
+                    buildForm();
+                    setFormData(data);
+                    renderInsights(data);
+                });
+            });
+            document.querySelectorAll('[data-del]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.dataset.del;
+                    if (!confirm('Delete this encounter?')) return;
+                    encounters = encounters.filter(e => e.id !== id);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(encounters));
+                    renderHistory();
+                });
+            });
+        }
+
+        // ========== PDF ==========
+        function generatePDFReport() {
+            const latest = encounters.length > 0 ? encounters[encounters.length - 1] : null;
+            if (!latest) { alert('Please save an encounter first.'); return; }
+            const idx = computeCareIndex(latest);
+            const tips = generateCareTips(latest, getGoals());
+            const concordance = calculateConcordance(latest, encounters);
+            const adjusted = Math.min(100, Math.round(idx * concordance.riskMultiplier));
+            let vbc = adjusted >= 75 ? '✅ High-value care: top quartile outcomes.' :
+                adjusted >= 50 ? '🟡 Moderate range. Focus on mobility and pain management.' :
+                '🔴 Lower range. Opportunity for intensive coordinated care.';
+            const ppd = getPPD();
+            const report = `
+          ================================================
+          MY THERAPEUTICS TRUST · Peptide PROMs/PREMs
+          ================================================
+          Date: ${new Date().toISOString().split('T')[0]}
+          Encounter: ${latest.id}
+          Profile: ${latest.profile}
+          PPD: ${ppd.name || '—'} (${ppd.license || '—'})
+          Doctor Verified: ${latest.doctor_verified ? '✅ Yes' : '❌ No'}
+          -------------------------------------------------
+          FUNCTIONALITY INDEX: ${adjusted}
+          Trend: ${detectTrend(encounters).direction} (${detectTrend(encounters).change.toFixed(1)} pts)
+          Concordance: ${concordance.alert || '✅ Aligned'}
+          -------------------------------------------------
+          7 CORE VARIABLES:
+            Pain: ${latest.pain || '—'}/10
+            Mobility: ${latest.mobility || '—'}/10
+            Fatigue: ${latest.fatigue || '—'}/10
+            Global Function: ${latest.function || '—'}/10
+            Adverse Events: ${latest.adverse || '—'}/10
+            Satisfaction: ${latest.satisfaction || '—'}/10
+            Adherence (missed): ${latest.adherence || '—'}
+          PHYSIOLOGY MARKERS:
+            Glucose: ${latest.glucose || '—'} mmol/L
+            FEV1: ${latest.fev1 || '—'} L
+            eGFR: ${latest.egfr || '—'} mL/min
+            CRP: ${latest.crp || '—'} mg/L
+          -------------------------------------------------
+          CARE TIPS:
+          ${tips.map(t => '  - ' + t).join('\n')}
+          -------------------------------------------------
+          VBC: ${vbc}
+          ================================================
+          `;
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Peptide_PROMs_Report_${new Date().toISOString().split('T')[0]}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ========== VERITAS ==========
+        function updateVeritasStatus() {
+            const ppdOk = isPPDComplete();
+            const allReady = ppdOk && verification.doctorVerified;
+
+            livenessDisplay.textContent = verification.liveness ? '✅' : '❌';
+            hrDisplay.textContent = verification.hr !== null ? verification.hr + ' bpm' : '— bpm';
+            doctorDisplay.textContent = verification.doctorVerified ? '✅' : '❌';
+            ppdStatus.textContent = ppdOk ? '✅ Complete' : '⚠️ Incomplete';
+            ppdStatus.style.color = ppdOk ? '#28a745' : '#ffc107';
+
+            if (allReady) {
+                veritasIcon.className = 'icon pass';
+                veritasIcon.textContent = '✅';
+                veritasText.textContent = 'VERITAS Ready · Doctor Verified ✓';
+                veritasHeaderBadge.textContent = '✅ VERIFIED';
+                veritasHeaderBadge.style.background = '#28a745';
+                tokenBadge.className = 'verification-badge verified';
+                tokenBadge.textContent = 'READY';
+                generateTokenBtn.disabled = false;
+                tokenStatus.textContent = '✅ Ready to generate token';
+                tokenStatus.style.color = '#28a745';
+            } else {
+                veritasIcon.className = 'icon pending';
+                veritasIcon.textContent = '⏳';
+                let missing = [];
+                if (!ppdOk) missing.push('PPD');
+                if (!verification.doctorVerified) missing.push('Doctor Verification');
+                veritasText.textContent = 'Pending: ' + missing.join(', ');
+                veritasHeaderBadge.textContent = '⏳ PENDING';
+                veritasHeaderBadge.style.background = '#ffc107';
+                tokenBadge.className = 'verification-badge pending';
+                tokenBadge.textContent = 'PENDING';
+                generateTokenBtn.disabled = true;
+                tokenStatus.textContent = 'Complete PPD + Doctor verification first.';
+                tokenStatus.style.color = '#8892b0';
+            }
+        }
+
+        function toggleDoctorVerification() {
+            // Doctor verifies liveness + HR (simulated)
+            verification.doctorVerified = !verification.doctorVerified;
+            if (verification.doctorVerified) {
+                verification.liveness = true;
+                verification.hr = Math.round(60 + Math.random() * 40);
+                document.getElementById('verifyDoctorBtn').textContent = '✅ Doctor Verified';
+                document.getElementById('verifyDoctorBtn').classList.add('verified');
+                document.getElementById('doctorVerificationStatus').textContent = '✅ Verified';
+                tokenStatus.textContent = '👨‍⚕️ Doctor verified liveness + HR: ' + verification.hr + ' bpm';
+            } else {
+                verification.liveness = false;
+                verification.hr = null;
+                document.getElementById('verifyDoctorBtn').textContent = 'Verify as Doctor';
+                document.getElementById('verifyDoctorBtn').classList.remove('verified');
+                document.getElementById('doctorVerificationStatus').textContent = 'Not verified';
+                tokenStatus.textContent = 'Doctor verification removed.';
+            }
+            updateVeritasStatus();
+        }
+
+        function resetVerification() {
+            verification.doctorVerified = false;
+            verification.liveness = false;
+            verification.hr = null;
+            document.getElementById('verifyDoctorBtn').textContent = 'Verify as Doctor';
+            document.getElementById('verifyDoctorBtn').classList.remove('verified');
+            document.getElementById('doctorVerificationStatus').textContent = 'Not verified';
+            tokenOutput.value = '';
+            tokenGenerated = false;
+            generateTokenBtn.disabled = true;
+            copyTokenBtn.disabled = true;
+            saveVaultBtn.disabled = true;
+            tokenBadge.className = 'verification-badge pending';
+            tokenBadge.textContent = 'PENDING';
+            veritasHeaderBadge.textContent = '⏳ PENDING';
+            veritasHeaderBadge.style.background = '#ffc107';
+            tokenStatus.textContent = 'Reset. Complete PPD + Doctor verification.';
+            tokenStatus.style.color = '#8892b0';
+            updateVeritasStatus();
+        }
+
+        // ========== TOKEN ==========
+        function generateToken() {
+            if (!isPPDComplete() || !verification.doctorVerified) {
+                tokenStatus.textContent = '⚠️ Complete PPD and Doctor verification first.';
+                tokenStatus.style.color = '#ffc107';
+                return;
+            }
+            const ppd = getPPD();
+            const data = getFormData();
+            const index = computeCareIndex(data);
+            const nowSec = Math.floor(Date.now() / 1000);
+            const expSec = nowSec + 600;
+            const header = { alg: "HS256", typ: "JWT", kid: "veritas-session", device_id: deviceId, version: "1.0.0" };
+            const payload = {
+                veritas: { liveness_confirmed: verification.liveness, hr_confirmed: verification.hr,
+                    doctor_verified: verification.doctorVerified, device_id: deviceId },
+                ppd: { caregiver_name: ppd.name, caregiver_license: ppd.license, issuing_authority: ppd.authority ||
+                        '—', professional_role: ppd.role || '—' },
+                assessment: { functionality_index: index, pain: parseFloat(data.pain) || 0, mobility: parseFloat(data
+                        .mobility) || 0, fatigue: parseFloat(data.fatigue) || 0, function: parseFloat(data
+                        .function) || 0, adverse: parseFloat(data.adverse) || 0, satisfaction: parseFloat(data
+                        .satisfaction) || 0, adherence: parseFloat(data.adherence) || 0, profile: currentProfile },
+                iat: nowSec,
+                exp: expSec,
+                jti: generateSessionId(),
+                version: "veritas-token-1.0.0"
+            };
+            const token = base64UrlEncode(JSON.stringify(header)) + '.' + base64UrlEncode(JSON.stringify(payload)) + '.' +
+                base64UrlEncode(TOKEN_KEY_STRING);
+            tokenOutput.value = token;
+            tokenGenerated = true;
+            generateTokenBtn.disabled = true;
+            copyTokenBtn.disabled = false;
+            saveVaultBtn.disabled = false;
+            tokenStatus.textContent = '✅ Token generated!';
+            tokenStatus.style.color = '#28a745';
+            tokenBadge.className = 'verification-badge verified';
+            tokenBadge.textContent = 'TOKEN OK';
+            veritasHeaderBadge.textContent = '🔐 TOKEN';
+            veritasHeaderBadge.style.background = '#6f42c1';
+        }
+
+        function copyToken() {
+            if (!tokenOutput.value) { tokenStatus.textContent = '⚠️ No token to copy.'; return; }
+            navigator.clipboard.writeText(tokenOutput.value).then(() => { tokenStatus.textContent = '✅ Copied!'; }).catch(
+            () => { tokenStatus.textContent = '⚠️ Copy manually.'; });
+        }
+
+        function saveToVault() {
+            const token = tokenOutput.value.trim();
+            if (!token) return;
+            tokenVault.push({ token, date: new Date().toISOString(), ppd_name: ppdName.value || 'Unknown',
+                device: deviceId, verified: verification.doctorVerified, verification_date: verification
+                    .doctorVerified ? new Date().toISOString() : null });
+            localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
+            renderVault();
+            tokenStatus.textContent = '✅ Saved to vault.';
+        }
+
+        function renderVault() {
+            if (tokenVault.length === 0) { vaultList.innerHTML =
+                    '<div style="color:#8892b0;font-size:0.55rem;text-align:center;padding:4px 0;">No tokens in vault.</div>';
+                vaultCount.textContent = '0 tokens'; return; }
+            let html = '';
+            tokenVault.forEach((entry, idx) => {
+                const short = entry.token ? entry.token.substring(0, 40) + '...' : '';
+                const statusClass = entry.verified ? 'verified' : 'pending';
+                const statusText = entry.verified ? '✓ VERIFIED' : '⏳ Pending';
+                html += `<div class="vault-item">
+                            <span class="vault-token">${short}</span>
+                            <span class="vault-status ${statusClass}">${statusText}</span>
+                            <span style="font-size:0.45rem;color:#8892b0;">${new Date(entry.date).toLocaleDateString()}</span>
+                            <span class="vault-actions">
+                              <button onclick="copyVaultToken(${idx})"><i class="fas fa-copy"></i></button>
+                              <button onclick="verifyVaultToken(${idx})" style="color:#28a745;"><i class="fas fa-check-circle"></i></button>
+                              <button onclick="deleteVaultToken(${idx})" style="color:#ff6b6b;"><i class="fas fa-trash"></i></button>
+                            </span>
+                          </div>`;
+            });
+            vaultList.innerHTML = html;
+            vaultCount.textContent = tokenVault.length + ' tokens';
+        }
+
+        window.copyVaultToken = function(idx) {
+            const entry = tokenVault[idx];
+            if (!entry) return;
+            navigator.clipboard.writeText(entry.token).then(() => { tokenStatus.textContent = '✅ Copied from vault.'; });
+        };
+
+        window.verifyVaultToken = function(idx) {
+            const entry = tokenVault[idx];
+            if (!entry) return;
+            try {
+                const parts = entry.token.split('.');
+                if (parts.length !== 3) { tokenStatus.textContent = '❌ Invalid format.'; return; }
+                const payload = JSON.parse(base64UrlDecode(parts[1]));
+                const signature = parts[2];
+                if (signature !== base64UrlEncode(TOKEN_KEY_STRING)) { tokenStatus.textContent = '❌ Invalid signature.';
+                    return; }
+                if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) { tokenStatus.textContent =
+                    '❌ Expired.'; return; }
+                tokenVault[idx].verified = true;
+                tokenVault[idx].verification_date = new Date().toISOString();
+                localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
+                renderVault();
+                tokenStatus.textContent = '✅ Token verified!';
+            } catch (e) { tokenStatus.textContent = '❌ Error: ' + e.message; }
+        };
+
+        window.deleteVaultToken = function(idx) {
+            if (!confirm('Delete this token?')) return;
+            tokenVault.splice(idx, 1);
+            localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
+            renderVault();
+            tokenStatus.textContent = '🗑️ Deleted.';
+        };
+
+        function clearVault() { if (!confirm('Clear all tokens?')) return;
+            tokenVault = [];
+            localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
+            renderVault();
+            tokenStatus.textContent = '🗑️ Vault cleared.'; }
+
+        function exportVault() {
+            if (tokenVault.length === 0) { tokenStatus.textContent = '⚠️ Empty.'; return; }
+            const blob = new Blob([JSON.stringify(tokenVault, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `veritas_vault_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            tokenStatus.textContent = '✅ Exported.';
+        }
+
+        function verifyAllVaultTokens() {
+            let count = 0;
+            tokenVault.forEach((entry, idx) => {
+                try {
+                    const parts = entry.token.split('.');
+                    if (parts.length !== 3) return;
+                    const payload = JSON.parse(base64UrlDecode(parts[1]));
+                    const signature = parts[2];
+                    if (signature === base64UrlEncode(TOKEN_KEY_STRING) && payload.exp && payload.exp > Math.floor(
+                        Date.now() / 1000)) {
+                        tokenVault[idx].verified = true;
+                        tokenVault[idx].verification_date = new Date().toISOString();
+                        count++;
+                    }
+                } catch (e) {}
+            });
+            if (count > 0) { localStorage.setItem(VAULT_KEY, JSON.stringify(tokenVault));
+                renderVault();
+                tokenStatus.textContent = `✅ ${count} verified.`; } else { tokenStatus.textContent =
+                'ℹ️ No valid tokens.'; }
+        }
+
+        // ========== PROFILE SWITCH ==========
+        function switchProfile(profile) {
+            currentProfile = profile;
+            document.querySelectorAll('.profile-btn').forEach(b => b.classList.toggle('active', b.dataset.profile ===
+            profile));
+            buildForm();
+            clearFormValues();
+            renderInsights(null);
+            compositeScore.textContent = '—';
+            aiInsight.innerHTML =
+                `<i class="fas fa-robot"></i> <span>Evidence‑based recommendations appear after saving.</span>`;
+            concordanceContainer.innerHTML = '';
+            trendContainer.style.display = 'none';
+            renderHistory();
+        }
+
+        // ========== INIT ==========
+        function init() {
+            buildForm();
+            renderHistory();
+            renderVault();
+            updateVeritasStatus();
+
+            if (encounters.length > 0) {
+                const latest = encounters[encounters.length - 1];
+                setFormData(latest);
+                currentProfile = latest.profile || 'acute';
+                document.querySelectorAll('.profile-btn').forEach(b => b.classList.toggle('active', b.dataset.profile ===
+                    currentProfile));
+                buildForm();
+                setFormData(latest);
+                renderInsights(latest);
+            }
+
+            document.querySelectorAll('.profile-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const profile = this.dataset.profile;
+                    if (profile !== currentProfile) switchProfile(profile);
+                });
+            });
+
+            form.addEventListener('submit', saveEncounter);
+            document.getElementById('clearBtn').addEventListener('click', function() {
+                clearFormValues();
+                renderInsights(null);
+                compositeScore.textContent = '—';
+                aiInsight.innerHTML =
+                    `<i class="fas fa-robot"></i> <span>Evidence‑based recommendations appear after saving.</span>`;
+                concordanceContainer.innerHTML = '';
+                trendContainer.style.display = 'none';
+            });
+            document.getElementById('pdfBtn').addEventListener('click', generatePDFReport);
+
+            document.getElementById('verifyDoctorBtn').addEventListener('click', toggleDoctorVerification);
+            document.getElementById('resetVerificationBtn').addEventListener('click', resetVerification);
+
+            document.getElementById('generateTokenBtn').addEventListener('click', generateToken);
+            document.getElementById('copyTokenBtn').addEventListener('click', copyToken);
+            document.getElementById('saveVaultBtn').addEventListener('click', saveToVault);
+            document.getElementById('clearVaultBtn').addEventListener('click', clearVault);
+            document.getElementById('exportVaultBtn').addEventListener('click', exportVault);
+            document.getElementById('verifyVaultBtn').addEventListener('click', verifyAllVaultTokens);
+
+            [ppdName, ppdLicense, ppdAuthority, ppdRole].forEach(el => {
+                el.addEventListener('input', updateVeritasStatus);
+            });
+
+            console.log('=== MY THERAPEUTICS TRUST · Peptide PROMs/PREMs initialized ===');
+            console.log('Doctor verifies liveness + HR in person. Click "Verify as Doctor" to confirm.');
+            console.log('Token signature key: ' + TOKEN_KEY_STRING);
+        }
+
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+        else init();
+    </script>
 </body>
 </html>
