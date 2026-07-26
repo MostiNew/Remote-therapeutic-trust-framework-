@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Peptide Verifier · Sovereign RTM</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f4f7fc;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .app-container { max-width: 1200px; width: 100%; display: flex; flex-direction: column; gap: 28px; }
+        .card { background: #ffffff; border-radius: 32px; box-shadow: 0 20px 40px -12px rgba(0, 20, 40, 0.15); padding: 2rem 2.25rem; }
+        .card-header { border-bottom: 1px solid #e6edf4; padding-bottom: 1.25rem; margin-bottom: 2rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+        .card-header h1 { font-weight: 600; font-size: 1.8rem; letter-spacing: -0.02em; color: #0b1a2b; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+        .card-header h1 small { font-size: 1rem; font-weight: 400; color: #2c4b66; background: #eef3f9; padding: 0.15rem 0.9rem; border-radius: 40px; }
+        .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .badge-local { background: #d1e7dd; color: #0f5132; font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.9rem; border-radius: 30px; text-transform: uppercase; }
+        .lang-selector { display: flex; gap: 4px; background: #eef3f9; padding: 4px; border-radius: 40px; }
+        .lang-btn { border: none; background: transparent; padding: 5px 14px; border-radius: 30px; font-size: 0.8rem; font-weight: 600; cursor: pointer; color: #4a6a85; transition: 0.15s; }
+        .lang-btn.active { background: #ffffff; color: #0b2d48; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .lang-btn:hover:not(.active) { background: rgba(255,255,255,0.5); }
+        .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; }
+        @media (max-width: 760px) { .grid-2col { grid-template-columns: 1fr; gap: 1.5rem; } }
+        .verifier-box { background: #f9fcff; padding: 1.2rem 1.5rem 1.5rem; border-radius: 24px; border: 1px solid #e2ebf3; margin-bottom: 1.5rem; }
+        .verifier-box h3 { font-weight: 600; font-size: 1.2rem; color: #0b1f30; margin-bottom: 0.5rem; }
+        .verifier-box .sub { color: #2c4b66; font-size: 0.95rem; margin-bottom: 1rem; border-left: 3px solid #b6d0e3; background: #f2f8fe; padding: 0.4rem 1rem; border-radius: 0 8px 8px 0; }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 0.8rem; margin: 0.8rem 0 0.5rem; }
+        .feature-item { font-size: 0.9rem; color: #1a3e58; display: flex; align-items: center; gap: 0.3rem; }
+        .feature-item::before { content: "🔒"; font-size: 0.9rem; }
+        .btn-verify { background: #0b2d48; color: white; border: none; border-radius: 60px; padding: 0.6rem 1.8rem; font-weight: 600; font-size: 0.95rem; cursor: pointer; width: 100%; transition: 0.15s; }
+        .btn-verify:hover { background: #124b72; }
+        .btn-action { color: white; border: none; border-radius: 60px; padding: 0.6rem 1.8rem; font-weight: 600; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; width: 100%; transition: 0.15s; }
+        .btn-export { background: #198754; }
+        .btn-export:hover { background: #157347; }
+        .btn-clear { background: #dc3545; }
+        .btn-clear:hover { background: #bb2d3b; }
+        .token-area { background: white; border-radius: 12px; border: 1px solid #d3e0ea; padding: 0.8rem 1.2rem; margin: 0.8rem 0; font-size: 0.85rem; color: #1d405a; word-break: break-all; font-family: monospace; min-height: 40px; }
+        .pill { background: #e3edf5; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; font-weight: 500; color: #1c405a; }
+        .status-badge { display: inline-block; background: #e6e9ed; color: #3a4f5e; padding: 0.15rem 0.8rem; border-radius: 30px; font-size: 0.75rem; font-weight: 600; }
+        .flex-between { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+        .question-group { margin-bottom: 1.5rem; background: #f9fcff; padding: 1.2rem 1.5rem 1.5rem; border-radius: 24px; border: 1px solid #e2ebf3; }
+        .q-label { font-weight: 600; font-size: 1.04rem; color: #0b1f30; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.7rem; flex-wrap: wrap; }
+        .q-label .badge { background: #d0e2f0; color: #1d405a; font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.7rem; border-radius: 30px; text-transform: uppercase; }
+        .q-desc { color: #3b5b78; font-size: 0.92rem; margin-bottom: 0.9rem; border-left: 3px solid #b6d0e3; background: #f2f8fe; padding: 0.5rem 1rem; border-radius: 0 8px 8px 0; }
+        .scale-options { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.7rem; }
+        .scale-options label { display: flex; align-items: center; gap: 0.3rem; font-size: 0.92rem; background: white; padding: 0.35rem 0.8rem; border-radius: 40px; border: 1px solid #d8e4ee; cursor: pointer; transition: 0.1s; }
+        .scale-options label:hover { background: #e6f0fa; border-color: #8eb3cc; }
+        .text-input, .select-input { width: 100%; padding: 0.7rem 1rem; border: 1px solid #d3e0ea; border-radius: 60px; font-size: 0.95rem; background: white; transition: 0.15s; }
+        .text-input:focus, .select-input:focus { border-color: #1f6b9e; outline: 2px solid #b7d5f0; outline-offset: 1px; }
+        .chart-container { position: relative; margin-top: 1rem; height: 250px; width: 100%; background: #ffffff; border: 1px solid #e2ebf3; border-radius: 16px; padding: 10px; }
+        .error-message { color: #7a1c1c; background: #ffe3e3; border: 1px solid #f5baba; padding: 0.8rem 1.2rem; border-radius: 12px; margin-top: 0.8rem; font-size: 0.9rem; display: none; }
+        svg { width: 100%; height: 100%; }
+        .score-label { font-size: 0.8rem; color: #4a6a85; margin-right: 0.5rem; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="card">
+        <div class="card-header">
+            <h1>
+                <span id="titleMain">🧬 My Peptide Verifier</span>
+                <small id="titleVersion">v3.1 Pages</small>
+            </h1>
+            <div class="header-right">
+                <span class="badge-local" id="badgeLocal">Zero-Cloud Local Only</span>
+                <div class="lang-selector">
+                    <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')">EN</button>
+                    <button class="lang-btn" data-lang="de" onclick="switchLanguage('de')">DE</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2col">
+            <!-- LEFT COLUMN -->
+            <div>
+                <div class="verifier-box">
+                    <h3 id="boxTitle">🔒 Local Sovereignty</h3>
+                    <div class="sub" id="boxSub">Encrypted storage exclusively in your local browser sandbox.</div>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-item" id="feat1">Local Storage</div>
+                        <div class="feature-item" id="feat2">Offline SVG Chart</div>
+                        <div class="feature-item" id="feat3">100% Sovereign</div>
+                        <div class="feature-item" id="feat4">GitHub Ready</div>
+                    </div>
+
+                    <button class="btn-verify" onclick="generateVerification()" id="btnSave">Save Entry & Verify</button>
+                    <button class="btn-action btn-export" id="exportBtn" style="display:none;" onclick="exportDataJSON()" id="btnExport">Export Full Dataset (JSON)</button>
+                    <button class="btn-action btn-clear" onclick="clearLocalStorage()" id="btnClear">Clear Local Storage</button>
+                    
+                    <div class="error-message" id="errorDisplay"></div>
+                    <div class="token-area" id="tokenDisplay">Ready for local data collection...</div>
+                    
+                    <div class="flex-between">
+                        <span class="pill" id="timestamp">Last Sync: Never</span>
+                        <span class="status-badge" id="statusBadge">Ready</span>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="q-label"><span id="qPatientId">Patient ID</span> <span class="badge" id="badgeAnon">Anonymous</span></div>
+                    <input type="text" id="patientId" class="text-input" value="ANON-USER-1">
+                </div>
+
+                <div class="question-group">
+                    <div class="q-label"><span id="qPeptide">Peptide Preparation</span> <span class="badge" id="badgeSelect">Selection</span></div>
+                    <select id="peptideType" class="select-input" onchange="updateDosageRange()">
+                        <option value="BPC-157">BPC-157 (Gastroprotectiv)</option>
+                        <option value="TB-500">TB-500 (Regeneration)</option>
+                        <option value="CJC-1295">CJC-1295 (Sekretagogum)</option>
+                    </select>
+                </div>
+
+                <div class="question-group">
+                    <div class="q-label"><span id="qDose">Single Dose</span> (<span id="doseUnit">mcg</span>)</div>
+                    <div class="q-desc" id="doseGuideline">Standard range for BPC-157: 250 - 500 mcg daily.</div>
+                    <input type="number" id="peptideDose" class="text-input" value="300">
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div>
+                <div class="question-group">
+                    <div class="q-label"><span id="qPain">Current Pain Level</span> <span class="badge" id="badgeScore">Score</span></div>
+                    <div class="scale-options">
+                        <span class="score-label" id="scoreNone">0 = none</span>
+                        <label><input type="radio" name="painScore" value="0"> 0</label>
+                        <label><input type="radio" name="painScore" value="1"> 1</label>
+                        <label><input type="radio" name="painScore" value="2" checked> 2</label>
+                        <label><input type="radio" name="painScore" value="3"> 3</label>
+                        <label><input type="radio" name="painScore" value="4"> 4</label>
+                        <span class="score-label" id="scoreWorst">4 = worst</span>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="q-label"><span id="qSide">Local Irritations?</span> <span class="badge" id="badgeAdherence">Adherence</span></div>
+                    <div class="scale-options">
+                        <label><input type="radio" name="sideEffects" value="no" checked> <span id="sideNo">None</span></label>
+                        <label><input type="radio" name="sideEffects" value="yes"> <span id="sideYes">Yes</span></label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="q-label"><span id="qHistory">Local History (last 5 entries)</span></div>
+                    <div class="chart-container">
+                        <svg id="svgChart" viewBox="0 0 500 220">
+                            <!-- Grid lines -->
+                            <line x1="50" y1="20" x2="480" y2="20" stroke="#eef3f9" stroke-width="1" stroke-dasharray="4"/>
+                            <line x1="50" y1="60" x2="480" y2="60" stroke="#eef3f9" stroke-width="1" stroke-dasharray="4"/>
+                            <line x1="50" y1="100" x2="480" y2="100" stroke="#eef3f9" stroke-width="1" stroke-dasharray="4"/>
+                            <line x1="50" y1="140" x2="480" y2="140" stroke="#eef3f9" stroke-width="1" stroke-dasharray="4"/>
+                            <line x1="50" y1="180" x2="480" y2="180" stroke="#eef3f9" stroke-width="1" stroke-dasharray="4"/>
+                            
+                            <!-- Y-axis labels -->
+                            <text x="25" y="24" font-size="10" fill="#7a92a5" text-anchor="end">4</text>
+                            <text x="25" y="64" font-size="10" fill="#7a92a5" text-anchor="end">3</text>
+                            <text x="25" y="104" font-size="10" fill="#7a92a5" text-anchor="end">2</text>
+                            <text x="25" y="144" font-size="10" fill="#7a92a5" text-anchor="end">1</text>
+                            <text x="25" y="184" font-size="10" fill="#7a92a5" text-anchor="end">0</text>
+                            
+                            <!-- Chart elements -->
+                            <path id="chartLine" d="" stroke="#1f6b9e" stroke-width="3" fill="none"/>
+                            <path id="chartArea" d="" fill="#e3f0fa" opacity="0.5"/>
+                            <g id="chartPoints"></g>
+                            <g id="chartLabels"></g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // MULTILINGUAL DICTIONARY
+    // ============================================================
+    const LANG = {
+        en: {
+            titleMain: '🧬 My Peptide Verifier',
+            titleVersion: 'v3.1 Pages',
+            badgeLocal: 'Zero-Cloud Local Only',
+            boxTitle: '🔒 Local Sovereignty',
+            boxSub: 'Encrypted storage exclusively in your local browser sandbox.',
+            feat1: 'Local Storage',
+            feat2: 'Offline SVG Chart',
+            feat3: '100% Sovereign',
+            feat4: 'GitHub Ready',
+            btnSave: 'Save Entry & Verify',
+            btnExport: 'Export Full Dataset (JSON)',
+            btnClear: 'Clear Local Storage',
+            tokenReady: 'Ready for local data collection...',
+            tokenCleared: 'Storage cleared.',
+            timestamp: 'Last Sync: Never',
+            statusReady: 'Ready',
+            statusSaved: 'Saved',
+            qPatientId: 'Patient ID',
+            badgeAnon: 'Anonymous',
+            qPeptide: 'Peptide Preparation',
+            badgeSelect: 'Selection',
+            qDose: 'Single Dose',
+            doseBPC: 'Standard range for BPC-157: 250 - 500 mcg daily.',
+            doseTB: 'Standard range for TB-500: 2000 - 5000 mcg weekly.',
+            doseCJC: 'Standard range for CJC-1295: 100 - 200 mcg.',
+            qPain: 'Current Pain Level',
+            badgeScore: 'Score',
+            scoreNone: '0 = none',
+            scoreWorst: '4 = worst',
+            qSide: 'Local Irritations?',
+            badgeAdherence: 'Adherence',
+            sideNo: 'None',
+            sideYes: 'Yes',
+            qHistory: 'Local History (last 5 entries)',
+            errorPatientId: 'Patient ID required.',
+            errorDose: (pep, min, max, unit) => `Dosage error for ${pep}. Range: ${min} - ${max} ${unit}`,
+            savedAt: (time) => `Saved at: ${time}`,
+            exportPayload: 'LOCAL_SOVEREIGN_RECORD',
+            exportFile: 'Peptide_Sovereign_Backup.json'
+        },
+        de: {
+            titleMain: '🧬 My Peptide Verifier',
+            titleVersion: 'v3.1 Pages',
+            badgeLocal: 'Zero-Cloud Local Only',
+            boxTitle: '🔒 Lokale Autarkie',
+            boxSub: 'Verschlüsselte Speicherung ausschließlich im lokalen Browser-Sandkasten.',
+            feat1: 'Local Storage',
+            feat2: 'Offline SVG-Chart',
+            feat3: '100% Souverän',
+            feat4: 'GitHub Ready',
+            btnSave: 'Eintrag sichern & Verifizieren',
+            btnExport: 'Vollständigen Datensatz exportieren (JSON)',
+            btnClear: 'Lokalen Speicher löschen',
+            tokenReady: 'Bereit für lokale Datenerfassung...',
+            tokenCleared: 'Speicher bereinigt.',
+            timestamp: 'Letzter Sync: Nie',
+            statusReady: 'Bereit',
+            statusSaved: 'Gespeichert',
+            qPatientId: 'Patienten-ID',
+            badgeAnon: 'Anonymisiert',
+            qPeptide: 'Peptid-Präparat',
+            badgeSelect: 'Auswahl',
+            qDose: 'Einzeldosis',
+            doseBPC: 'Standardbereich für BPC-157: 250 - 500 mcg täglich.',
+            doseTB: 'Standardbereich für TB-500: 2000 - 5000 mcg wöchentlich.',
+            doseCJC: 'Standardbereich für CJC-1295: 100 - 200 mcg.',
+            qPain: 'Aktuelles Schmerzniveau',
+            badgeScore: 'Score',
+            scoreNone: '0 = keine',
+            scoreWorst: '4 = stärkste',
+            qSide: 'Lokale Irritationen?',
+            badgeAdherence: 'Adhärenz',
+            sideNo: 'Keine',
+            sideYes: 'Ja',
+            qHistory: 'Echter lokaler Verlauf (letzte 5 Einträge)',
+            errorPatientId: 'Patienten-ID fehlt.',
+            errorDose: (pep, min, max, unit) => `Dosis-Sicherheitsfehler für ${pep}. Bereich: ${min} - ${max} ${unit}`,
+            savedAt: (time) => `Lokal gesichert: ${time}`,
+            exportPayload: 'LOCAL_SOVEREIGN_RECORD',
+            exportFile: 'Peptide_Sovereign_Backup.json'
+        }
+    };
+
+    let currentLang = 'en';
+    const safetyRules = {
+        'BPC-157': { min: 200, max: 1000, unit: 'mcg', descKey: 'doseBPC' },
+        'TB-500': { min: 1000, max: 5000, unit: 'mcg', descKey: 'doseTB' },
+        'CJC-1295': { min: 100, max: 300, unit: 'mcg', descKey: 'doseCJC' }
+    };
+    
+    let historyData = [];
+    
+    // ============================================================
+    // LANGUAGE SWITCH
+    // ============================================================
+    function switchLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+        updateUI();
+        updateDosageRange();
+    }
+
+    function t(key, ...args) {
+        const val = LANG[currentLang][key];
+        if (typeof val === 'function') return val(...args);
+        return val || key;
+    }
+
+    function updateUI() {
+        const l = LANG[currentLang];
+        document.getElementById('titleMain').textContent = l.titleMain;
+        document.getElementById('titleVersion').textContent = l.titleVersion;
+        document.getElementById('badgeLocal').textContent = l.badgeLocal;
+        document.getElementById('boxTitle').textContent = l.boxTitle;
+        document.getElementById('boxSub').textContent = l.boxSub;
+        document.getElementById('feat1').textContent = l.feat1;
+        document.getElementById('feat2').textContent = l.feat2;
+        document.getElementById('feat3').textContent = l.feat3;
+        document.getElementById('feat4').textContent = l.feat4;
+        document.getElementById('btnSave').textContent = l.btnSave;
+        document.getElementById('btnExport').textContent = l.btnExport;
+        document.getElementById('btnClear').textContent = l.btnClear;
+        document.getElementById('qPatientId').textContent = l.qPatientId;
+        document.getElementById('badgeAnon').textContent = l.badgeAnon;
+        document.getElementById('qPeptide').textContent = l.qPeptide;
+        document.getElementById('badgeSelect').textContent = l.badgeSelect;
+        document.getElementById('qDose').textContent = l.qDose;
+        document.getElementById('qPain').textContent = l.qPain;
+        document.getElementById('badgeScore').textContent = l.badgeScore;
+        document.getElementById('scoreNone').textContent = l.scoreNone;
+        document.getElementById('scoreWorst').textContent = l.scoreWorst;
+        document.getElementById('qSide').textContent = l.qSide;
+        document.getElementById('badgeAdherence').textContent = l.badgeAdherence;
+        document.getElementById('sideNo').textContent = l.sideNo;
+        document.getElementById('sideYes').textContent = l.sideYes;
+        document.getElementById('qHistory').textContent = l.qHistory;
+        
+        // Update status texts if not in special state
+        const badge = document.getElementById('statusBadge');
+        if (badge.textContent === LANG.en.statusReady || badge.textContent === LANG.de.statusReady) {
+            badge.textContent = l.statusReady;
+        }
+        if (badge.textContent === LANG.en.statusSaved || badge.textContent === LANG.de.statusSaved) {
+            badge.textContent = l.statusSaved;
+        }
+        
+        // Update token display if default
+        const tokenDisplay = document.getElementById('tokenDisplay');
+        if (tokenDisplay.textContent === LANG.en.tokenReady || tokenDisplay.textContent === LANG.de.tokenReady ||
+            tokenDisplay.textContent === LANG.en.tokenCleared || tokenDisplay.textContent === LANG.de.tokenCleared) {
+            tokenDisplay.textContent = l.tokenReady;
+        }
+        
+        // Update timestamp if default
+        const ts = document.getElementById('timestamp');
+        if (ts.textContent === LANG.en.timestamp || ts.textContent === LANG.de.timestamp) {
+            ts.textContent = l.timestamp;
+        }
+        
+        updateDosageRange();
+    }
+
+    // ============================================================
+    // DOSAGE RANGE
+    // ============================================================
+    function updateDosageRange() {
+        const pep = document.getElementById('peptideType').value;
+        const rules = safetyRules[pep];
+        document.getElementById('doseUnit').innerText = rules.unit;
+        document.getElementById('doseGuideline').innerText = t(rules.descKey);
+        const currentVal = parseInt(document.getElementById('peptideDose').value);
+        if (isNaN(currentVal) || currentVal < rules.min || currentVal > rules.max) {
+            document.getElementById('peptideDose').value = rules.min;
+        }
+    }
+
+    // ============================================================
+    // CHART DRAWING
+    // ============================================================
+    function drawChart() {
+        const linePath = document.getElementById('chartLine');
+        const areaPath = document.getElementById('chartArea');
+        const pointsGroup = document.getElementById('chartPoints');
+        const labelsGroup = document.getElementById('chartLabels');
+        pointsGroup.innerHTML = '';
+        labelsGroup.innerHTML = '';
+        
+        if(historyData.length === 0) {
+            linePath.setAttribute('d', '');
+            areaPath.setAttribute('d', '');
+            return;
+        }
+        
+        const widthBetween = 430 / Math.max(1, historyData.length - 1);
+        let pathCommands = '';
+        let areaCommands = 'M 50 180 ';
+        
+        historyData.forEach((score, i) => {
+            const x = 50 + (i * widthBetween);
+            const y = 180 - (score * 40);
+            
+            if(i === 0) {
+                pathCommands += `M ${x} ${y} `;
+            } else {
+                pathCommands += `L ${x} ${y} `;
+            }
+            areaCommands += `L ${x} ${y} `;
+            
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', y);
+            circle.setAttribute('r', '5');
+            circle.setAttribute('fill', '#ffffff');
+            circle.setAttribute('stroke', '#1f6b9e');
+            circle.setAttribute('stroke-width', '2.5');
+            pointsGroup.appendChild(circle);
+            
+            const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            txt.setAttribute('x', x);
+            txt.setAttribute('y', '202');
+            txt.setAttribute('font-size', '10');
+            txt.setAttribute('fill', '#7a92a5');
+            txt.setAttribute('text-anchor', 'middle');
+            const label = currentLang === 'de' ? `Eintr. ${i+1}` : `Entry ${i+1}`;
+            txt.textContent = label;
+            labelsGroup.appendChild(txt);
+        });
+        
+        areaCommands += `L ${50 + ((historyData.length - 1) * widthBetween)} 180 Z`;
+        linePath.setAttribute('d', pathCommands);
+        areaPath.setAttribute('d', areaCommands);
+    }
+
+    // ============================================================
+    // MAIN FUNCTIONS
+    // ============================================================
+    function generateVerification() {
+        const patientId = document.getElementById('patientId').value.trim();
+        const peptide = document.getElementById('peptideType').value;
+        const dose = parseFloat(document.getElementById('peptideDose').value);
+        const painScore = document.querySelector('input[name="painScore"]:checked').value;
+        const errorDisplay = document.getElementById('errorDisplay');
+        errorDisplay.style.display = 'none';
+        
+        if (!patientId) {
+            showValidationError(t('errorPatientId'));
+            return;
+        }
+        
+        const limits = safetyRules[peptide];
+        if (isNaN(dose) || dose < limits.min || dose > limits.max) {
+            showValidationError(t('errorDose', peptide, limits.min, limits.max, limits.unit));
+            return;
+        }
+        
+        historyData.push(parseInt(painScore));
+        if (historyData.length > 5) historyData.shift();
+        localStorage.setItem('peptide_history_v3', JSON.stringify(historyData));
+        
+        const now = new Date();
+        const formattedToken = `MPV-PAGES-${Math.random().toString(36).substring(2,7).toUpperCase()}`;
+        document.getElementById('tokenDisplay').innerText = formattedToken;
+        document.getElementById('timestamp').innerText = t('savedAt', now.toLocaleTimeString(currentLang === 'de' ? 'de-DE' : 'en-US'));
+        
+        const badge = document.getElementById('statusBadge');
+        badge.innerText = t('statusSaved');
+        badge.style.background = "#e3f9e5";
+        badge.style.color = "#1c7a2c";
+        document.getElementById('exportBtn').style.display = 'block';
+        drawChart();
+    }
+    
+    function showValidationError(msg) {
+        const errorDisplay = document.getElementById('errorDisplay');
+        errorDisplay.innerText = msg;
+        errorDisplay.style.display = 'block';
+    }
+    
+    function exportDataJSON() {
+        const storedData = localStorage.getItem('peptide_history_v3');
+        const payload = {
+            integrity: t('exportPayload'),
+            exportedAt: new Date().toISOString(),
+            patientId: document.getElementById('patientId').value,
+            historicalPainScores: storedData ? JSON.parse(storedData) : historyData
+        };
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 4));
+        const dlAnchor = document.createElement('a');
+        dlAnchor.setAttribute("href", dataStr);
+        dlAnchor.setAttribute("download", t('exportFile'));
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        dlAnchor.remove();
+    }
+    
+    function clearLocalStorage() {
+        localStorage.removeItem('peptide_history_v3');
+        historyData = [];
+        drawChart();
+        document.getElementById('tokenDisplay').innerText = t('tokenCleared');
+        document.getElementById('exportBtn').style.display = 'none';
+        const badge = document.getElementById('statusBadge');
+        badge.innerText = t('statusReady');
+        badge.style.background = "#e6e9ed";
+        badge.style.color = "#3a4f5e";
+    }
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    window.onload = function() {
+        const stored = localStorage.getItem('peptide_history_v3');
+        if (stored) {
+            historyData = JSON.parse(stored);
+            document.getElementById('exportBtn').style.display = 'block';
+        } else {
+            historyData = [];
+        }
+        // Default to English
+        switchLanguage('en');
+        drawChart();
+    };
+</script>
+</body>
+</html>
+
